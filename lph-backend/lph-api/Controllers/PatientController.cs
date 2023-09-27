@@ -17,6 +17,7 @@ public class PatientController : ControllerBase
     [HttpGet("GetAll")]
     public IActionResult GetAll()
     {
+        System.Threading.Thread.Sleep(1000);
         return Ok(Patients);
     }
 }

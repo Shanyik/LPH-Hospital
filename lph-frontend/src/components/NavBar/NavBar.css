@@ -1,0 +1,41 @@
+.menuButton {
+    color: rgb(0, 0, 0);
+    font-size: 2vw;
+    margin: 1rem;
+    text-align: center;
+    text-decoration: none;
+
+}
+
+.menuButton:hover {
+    color: #2e7d32;
+    cursor: pointer;
+    transition: 0.5s;
+}
+
+.navbar{
+    
+        width: 30%;
+        min-Width: 30%;
+        height: auto;
+        background-color: rgba(0, 0, 0, 0.1);
+        position: relative;
+        z-index: 100;
+        left: 35%;
+        margin-top: 1rem;
+        border-radius: 20px;
+
+
+}
+
+@media screen and (max-width: 601px) {
+    .menuButton {
+        font-size: 3vw;
+        margin: 1rem;
+    }
+    .navbar{
+        width: 80%;
+        min-Width: 80%;
+        left: 10%;
+    }
+}
