@@ -3,6 +3,18 @@ import "./DisplayPatients.css"
 
 const DisplayPatients = () => {
 
+    const deleteButton = (id) =>{
+        deletePatient(id).then(data => console.log(data))
+        setPatients((patients => {
+            return patients.filter((patient) => patient.id !== id) 
+        }))
+    }
+
+    const deletePatient = (id) =>{
+        return fetch(`http://localhost:5274/Patient/Delete:${id}`, {method: "DELETE"})
+        .then((res) => res.json())
+    }
+
     const [patients, setPatients] = useState([])
     
     useEffect(() => {
@@ -13,7 +25,7 @@ const DisplayPatients = () => {
     }, [])
 
   return (
-    (patients.length > 0) ? [
+    patients.length > 0 ? [
         <table>
             <thead>
                 <tr>
@@ -21,6 +33,7 @@ const DisplayPatients = () => {
                     <th>Last Name</th>
                     <th>Email</th>
                     <th>Phone number</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -30,6 +43,7 @@ const DisplayPatients = () => {
                         <td>{patient.lastName}</td>
                         <td>{patient.email}</td>
                         <td>{patient.phoneNumber}</td>
+                        <td><button onClick={() => deleteButton(patient.id)}>Delete</button></td>
                     </tr>
                 ))}
             </tbody>

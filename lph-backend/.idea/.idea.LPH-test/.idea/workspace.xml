@@ -12,11 +12,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e2d0dc57-7f13-4847-b48e-6d743bc33342" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.LPH-test/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.LPH-test/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lph-frontend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/../lph-frontend/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lph-frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../lph-frontend/package.json" afterDir="false" />
-    </list>
+    <list default="true" id="e2d0dc57-7f13-4847-b48e-6d743bc33342" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -152,7 +148,7 @@
       <workItem from="1695802575729" duration="1696000" />
       <workItem from="1695804820634" duration="2169000" />
       <workItem from="1695807554476" duration="389000" />
-      <workItem from="1695808046571" duration="3363000" />
+      <workItem from="1695808046571" duration="4218000" />
     </task>
     <servers />
   </component>

@@ -31,3 +31,15 @@ table button {
     top: 20px;
     font-size: 40px;
 }
+
+button{
+    text-decoration: none;
+    background-color: red;
+    color: aliceblue;
+}
+
+button:hover{
+    color: black;
+    background-color: rgb(211, 50, 50);
+    transition: 0.3s;
+}

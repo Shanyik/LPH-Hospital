@@ -2,7 +2,7 @@
 
 public class Patient
 {
-    private uint _id { get; }
+    public uint Id { get; }
     public string Username { get; }
     public string Password { get; }
     public string Email { get; }
@@ -13,7 +13,7 @@ public class Patient
 
     public Patient(uint id, string username, string password, string email, string phoneNumber, string firstName, string lastName)
     {
-        _id = id;
+        Id = id;
         Username = username;
         Password = password;
         Email = email;
