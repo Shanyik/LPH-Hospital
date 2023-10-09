@@ -8,66 +8,67 @@ namespace lph_api.Controllers;
 [Route("[controller]")]
 public class PatientController : ControllerBase
 {
+
     private readonly IPatientRepository _patientRepository;
 
     public PatientController(IPatientRepository patientRepository)
     {
         _patientRepository = patientRepository;
     }
-
+    
     [HttpGet("GetAll")]
     public IActionResult GetAll()
     {
-        //System.Threading.Thread.Sleep(1000);
         try
         {
-            var patients = _patientRepository.GetAll().ToList();
-            if (patients.Count == 0)
+            var patients = _patientRepository.GetAll();
+
+            if (!patients.Any())
             {
-                return NotFound("No patients");
+                return NotFound("No patients in database");
             }
 
             return Ok(patients);
         }
         catch (Exception e)
         {
-            Console.WriteLine(e);
-            return BadRequest("Server error");
+            Console.WriteLine("Error getting patient data");
+            return BadRequest("Error getting patient data");
         }
-        
     }
 
-    [HttpGet("GetPatientByUsername:{username}")]
-    public IActionResult GetPatient(string username)
+    [HttpGet("GetByUsername:{username}")]
+    public IActionResult GetByUsername(string username)
     {
         try
         {
-            var res = _patientRepository.GetPatientByName(username);
-
-            if (res == null)
+            var patient = _patientRepository.GetByUsername(username);
+            
+            if (patient == null)
             {
-                return NotFound($"Patient not found with {username}");
+                return NotFound("No patient with this username in database");
             }
 
-            return Ok(res);
+            return Ok(patient);
         }
         catch (Exception e)
         {
-            Console.WriteLine(e);
-            return BadRequest("Server error");
+            Console.WriteLine("Error getting patient data");
+            return BadRequest("Error getting patient data");
         }
     }
 
-    [HttpPost("AddPatient")]
-    public IActionResult AddPatient(Patient patient) //[FromBody] 
+    [HttpPost("Add")]
+    public IActionResult AddPatient(Patient patient)
     {
         if (patient == null)
         {
-            return BadRequest("Hibás vagy hiányzó adatok a kérésben.");
+            return BadRequest("Missing or not accaptable data.");
         }
+        
         try
         {
-            _patientRepository.AddPatient(patient);
+            _patientRepository.Add(patient);
             return Ok($"patient added with {patient.Username}");
         }
         catch (Exception e)
@@ -77,47 +78,24 @@ public class PatientController : ControllerBase
         }
     }
 
-    [HttpDelete("DeletByUsername:{username}")]
-    public IActionResult DeletPatientByUsername(string username)
+    [HttpDelete("Delete:{username}")]
+    public IActionResult Delete(string username)
     {
         try
         {
-            Console.WriteLine(username);
-            var deletPatient = _patientRepository.GetPatientByName(username);
+            var patient = _patientRepository.GetByUsername(username);
             
-            if (deletPatient == null)
+            if (patient == null)
             {
-                return NotFound($"Patient not found with {username}");
+                return NotFound("No patient with this username in database");
             }
-            _patientRepository.DeletPatient(deletPatient);
-            return Ok("asd");
-
+            _patientRepository.Delete(patient);
+            return Ok($"Successfully deleted '{username}' user from database");
         }
         catch (Exception e)
         {
-            Console.WriteLine(e);
-            throw;
-        }
-    }
-
-
-    [HttpPatch("Update")]
-    public IActionResult UpdatePatient(Patient patient)
-    {
-        try
-        {
-            var res = _patientRepository.GetPatientByName(patient.Username);
-            if (res != null)
-            {
-                return Ok($"");
-            }
-
-            return NotFound("");
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e);
-            throw;
+            Console.WriteLine("Error adding patient data");
+            return BadRequest("Error adding patient data");
         }
     }
     

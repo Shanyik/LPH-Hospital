@@ -5,12 +5,8 @@ namespace lph_api.Repository.PatientRepo;
 public interface IPatientRepository
 {
     IEnumerable<Patient> GetAll();
-
-    Patient? GetPatientByName(string name);
-
-    void AddPatient(Patient patient);
-    
-    void DeletPatient(Patient patient);
-    
-    void UpdatePatient(Patient patient);
+    Patient? GetByUsername(string username);
+    void Add(Patient patient);
+    void Delete(Patient patient);
+    void Update(Patient patient);
 }

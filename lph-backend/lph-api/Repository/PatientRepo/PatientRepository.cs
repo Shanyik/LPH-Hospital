@@ -7,33 +7,33 @@ public class PatientRepository : IPatientRepository
 {
     public IEnumerable<Patient> GetAll()
     {
-        using var dbContext = new HospitalApi();
+        using var dbContext = new HospitalApiContext();
         return dbContext.Patients.ToList();
     }
 
-    public Patient? GetPatientByName(string username)
+    public Patient? GetByUsername(string username)
     {
-        using var dbContext = new HospitalApi();
+        using var dbContext = new HospitalApiContext();
         return dbContext.Patients.FirstOrDefault(c => c.Username == username);
     }
 
-    public void AddPatient(Patient patient)
+    public void Add(Patient patient)
     {
-        using var dbContext = new HospitalApi();
+        using var dbContext = new HospitalApiContext();
         dbContext.Add(patient);
         dbContext.SaveChanges();
     }
 
-    public void DeletPatient(Patient patient)
+    public void Delete(Patient patient)
     {
-        using var dbContext = new HospitalApi();
+        using var dbContext = new HospitalApiContext();
         dbContext.Remove(patient);
         dbContext.SaveChanges();
     }
 
-    public void UpdatePatient(Patient patient)
-    {
-        using var dbContext = new HospitalApi();
+    public void Update(Patient patient)
+    {  
+        using var dbContext = new HospitalApiContext();
         dbContext.Update(patient);
         dbContext.SaveChanges();
     }

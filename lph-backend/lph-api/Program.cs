@@ -11,6 +11,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddSingleton<IPatientRepository, PatientRepository>();
 builder.Services.AddSingleton<IDoctorRepository, DoctorRepository>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

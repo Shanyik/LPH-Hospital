@@ -1,9 +1,11 @@
-﻿/*using lph_api.Repository.DoctorRepo;
+﻿using lph_api.Model;
+using lph_api.Repository.DoctorRepo;
 using Microsoft.AspNetCore.Mvc;
 
 namespace lph_api.Controllers;
 
 [ApiController]
+[Route("[controller]")]
 public class DoctorController : ControllerBase
 {
     private readonly IDoctorRepository _doctorRepository;
@@ -12,42 +14,61 @@ public class DoctorController : ControllerBase
     {
         _doctorRepository = doctorRepository;
     }
-
+    
     [HttpGet("GetAll")]
     public IActionResult GetAll()
     {
-        //System.Threading.Thread.Sleep(1000);
         try
         {
-            var patients = _doctorRepository.GetAll().ToList();
-            if (patients.Count == 0)
+            var doctors = _doctorRepository.GetAll();
+
+            if (!doctors.Any())
             {
-                return NotFound("No patients");
+                return NotFound("No doctors in database");
             }
 
-            return Ok(patients);
+            return Ok(doctors);
         }
         catch (Exception e)
         {
-            Console.WriteLine(e);
-            return BadRequest("Server error");
+            Console.WriteLine("Error getting doctor data");
+            return BadRequest("Error getting doctor data");
+        }
+    }
+
+    [HttpGet("GetByUsername:{username}")]
+    public IActionResult GetByUsername(string username)
+    {
+        try
+        {
+            var doctor = _doctorRepository.GetByUsername(username);
+            
+            if (doctor == null)
+            {
+                return NotFound("No doctor with this username in database");
+            }
+
+            return Ok(doctor);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine("Error getting doctor data");
+            return BadRequest("Error getting doctor data");
+        }
+    }
+
+    [HttpPost("Add")]
+    public IActionResult AddDoctor(Doctor doctor)
+    {
+        if (doctor == null)
+        {
+            return BadRequest("Missing or not acceptable data.");
         }
         
-    }
-
-    [HttpGet("GetPatientByUsername:{username}")]
-    public IActionResult GetPatient(string username)
-    {
         try
         {
-            var res = _doctorRepository.GetPatientByName(username);
-
-            if (res == null)
-            {
-                return NotFound($"Patient not found with {username}");
-            }
-
-            return Ok(res);
+            _doctorRepository.Add(doctor);
+            return Ok($"doctor added with {doctor.Username}");
         }
         catch (Exception e)
         {
@@ -56,66 +77,24 @@ public class DoctorController : ControllerBase
         }
     }
 
-    [HttpPost("AddPatient")]
-    public IActionResult AddPatient(Patient patient) //[FromBody] 
-    {
-        if (patient == null)
-        {
-            return BadRequest("Hibás vagy hiányzó adatok a kérésben.");
-        }
-        try
-        {
-            _doctorRepository.AddPatient(patient);
-            return Ok($"patient added with {patient.Username}");
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e);
-            return BadRequest("Server error");
-        }
-    }
-
-    [HttpDelete("DeletByUsername:{username}")]
-    public IActionResult DeletPatientByUsername(string username)
+    [HttpDelete("Delete:{username}")]
+    public IActionResult Delete(string username)
     {
         try
         {
-            Console.WriteLine(username);
-            var deletPatient = _doctorRepository.GetPatientByName(username);
+            var doctor = _doctorRepository.GetByUsername(username);
             
-            if (deletPatient == null)
+            if (doctor == null)
             {
-                return NotFound($"Patient not found with {username}");
+                return NotFound("No doctor with this username in database");
             }
-            _doctorRepository.DeletPatient(deletPatient);
-            return Ok("asd");
-
+            _doctorRepository.Delete(doctor);
+            return Ok($"Successfully deleted '{username}' user from database");
         }
         catch (Exception e)
         {
-            Console.WriteLine(e);
-            throw;
+            Console.WriteLine("Error adding doctor data");
+            return BadRequest("Error adding doctor data");
         }
     }
-
-
-    [HttpPatch("Update")]
-    public IActionResult UpdatePatient(Patient patient)
-    {
-        try
-        {
-            var res = _doctorRepository.GetPatientByName(patient.Username);
-            if (res != null)
-            {
-                return Ok($"");
-            }
-
-            return NotFound("");
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e);
-            throw;
-        }
-    }
-}*/
+}
