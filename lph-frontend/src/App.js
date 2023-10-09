@@ -8,10 +8,11 @@ import NotFound from './components/NotFound/NotFound';
 
 function App() {
 
+
   return (
     <Router>
       <div className="App">
-        <Navbar/>
+       
         <Routes> 
           <Route exact path="*" element={<NotFound/>}></Route> {/* 404 */}
           <Route path="/" element={<Home />} />  

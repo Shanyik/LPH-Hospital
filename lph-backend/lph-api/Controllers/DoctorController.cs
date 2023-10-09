@@ -1,18 +1,16 @@
-﻿using lph_api.Model;
-using lph_api.Repository.PatientRepo;
+﻿/*using lph_api.Repository.DoctorRepo;
 using Microsoft.AspNetCore.Mvc;
 
 namespace lph_api.Controllers;
 
 [ApiController]
-[Route("[controller]")]
-public class PatientController : ControllerBase
+public class DoctorController : ControllerBase
 {
-    private readonly IPatientRepository _patientRepository;
+    private readonly IDoctorRepository _doctorRepository;
 
-    public PatientController(IPatientRepository patientRepository)
+    public DoctorController(IDoctorRepository doctorRepository)
     {
-        _patientRepository = patientRepository;
+        _doctorRepository = doctorRepository;
     }
 
     [HttpGet("GetAll")]
@@ -21,7 +19,7 @@ public class PatientController : ControllerBase
         //System.Threading.Thread.Sleep(1000);
         try
         {
-            var patients = _patientRepository.GetAll().ToList();
+            var patients = _doctorRepository.GetAll().ToList();
             if (patients.Count == 0)
             {
                 return NotFound("No patients");
@@ -42,7 +40,7 @@ public class PatientController : ControllerBase
     {
         try
         {
-            var res = _patientRepository.GetPatientByName(username);
+            var res = _doctorRepository.GetPatientByName(username);
 
             if (res == null)
             {
@@ -67,7 +65,7 @@ public class PatientController : ControllerBase
         }
         try
         {
-            _patientRepository.AddPatient(patient);
+            _doctorRepository.AddPatient(patient);
             return Ok($"patient added with {patient.Username}");
         }
         catch (Exception e)
@@ -83,13 +81,13 @@ public class PatientController : ControllerBase
         try
         {
             Console.WriteLine(username);
-            var deletPatient = _patientRepository.GetPatientByName(username);
+            var deletPatient = _doctorRepository.GetPatientByName(username);
             
             if (deletPatient == null)
             {
                 return NotFound($"Patient not found with {username}");
             }
-            _patientRepository.DeletPatient(deletPatient);
+            _doctorRepository.DeletPatient(deletPatient);
             return Ok("asd");
 
         }
@@ -106,7 +104,7 @@ public class PatientController : ControllerBase
     {
         try
         {
-            var res = _patientRepository.GetPatientByName(patient.Username);
+            var res = _doctorRepository.GetPatientByName(patient.Username);
             if (res != null)
             {
                 return Ok($"");
@@ -120,5 +118,4 @@ public class PatientController : ControllerBase
             throw;
         }
     }
-    
-}
+}*/

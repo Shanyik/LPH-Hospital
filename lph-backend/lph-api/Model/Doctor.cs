@@ -1,6 +1,6 @@
 ﻿namespace lph_api.Model;
 
-public class Patient
+public class Doctor
 {
     public uint Id { get; set; }
     public string Username { get; set;}
@@ -9,9 +9,6 @@ public class Patient
     public string? PhoneNumber { get; set;}
     public string FirstName { get;set;}
     public string LastName { get; set;}
-    public DateTime CreatedAt  { get; set;}
-
-    
-
-    
+    public string Ward { get; set;}
+    public DateTime CreatedAt { get; set;}
 }
