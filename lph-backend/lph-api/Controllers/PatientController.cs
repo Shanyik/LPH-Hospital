@@ -1,4 +1,5 @@
 ﻿using lph_api.Model;
+using lph_api.Repository.PatientRepo;
 using Microsoft.AspNetCore.Mvc;
 
 namespace lph_api.Controllers;
@@ -7,33 +8,95 @@ namespace lph_api.Controllers;
 [Route("[controller]")]
 public class PatientController : ControllerBase
 {
-    private static IEnumerable<Patient> Patients = new List<Patient>
-    {
-        new Patient(1, "Smithy", "Incorrect", "Smith@gmail.com", "+3610123456", "John", "Smith"),
-        new Patient(2, "Fizzy", "Incorrect", "FizzBuzz@gmail.com", "+3620123456", "Fizz", "Buzz"),
-        new Patient(3, "Dough", "Incorrect", "JohnDoe@gmail.com", "+3630123456", "John", "Doe"),
-    };
 
+    private readonly IPatientRepository _patientRepository;
+
+    public PatientController(IPatientRepository patientRepository)
+    {
+        _patientRepository = patientRepository;
+    }
+    
     [HttpGet("GetAll")]
     public IActionResult GetAll()
     {
-        System.Threading.Thread.Sleep(1000);
-        return Ok(Patients);
+        try
+        {
+            var patients = _patientRepository.GetAll();
+
+            if (!patients.Any())
+            {
+                return NotFound("No patients in database");
+            }
+
+            return Ok(patients);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine("Error getting patient data");
+            return BadRequest("Error getting patient data");
+        }
     }
 
-    [HttpDelete("Delete:{id}")]
-    public IActionResult Delete(int id)
+    [HttpGet("GetByUsername:{username}")]
+    public IActionResult GetByUsername(string username)
     {
-        var patientsCopy = Patients.ToList();
-        var patient = Patients.FirstOrDefault(patient => patient.Id == id);
+        try
+        {
+            var patient = _patientRepository.GetByUsername(username);
+            
+            if (patient == null)
+            {
+                return NotFound("No patient with this username in database");
+            }
 
+            return Ok(patient);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine("Error getting patient data");
+            return BadRequest("Error getting patient data");
+        }
+    }
+
+    [HttpPost("Add")]
+    public IActionResult AddPatient(Patient patient)
+    {
         if (patient == null)
         {
-            return NotFound("Id not found.");
+            return BadRequest("Missing or not accaptable data.");
         }
         
-        patientsCopy.Remove(patient);
-        Patients = patientsCopy;
-        return Ok(id);
+        try
+        {
+            _patientRepository.Add(patient);
+            return Ok($"patient added with {patient.Username}");
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return BadRequest("Server error");
+        }
     }
+
+    [HttpDelete("Delete:{username}")]
+    public IActionResult Delete(string username)
+    {
+        try
+        {
+            var patient = _patientRepository.GetByUsername(username);
+            
+            if (patient == null)
+            {
+                return NotFound("No patient with this username in database");
+            }
+            _patientRepository.Delete(patient);
+            return Ok($"Successfully deleted '{username}' user from database");
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine("Error adding patient data");
+            return BadRequest("Error adding patient data");
+        }
+    }
+    
 }

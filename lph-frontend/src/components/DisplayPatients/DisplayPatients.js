@@ -3,22 +3,24 @@ import "./DisplayPatients.css"
 
 const DisplayPatients = () => {
 
-    const deleteButton = (id) =>{
-        deletePatient(id).then(data => console.log(data))
-        setPatients((patients => {
-            return patients.filter((patient) => patient.id !== id) 
-        }))
+    const deleteButton = (username) =>{
+        deletePatient(username)
+        .then( 
+            setPatients((patients => {
+            return patients.filter((patient) => patient.username !== username) 
+        })))
     }
 
-    const deletePatient = (id) =>{
-        return fetch(`http://localhost:5274/Patient/Delete:${id}`, {method: "DELETE"})
-        .then((res) => res.json())
+    const deletePatient = (username) =>{
+        return fetch(`http://localhost:5274/Patient/Delete:${username}`, {method: "DELETE"})
+        .then((res) => res.text())
+        .then((res) => console.log(res))
     }
 
     const [patients, setPatients] = useState([])
     
     useEffect(() => {
-      fetch('http://localhost:5274/Patient/GetAll')
+      fetch('http://localhost:5274/Patient/GetAll') // env
         .then(response => response.json())
         .then(data => setPatients(data))
         .catch(error => console.log(error))
@@ -43,7 +45,7 @@ const DisplayPatients = () => {
                         <td>{patient.lastName}</td>
                         <td>{patient.email}</td>
                         <td>{patient.phoneNumber}</td>
-                        <td><button onClick={() => deleteButton(patient.id)}>Delete</button></td>
+                        <td><button onClick={() => deleteButton(patient.username)}>Delete</button></td>
                     </tr>
                 ))}
             </tbody>

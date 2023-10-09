@@ -1,3 +1,6 @@
+using lph_api.Repository.DoctorRepo;
+using lph_api.Repository.PatientRepo;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -6,6 +9,8 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddSingleton<IPatientRepository, PatientRepository>();
+builder.Services.AddSingleton<IDoctorRepository, DoctorRepository>();
 
 var app = builder.Build();
 

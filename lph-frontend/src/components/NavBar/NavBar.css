@@ -15,20 +15,20 @@
 
 .navbar{
     
-        width: 30%;
-        min-Width: 30%;
+        width: 80%;
+        min-Width: 80%;
         height: auto;
         background-color: rgba(0, 0, 0, 0.1);
         position: relative;
         z-index: 100;
-        left: 35%;
+        left: 10%;
         margin-top: 1rem;
         border-radius: 20px;
 
 
 }
 
-@media screen and (max-width: 601px) {
+@media screen and (max-width: 801px) {
     .menuButton {
         font-size: 3vw;
         margin: 1rem;
