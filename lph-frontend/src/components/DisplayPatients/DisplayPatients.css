@@ -40,7 +40,7 @@ button{
 
 button:hover{
     color: black;
-    background-color: rgb(211, 50, 50);
+    background-color: rgb(50, 211, 98);
     transition: 0.3s;
 }
 html, body, #root {

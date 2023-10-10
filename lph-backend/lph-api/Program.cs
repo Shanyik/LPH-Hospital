@@ -1,5 +1,10 @@
+using lph_api.Model;
 using lph_api.Repository.DoctorRepo;
+using lph_api.Repository.EventRepo;
+using lph_api.Repository.ExamRepo;
 using lph_api.Repository.PatientRepo;
+using lph_api.Repository.PrescriptionRepo;
+using lph_api.Repository.ProductRepo;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +16,10 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddSingleton<IPatientRepository, PatientRepository>();
 builder.Services.AddSingleton<IDoctorRepository, DoctorRepository>();
+builder.Services.AddSingleton<IProductRepository, ProductRepository>();
+builder.Services.AddSingleton<IPrescriptionRepository, PrescriptionRepository>();
+builder.Services.AddSingleton<IExamRepository, ExamRepository>();
+builder.Services.AddSingleton<IEventRepository, EventRepository>();
 
 var app = builder.Build();
 
