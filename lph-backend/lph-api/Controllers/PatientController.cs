@@ -1,4 +1,5 @@
-﻿using lph_api.Model;
+﻿using System.Text.Json.Nodes;
+using lph_api.Model;
 using lph_api.Repository.PatientRepo;
 using Microsoft.AspNetCore.Mvc;
 
@@ -25,7 +26,11 @@ public class PatientController : ControllerBase
 
             if (!patients.Any())
             {
-                return NotFound("No patients in database");
+                var response = new
+                {
+                    Message = "Patient not found",
+                };
+                return NotFound(response);
             }
 
             return Ok(patients);
@@ -33,7 +38,11 @@ public class PatientController : ControllerBase
         catch (Exception e)
         {
             Console.WriteLine("Error getting patient data");
-            return BadRequest("Error getting patient data");
+            var response = new
+            {
+                Message = "Patient not found",
+            };
+            return BadRequest(response);
         }
     }
 
@@ -46,7 +55,11 @@ public class PatientController : ControllerBase
             
             if (patient == null)
             {
-                return NotFound("No patient with this username in database");
+                var res = new
+                {
+                    Message = "Patient not found",
+                };
+                return NotFound(res);
             }
 
             return Ok(patient);

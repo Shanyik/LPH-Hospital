@@ -72,7 +72,7 @@ namespace lph_api.Migrations
                         new
                         {
                             Id = 1L,
-                            CreatedAt = new DateTime(2023, 10, 9, 10, 54, 51, 612, DateTimeKind.Local).AddTicks(2315),
+                            CreatedAt = new DateTime(2023, 10, 9, 14, 38, 50, 231, DateTimeKind.Local).AddTicks(9490),
                             Email = "Smith@gmail.com",
                             FirstName = "John",
                             LastName = "Smith",
@@ -84,7 +84,7 @@ namespace lph_api.Migrations
                         new
                         {
                             Id = 2L,
-                            CreatedAt = new DateTime(2023, 10, 9, 10, 54, 51, 612, DateTimeKind.Local).AddTicks(2326),
+                            CreatedAt = new DateTime(2023, 10, 9, 14, 38, 50, 231, DateTimeKind.Local).AddTicks(9502),
                             Email = "Doughy@gmail.com",
                             FirstName = "John",
                             LastName = "Doe",
@@ -96,7 +96,7 @@ namespace lph_api.Migrations
                         new
                         {
                             Id = 3L,
-                            CreatedAt = new DateTime(2023, 10, 9, 10, 54, 51, 612, DateTimeKind.Local).AddTicks(2329),
+                            CreatedAt = new DateTime(2023, 10, 9, 14, 38, 50, 231, DateTimeKind.Local).AddTicks(9505),
                             Email = "Fizy@gmail.com",
                             FirstName = "Fizz",
                             LastName = "Buzz",
@@ -153,7 +153,7 @@ namespace lph_api.Migrations
                         new
                         {
                             Id = 1L,
-                            CreatedAt = new DateTime(2023, 10, 9, 10, 54, 51, 612, DateTimeKind.Local).AddTicks(1715),
+                            CreatedAt = new DateTime(2023, 10, 9, 14, 38, 50, 231, DateTimeKind.Local).AddTicks(8860),
                             Email = "Smith@gmail.com",
                             FirstName = "John",
                             LastName = "Smith",
@@ -164,7 +164,7 @@ namespace lph_api.Migrations
                         new
                         {
                             Id = 2L,
-                            CreatedAt = new DateTime(2023, 10, 9, 10, 54, 51, 612, DateTimeKind.Local).AddTicks(1766),
+                            CreatedAt = new DateTime(2023, 10, 9, 14, 38, 50, 231, DateTimeKind.Local).AddTicks(8908),
                             Email = "Doughy@gmail.com",
                             FirstName = "John",
                             LastName = "Doe",
@@ -175,7 +175,7 @@ namespace lph_api.Migrations
                         new
                         {
                             Id = 3L,
-                            CreatedAt = new DateTime(2023, 10, 9, 10, 54, 51, 612, DateTimeKind.Local).AddTicks(1768),
+                            CreatedAt = new DateTime(2023, 10, 9, 14, 38, 50, 231, DateTimeKind.Local).AddTicks(8911),
                             Email = "Fizy@gmail.com",
                             FirstName = "Fizz",
                             LastName = "Buzz",

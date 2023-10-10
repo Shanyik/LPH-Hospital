@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using lph_api.Context;
 
@@ -10,10 +11,12 @@ using lph_api.Context;
 
 namespace lph_api.Migrations
 {
-    [DbContext(typeof(HospitalApi))]
-    partial class HospitalApiModelSnapshot : ModelSnapshot
+    [DbContext(typeof(HospitalApiContext))]
+    [Migration("20231009123850_newShema")]
+    partial class newShema
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -34,6 +37,7 @@ namespace lph_api.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FirstName")
@@ -49,6 +53,7 @@ namespace lph_api.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PhoneNumber")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Username")
@@ -70,13 +75,38 @@ namespace lph_api.Migrations
                         new
                         {
                             Id = 1L,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Email = "asd@asd.hu",
+                            CreatedAt = new DateTime(2023, 10, 9, 14, 38, 50, 231, DateTimeKind.Local).AddTicks(9490),
+                            Email = "Smith@gmail.com",
+                            FirstName = "John",
+                            LastName = "Smith",
+                            Password = "Incorrect",
+                            PhoneNumber = "+3610123456",
+                            Username = "Smithy",
+                            Ward = "a"
+                        },
+                        new
+                        {
+                            Id = 2L,
+                            CreatedAt = new DateTime(2023, 10, 9, 14, 38, 50, 231, DateTimeKind.Local).AddTicks(9502),
+                            Email = "Doughy@gmail.com",
                             FirstName = "John",
                             LastName = "Doe",
-                            Password = "asdf",
-                            Username = "Test",
-                            Ward = "a"
+                            Password = "Incorrect",
+                            PhoneNumber = "+3620123456",
+                            Username = "Doughy",
+                            Ward = "b"
+                        },
+                        new
+                        {
+                            Id = 3L,
+                            CreatedAt = new DateTime(2023, 10, 9, 14, 38, 50, 231, DateTimeKind.Local).AddTicks(9505),
+                            Email = "Fizy@gmail.com",
+                            FirstName = "Fizz",
+                            LastName = "Buzz",
+                            Password = "Incorrect",
+                            PhoneNumber = "+3630123456",
+                            Username = "Fizzy",
+                            Ward = "c"
                         });
                 });
 
@@ -92,6 +122,7 @@ namespace lph_api.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FirstName")
@@ -107,6 +138,7 @@ namespace lph_api.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PhoneNumber")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Username")
@@ -124,12 +156,35 @@ namespace lph_api.Migrations
                         new
                         {
                             Id = 1L,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Email = "asd@asd.hu",
+                            CreatedAt = new DateTime(2023, 10, 9, 14, 38, 50, 231, DateTimeKind.Local).AddTicks(8860),
+                            Email = "Smith@gmail.com",
+                            FirstName = "John",
+                            LastName = "Smith",
+                            Password = "Incorrect",
+                            PhoneNumber = "+3610123456",
+                            Username = "Smithy"
+                        },
+                        new
+                        {
+                            Id = 2L,
+                            CreatedAt = new DateTime(2023, 10, 9, 14, 38, 50, 231, DateTimeKind.Local).AddTicks(8908),
+                            Email = "Doughy@gmail.com",
                             FirstName = "John",
                             LastName = "Doe",
-                            Password = "asdf",
-                            Username = "Test"
+                            Password = "Incorrect",
+                            PhoneNumber = "+3620123456",
+                            Username = "Doughy"
+                        },
+                        new
+                        {
+                            Id = 3L,
+                            CreatedAt = new DateTime(2023, 10, 9, 14, 38, 50, 231, DateTimeKind.Local).AddTicks(8911),
+                            Email = "Fizy@gmail.com",
+                            FirstName = "Fizz",
+                            LastName = "Buzz",
+                            Password = "Incorrect",
+                            PhoneNumber = "+3630123456",
+                            Username = "Fizzy"
                         });
                 });
 #pragma warning restore 612, 618

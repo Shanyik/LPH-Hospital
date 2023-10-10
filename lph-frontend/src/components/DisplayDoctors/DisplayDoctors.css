@@ -1,4 +1,4 @@
-table {
+/*table {
     width: 75%;
     position: relative;
     top: 20px;
@@ -34,7 +34,7 @@ table button {
 
 button{
     text-decoration: none;
-    background-color: red;
+    background-color: rgb(55, 0, 255);
     color: aliceblue;
 }
 
@@ -42,4 +42,4 @@ button:hover{
     color: black;
     background-color: rgb(211, 50, 50);
     transition: 0.3s;
-}
+}*/

@@ -10,23 +10,37 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="47c9989a-d882-43bd-b497-14df2e7ea711" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/lph-api/Context/HospitalApi.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lph-api/Model/Doctor.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lph-api/Repository/DoctorRepo/DoctorRepository.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lph-api/Repository/DoctorRepo/IDoctorRepository.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lph-api/Repository/PatientRepo/IPatientRepository.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lph-api/Repository/PatientRepo/PatientRepository.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lph-api/Controllers/PatientController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/lph-api/Controllers/PatientController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lph-api/Model/Patient.cs" beforeDir="false" afterPath="$PROJECT_DIR$/lph-api/Model/Patient.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lph-api/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/lph-api/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lph-api/lph-api.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/lph-api/lph-api.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lph-frontend/public/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/../lph-frontend/public/manifest.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lph-frontend/src/components/DisplayPatients/DisplayPatients.js" beforeDir="false" afterPath="$PROJECT_DIR$/../lph-frontend/src/components/DisplayPatients/DisplayPatients.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.lph-backend.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.lph-backend.dir/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lph-api/Context/HospitalApi.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lph-api/Context/HospitalApiContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/lph-api/Context/HospitalApiContext.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lph-api/Migrations/20231009084951_InitDatabase.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lph-api/Migrations/20231009084951_InitDatabase.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lph-api/Migrations/20231009085036_CreateHospital.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lph-api/Migrations/20231009085036_CreateHospital.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lph-api/Migrations/20231009085610_updateSchema.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lph-api/Migrations/20231009085610_updateSchema.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lph-api/Migrations/HospitalApiContextModelSnapshot.cs" beforeDir="false" afterPath="$PROJECT_DIR$/lph-api/Migrations/HospitalApiContextModelSnapshot.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lph-api/Migrations/HospitalApiModelSnapshot.cs" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/lph-api/Controllers/DoctorController.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/lph-api/Controllers/PatientController.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/lph-api/Model/Doctor.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/lph-api/Model/Patient.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/lph-api/Program.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/lph-api/Repository/DoctorRepo/DoctorRepository.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/lph-api/Repository/DoctorRepo/IDoctorRepository.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/lph-api/Repository/PatientRepo/IPatientRepository.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/lph-api/Repository/PatientRepo/PatientRepository.cs" root0="FORCE_HIGHLIGHTING" />
+  </component>
+  <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="Toolset" />
   </component>
   <component name="ProjectId" id="2W11aViw00iocv8Hg8BHJAgF2n4" />
   <component name="ProjectViewState">
@@ -109,13 +123,14 @@
       <option name="presentableId" value="Default" />
       <updated>1695885338376</updated>
       <workItem from="1695885339752" duration="2888000" />
-      <workItem from="1696839418158" duration="8886000" />
+      <workItem from="1696839418158" duration="13229000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+  <component name="UnityCheckinConfiguration" checkUnsavedScenes="true" />
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
   </component>

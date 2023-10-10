@@ -11,9 +11,9 @@ using lph_api.Context;
 
 namespace lph_api.Migrations
 {
-    [DbContext(typeof(HospitalApi))]
-    [Migration("20231009085610_updateSchema")]
-    partial class updateSchema
+    [DbContext(typeof(HospitalApiContext))]
+    [Migration("20231009123704_test")]
+    partial class test
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -37,6 +37,7 @@ namespace lph_api.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FirstName")
@@ -52,6 +53,7 @@ namespace lph_api.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PhoneNumber")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Username")
@@ -73,13 +75,38 @@ namespace lph_api.Migrations
                         new
                         {
                             Id = 1L,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Email = "asd@asd.hu",
+                            CreatedAt = new DateTime(2023, 10, 9, 14, 37, 4, 879, DateTimeKind.Local).AddTicks(2243),
+                            Email = "Smith@gmail.com",
+                            FirstName = "John",
+                            LastName = "Smith",
+                            Password = "Incorrect",
+                            PhoneNumber = "+3610123456",
+                            Username = "Smithy",
+                            Ward = "a"
+                        },
+                        new
+                        {
+                            Id = 2L,
+                            CreatedAt = new DateTime(2023, 10, 9, 14, 37, 4, 879, DateTimeKind.Local).AddTicks(2255),
+                            Email = "Doughy@gmail.com",
                             FirstName = "John",
                             LastName = "Doe",
-                            Password = "asdf",
-                            Username = "Test",
-                            Ward = "a"
+                            Password = "Incorrect",
+                            PhoneNumber = "+3620123456",
+                            Username = "Doughy",
+                            Ward = "b"
+                        },
+                        new
+                        {
+                            Id = 3L,
+                            CreatedAt = new DateTime(2023, 10, 9, 14, 37, 4, 879, DateTimeKind.Local).AddTicks(2258),
+                            Email = "Fizy@gmail.com",
+                            FirstName = "Fizz",
+                            LastName = "Buzz",
+                            Password = "Incorrect",
+                            PhoneNumber = "+3630123456",
+                            Username = "Fizzy",
+                            Ward = "c"
                         });
                 });
 
@@ -95,6 +122,7 @@ namespace lph_api.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FirstName")
@@ -110,6 +138,7 @@ namespace lph_api.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PhoneNumber")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Username")
@@ -127,12 +156,35 @@ namespace lph_api.Migrations
                         new
                         {
                             Id = 1L,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Email = "asd@asd.hu",
+                            CreatedAt = new DateTime(2023, 10, 9, 14, 37, 4, 879, DateTimeKind.Local).AddTicks(1645),
+                            Email = "Smith@gmail.com",
+                            FirstName = "John",
+                            LastName = "Smith",
+                            Password = "Incorrect",
+                            PhoneNumber = "+3610123456",
+                            Username = "Smithy"
+                        },
+                        new
+                        {
+                            Id = 2L,
+                            CreatedAt = new DateTime(2023, 10, 9, 14, 37, 4, 879, DateTimeKind.Local).AddTicks(1686),
+                            Email = "Doughy@gmail.com",
                             FirstName = "John",
                             LastName = "Doe",
-                            Password = "asdf",
-                            Username = "Test"
+                            Password = "Incorrect",
+                            PhoneNumber = "+3620123456",
+                            Username = "Doughy"
+                        },
+                        new
+                        {
+                            Id = 3L,
+                            CreatedAt = new DateTime(2023, 10, 9, 14, 37, 4, 879, DateTimeKind.Local).AddTicks(1690),
+                            Email = "Fizy@gmail.com",
+                            FirstName = "Fizz",
+                            LastName = "Buzz",
+                            Password = "Incorrect",
+                            PhoneNumber = "+3630123456",
+                            Username = "Fizzy"
                         });
                 });
 #pragma warning restore 612, 618

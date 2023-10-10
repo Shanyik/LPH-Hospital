@@ -34,7 +34,7 @@ table button {
 
 button{
     text-decoration: none;
-    background-color: red;
+    background-color: rgb(225, 91, 8);
     color: aliceblue;
 }
 
@@ -43,3 +43,22 @@ button:hover{
     background-color: rgb(211, 50, 50);
     transition: 0.3s;
 }
+html, body, #root {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+#patientMain {
+    height: 100%;
+    width: 100%;
+    /* További stílusok ... */
+}
+
+table {
+    width: 100%;
+    /* További stílusok ... */
+}
+
+

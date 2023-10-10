@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import "./Home.css"
+import { Link } from 'react-router-dom'
 
 const Home = (props) => {
 
@@ -8,11 +9,13 @@ const Home = (props) => {
   return (
     <section>
       <div className='title'>Welcome to Los Pollos Hermlanos Hospital!</div>
-      <button onClick={() => {props.setUser("doctor")}}>Doctor</button>
-      <button onClick={() => {props.setUser("patient")}}>Patient</button>
-      <button onClick={() => {props.setUser(null)}}>logout</button>
+      <Link to="/main">
+        <button onClick={() => { props.setUser("doctor") }}>Doctor</button>
+      </Link>
+      <button onClick={() => { props.setUser("patient") }}>Patient</button>
+      
     </section>
-    
+
   )
 }
 

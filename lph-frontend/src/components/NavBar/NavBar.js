@@ -22,33 +22,29 @@ const Navbar = (props) => {
 
         </Box>
     </section>
-    ] : props.user === "doctor"  ? [
+    ] : props.user === "doctor" ?[
       <section>
        <Box className="navbar">
           <Grid container alignItems="center">
-            <Grid item xs={4} >
-                <Link className='menuButton' to="/">Home </Link>
+            <Grid item xs={3} >
+                <Link className='menuButton' to="/patients">Patients </Link>
             </Grid>
-            <Grid item xs={4} >
-                <Link className='menuButton' to="/patients"> Patients</Link>
+            <Grid item xs={3} >
+                <Link className='menuButton' to="/examination"> Examination</Link>
             </Grid>
-            <Grid item xs={4} >
-                <Link className='menuButton' to="/doctors"> Doctors</Link>
+            <Grid item xs={3} >
+          
+            </Grid>
+            <Grid item xs={3} >
+                <Link className='menuButton' to="/"><button onClick={()=>{props.setUser("null")}}>LogOut</button></Link>
             </Grid>
           </Grid>
-
         </Box>
     </section>
     ] : [
       <section>
-       <Box className="navbar">
-          <Grid container alignItems="center">
-            <Grid item xs={12} >
-                <Link className='menuButton' to="/">Home </Link>
-            </Grid>
-          </Grid>
-       </Box>
-    </section>
+
+      </section>
     ]
   );
 }
