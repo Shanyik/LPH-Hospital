@@ -11,7 +11,7 @@ const DisplayPatients = () => {
         })))
     }
 
-    const deletePatient = (username) =>{
+     const deletePatient = (username) =>{
         return fetch(`http://localhost:5274/Patient/Delete:${username}`, {method: "DELETE"})
         .then((res) => res.text())
         .then((res) => console.log(res))
