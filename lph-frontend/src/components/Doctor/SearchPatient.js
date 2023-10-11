@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 
-const SearchField = ({ searchButton, setSearchValue, searchFetchValue }) => {
+const SearchField = ({ searchButton, setSearchValue}) => {
 
     const [seacrchVal, setSearchVal] = useState("")
     const [errorState, setErrorState] = useState("")

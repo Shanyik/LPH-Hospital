@@ -23,7 +23,7 @@ public class PrescriptionController : ControllerBase
             
             if (!prescriptions.Any())
             {
-                return NotFound("No prescription with this id in database");
+                return NotFound();
             }
 
             return Ok(prescriptions);

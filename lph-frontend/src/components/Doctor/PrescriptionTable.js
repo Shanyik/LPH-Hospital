@@ -1,4 +1,4 @@
-const PresceptionTable = () => {
+const PresceptionTable = ({ presciptions }) => {
     return (
         <div id="prescriptionTableContainer">
 
@@ -10,10 +10,17 @@ const PresceptionTable = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>Name</td>
-                        <td>Date</td>
-                    </tr>
+                    {
+                        presciptions.length >= 1 ? [presciptions.map((presciption)=>(
+                            <tr>
+                                <td>{presciption.name}</td>
+                                <td>{presciption.createdAt}</td>
+                            </tr>
+                            ))] : [
+                                <td colSpan="2">Prescreption not found </td>
+                            ]
+                    }
+                    
                 </tbody>
             </table>
         </div>

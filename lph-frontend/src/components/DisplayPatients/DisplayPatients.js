@@ -11,13 +11,27 @@ const deletePatient = (username) => {
         .then((res) => console.log(res))
 }
 
+const getExamDataByPatientID = (id) => {
+    const apiURL = process.env.REACT_APP_API_URL;
+    console.log(process.env.REACT_APP_API_URL)
+    return fetch(`http://localhost:5274/Exam/GetByPatientId:${id}`).then((res => res.json()))
+}
+
+const getPresceptionDataByPatientID = (id) => {
+    const apiURL = process.env.REACT_APP_API_URL;
+    console.log(process.env.REACT_APP_API_URL)
+    return fetch(`http://localhost:5274/Prescription/GetByPatientId:${id}`).then((res => res.json()))
+}
+
 
 
 const DisplayPatients = () => {
 
     const [patients, setPatients] = useState([])
     const [searchValue, setSearchValue] = useState("")
-    const [searchFetchValue, setSearchFetchValue] = useState([]);
+    const [searchFetchValue, setSearchFetchValue] = useState(200);
+    const [examinations, setExaminations] = useState([]);
+    const [presciptions, setPresciptions] = useState([]);
 
 
     useEffect(() => {
@@ -45,12 +59,22 @@ const DisplayPatients = () => {
         const trimmedSearchValue = searchValue.trim();
         if (trimmedSearchValue !== "") {
             findPatient(searchValue).then(data => {
-                if (!Object.keys(data).includes("message")) {
+                console.log(data)
+                if(data.status === 404){
+                    console.log("asdff")
+                    setSearchFetchValue(404)
+                }else{
+                    console.log("234")
+                    setPatients([data])
+                    setSearchFetchValue(200)
+                }
+               
+                /*if (!Object.keys(data).includes("message")) {
                     setPatients([data])
                     setSearchFetchValue([])
                 } else {
                     setSearchFetchValue([data])
-                }
+                }*/
             })
         }
     }
@@ -63,13 +87,27 @@ const DisplayPatients = () => {
             }
             )
             .catch(error => console.log(error))
-        setSearchFetchValue([])
+        setSearchFetchValue(200)
+    }
+
+    const rowController = (id) => {
+        console.log(id)
+        getExamDataByPatientID(id).then(data=> {
+            console.log(data)
+            setExaminations(data);
+        }).then(
+            getPresceptionDataByPatientID(id).then(data => {
+                console.log(data)
+                setPresciptions(data)
+            })
+        )
+
     }
 
 
     return (
         <div>
-            <SearchField searchButton={searchButton} setSearchValue={setSearchValue} searchFetchValue={searchFetchValue} />
+            <SearchField searchButton={searchButton} setSearchValue={setSearchValue}  />
             <Box id="patientMain">
                 <Grid container alignItems="center">
                     <Grid item xs={8} >
@@ -88,11 +126,11 @@ const DisplayPatients = () => {
                                     </thead>
                                     <tbody>
                                         {
-                                            searchFetchValue.length > 0 ? [
+                                            searchFetchValue === 404 ? [
                                                 <td colSpan="5">Patient not found <div onClick={() => { refresPatient() }}>refress the list</div></td>
                                             ] : [
                                                 Object.values(patients).map((patient) => (
-                                                    <tr key={patient.id} >
+                                                    <tr key={patient.id} onClick={()=>{rowController(patient.id)}}>
                                                         <td>{patient.firstName}</td>
                                                         <td>{patient.lastName}</td>
                                                         <td>{patient.email}</td>
@@ -112,8 +150,8 @@ const DisplayPatients = () => {
 
                     </Grid>
                     <Grid item xs={4} >
-                        <ExaminationTable />
-                        <PresceptionTable />
+                        <ExaminationTable examinations={examinations}/>
+                        <PresceptionTable presciptions={presciptions}/>
                     </Grid>
                 </Grid>
 

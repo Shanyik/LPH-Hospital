@@ -19,11 +19,11 @@ public class ExamController : ControllerBase
     {
         try
         {
-            var exams = _examRepository.GetByPatientId(id);
+            var exams = _examRepository.GetByPatientId(id).ToList();
 
             if (!exams.Any())
             {
-                return NotFound("No exam with this id in database");
+                return NotFound();
             }
 
             return Ok(exams);

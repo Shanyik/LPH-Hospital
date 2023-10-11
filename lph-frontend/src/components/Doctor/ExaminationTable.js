@@ -1,4 +1,4 @@
-const ExaminationTable = () => {
+const ExaminationTable = ({examinations}) => {
     return (
         <div id="examTableContainer">
             <table id="examTable">
@@ -9,10 +9,15 @@ const ExaminationTable = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>Exam lesz itt</td>
-                        <td>Exam date</td>
-                    </tr>
+                    {examinations.length == 0 ? 
+                    [<td colSpan="2">Examination not found </td>] 
+                    : 
+                    [examinations.map((exam)=>(
+                        <tr>
+                        <td>{exam.type}</td>
+                        <td>{exam.createdAt}</td>
+                    </tr>))]
+                    }
                 </tbody>
             </table>
         </div>

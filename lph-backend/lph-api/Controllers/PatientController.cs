@@ -30,7 +30,7 @@ public class PatientController : ControllerBase
                 {
                     Message = "Patient not found",
                 };
-                return NotFound(response);
+                return NotFound();
             }
 
             return Ok(patients);
@@ -42,7 +42,7 @@ public class PatientController : ControllerBase
             {
                 Message = "Patient not found",
             };
-            return BadRequest(response);
+            return BadRequest();
         }
     }
 
@@ -59,10 +59,10 @@ public class PatientController : ControllerBase
                 {
                     Message = "Patient not found",
                 };
-                return NotFound(res);
+                return NotFound();
             }
 
-            return Ok(patient);
+            return Ok();
         }
         catch (Exception e)
         {
