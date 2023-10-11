@@ -23,15 +23,14 @@ public class EventController : ControllerBase
 
             if (!events.Any())
             {
-                return NotFound("No events in database");
+                return NotFound();
             }
 
             return Ok(events);
         }
         catch (Exception e)
         {
-            Console.WriteLine("Error getting event data");
-            return BadRequest("Error getting event data");
+            return BadRequest();
         }
     }
 
@@ -40,18 +39,18 @@ public class EventController : ControllerBase
     {
         if (eventName == null)
         {
-            return BadRequest("Missing or not acceptable data.");
+            return BadRequest();
         }
         
         try
         {
             _eventRepository.Add(eventName);
-            return Ok($"doctor added with {eventName.Name}");
+            return Ok();
         }
         catch (Exception e)
         {
             Console.WriteLine(e);
-            return BadRequest("Server error");
+            return BadRequest();
         }
     }
 
@@ -64,15 +63,14 @@ public class EventController : ControllerBase
             
             if (eventName == null)
             {
-                return NotFound("No event with this id in database");
+                return NotFound();
             }
             _eventRepository.Delete(eventName);
-            return Ok($"Successfully deleted event from database");
+            return Ok();
         }
         catch (Exception e)
         {
-            Console.WriteLine("Error adding event data");
-            return BadRequest("Error adding event data");
+            return BadRequest();
         }
     }
 }
