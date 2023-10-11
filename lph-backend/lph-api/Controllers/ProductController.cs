@@ -23,15 +23,14 @@ public class ProductController : ControllerBase
 
             if (!products.Any())
             {
-                return NotFound("No products in database");
+                return NotFound();
             }
 
             return Ok(products);
         }
         catch (Exception e)
         {
-            Console.WriteLine("Error getting product data");
-            return BadRequest("Error getting product data");
+            return BadRequest();
         }
     }
 
@@ -44,15 +43,14 @@ public class ProductController : ControllerBase
             
             if (product == null)
             {
-                return NotFound("No patient with this username in database");
+                return NotFound();
             }
 
             return Ok(product);
         }
         catch (Exception e)
         {
-            Console.WriteLine("Error getting patient data");
-            return BadRequest("Error getting patient data");
+            return BadRequest();
         }
     }
 }

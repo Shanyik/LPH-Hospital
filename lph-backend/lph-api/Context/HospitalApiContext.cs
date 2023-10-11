@@ -19,7 +19,6 @@ public class HospitalApiContext : DbContext
     
     protected override void OnModelCreating(ModelBuilder builder)
     {
-        //Configure the City entity - making the 'Name' unique
         builder.Entity<Patient>()
             .HasIndex(p => new {p.Username, p.MedicalNumber})
             .IsUnique();

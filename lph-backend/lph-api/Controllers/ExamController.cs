@@ -23,15 +23,14 @@ public class ExamController : ControllerBase
 
             if (!exams.Any())
             {
-                return NotFound("No exam with this id in database");
+                return NotFound();
             }
 
             return Ok(exams);
         }
         catch (Exception e)
         {
-            Console.WriteLine("Error getting exams data");
-            return BadRequest("Error getting exams data");
+            return BadRequest();
         }
     }
     
@@ -44,15 +43,14 @@ public class ExamController : ControllerBase
             
             if (!exams.Any())
             {
-                return NotFound("No exam with this id in database");
+                return NotFound();
             }
 
             return Ok(exams);
         }
         catch (Exception e)
         {
-            Console.WriteLine("Error getting exams data");
-            return BadRequest("Error getting exams data");
+            return BadRequest();
         }
     }
     

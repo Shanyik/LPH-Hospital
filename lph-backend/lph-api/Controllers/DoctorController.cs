@@ -24,15 +24,14 @@ public class DoctorController : ControllerBase
 
             if (!doctors.Any())
             {
-                return NotFound("No doctors in database");
+                return NotFound();
             }
 
             return Ok(doctors);
         }
         catch (Exception e)
         {
-            Console.WriteLine("Error getting doctor data");
-            return BadRequest("Error getting doctor data");
+            return BadRequest();
         }
     }
 
@@ -45,15 +44,14 @@ public class DoctorController : ControllerBase
             
             if (doctor == null)
             {
-                return NotFound("No doctor with this username in database");
+                return NotFound();
             }
 
             return Ok(doctor);
         }
         catch (Exception e)
         {
-            Console.WriteLine("Error getting doctor data");
-            return BadRequest("Error getting doctor data");
+            return BadRequest();
         }
     }
 
@@ -62,18 +60,17 @@ public class DoctorController : ControllerBase
     {
         if (doctor == null)
         {
-            return BadRequest("Missing or not acceptable data.");
+            return BadRequest();
         }
         
         try
         {
             _doctorRepository.Add(doctor);
-            return Ok($"doctor added with {doctor.Username}");
+            return Ok();
         }
         catch (Exception e)
         {
-            Console.WriteLine(e);
-            return BadRequest("Server error");
+            return BadRequest();
         }
     }
 
@@ -86,15 +83,14 @@ public class DoctorController : ControllerBase
             
             if (doctor == null)
             {
-                return NotFound("No doctor with this username in database");
+                return NotFound();
             }
             _doctorRepository.Delete(doctor);
-            return Ok($"Successfully deleted '{username}' user from database");
+            return Ok();
         }
         catch (Exception e)
         {
-            Console.WriteLine("Error adding doctor data");
-            return BadRequest("Error adding doctor data");
+            return BadRequest();
         }
     }
 }

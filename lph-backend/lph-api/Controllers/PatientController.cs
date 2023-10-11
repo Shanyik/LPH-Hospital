@@ -26,23 +26,14 @@ public class PatientController : ControllerBase
 
             if (!patients.Any())
             {
-                var response = new
-                {
-                    Message = "Patient not found",
-                };
-                return NotFound(response);
+                return NotFound();
             }
 
             return Ok(patients);
         }
         catch (Exception e)
         {
-            Console.WriteLine("Error getting patient data");
-            var response = new
-            {
-                Message = "Patient not found",
-            };
-            return BadRequest(response);
+            return BadRequest();
         }
     }
 
@@ -55,19 +46,14 @@ public class PatientController : ControllerBase
             
             if (patient == null)
             {
-                var res = new
-                {
-                    Message = "Patient not found",
-                };
-                return NotFound(res);
+                return NotFound();
             }
 
             return Ok(patient);
         }
         catch (Exception e)
         {
-            Console.WriteLine("Error getting patient data");
-            return BadRequest("Error getting patient data");
+            return BadRequest();
         }
     }
 
@@ -76,18 +62,18 @@ public class PatientController : ControllerBase
     {
         if (patient == null)
         {
-            return BadRequest("Missing or not accaptable data.");
+            return BadRequest();
         }
         
         try
         {
             _patientRepository.Add(patient);
-            return Ok($"patient added with {patient.Username}");
+            return Ok();
         }
         catch (Exception e)
         {
             Console.WriteLine(e);
-            return BadRequest("Server error");
+            return BadRequest();
         }
     }
 
@@ -100,15 +86,14 @@ public class PatientController : ControllerBase
             
             if (patient == null)
             {
-                return NotFound("No patient with this username in database");
+                return NotFound();
             }
             _patientRepository.Delete(patient);
-            return Ok($"Successfully deleted '{username}' user from database");
+            return Ok();
         }
         catch (Exception e)
         {
-            Console.WriteLine("Error adding patient data");
-            return BadRequest("Error adding patient data");
+            return BadRequest();
         }
     }
     
