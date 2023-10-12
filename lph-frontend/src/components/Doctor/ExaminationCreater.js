@@ -1,14 +1,36 @@
+
 import { useEffect, useState } from "react";
 
+const getDoctorById = (userId) => {
+    return fetch(`/Doctor/GetById:${userId}`).then(res => res.json())
+}
 
-const ExaminationCreater = () => {
+const getPatientByMedicalNumber = (medicalNumber) => {
+    return fetch(`/Patient/GetByMedicalNumber:${medicalNumber}`).then(res => res.json())
+}
 
+const addExam = (data) => {
+    return fetch(`/Exam/Add`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+    }).then((res) => res.json());
+}
+
+
+
+const ExaminationCreater = ({ userId }) => {
+
+    const [doctor, setDoctor] = useState(null)
     const [type, setType] = useState(null)
     const [doctorFirstName, setDoctorFirstName] = useState("")
     const [doctorLastName, setDoctorLastName] = useState("")
     const [wards, setWards] = useState(["a", "b", "c", "d"])
     const [currentWard, setCurrentWard] = useState(null)
 
+    const [patient, setPatient] = useState(null)
     const [patientFirstName, setPatientFirstName] = useState("")
     const [patientLastName, setPatientLastName] = useState("")
     const [medicalNumber, setMedicalNumber] = useState("")
@@ -16,40 +38,82 @@ const ExaminationCreater = () => {
 
     const [description, setDescription] = useState("")
 
-    const handleSubmit = () => {
+    const [formError, setFormError] = useState(false)
 
-    }
-    useEffect(()=>{
-        console.log(medicalNumbererror)
-    })
+
+    useEffect(() => {
+        getDoctorById(userId).then(data => {
+            setDoctor(data)
+            console.log(data.lastName)
+            setDoctorFirstName(data.firstName)
+            setDoctorLastName(data.lastName)
+        })
+    }, [])
 
     const handleMedicalNumberChange = (event) => {
         const input = event.target.value;
-        const isNumeric = /^[0-9]+$/.test(input);
-        
-        if(isNumeric){
+        const isNumeric = /^[0-9-]+$/.test(input);
+
+        if (isNumeric) {
             setMedicalNumber(input);
             setMedicalNumberError(false)
-        }else if(input === ""){
+            getPatientByMedicalNumber(input).then(data => {
+                if (data.status === 404) {
+                    console.log(data)
+                } else {
+                    console.log(data)
+                    setPatient(data)
+                    setMedicalNumberError("accept")
+                }
+            })
+        } else if (input === "") {
             setMedicalNumberError(false)
-        }else{
+        } else {
             setMedicalNumberError(true)
         }
     };
 
-    const handleDescription = () => {
+    const onSubmit = (e) => {
+        e.preventDefault();
+        console.log(description)
+       if(patient !== null && type !== null){
+        const data = {
+            type: type,
+            doctorid: userId,
+            patientId: patient.id,
+            result: description,
+            createdAt : new Date()
+        }
+        console.log(data)
+        setFormError(false)
+        addExam(data)
+       }else{
+        setFormError(true)
+       }
+    };
 
-    }
-   
+
 
     return (
-        <div>
-            <form className="ExamForm" onSubmit={handleSubmit}>
+        doctor !== null ? [<div id="examCreaterContainer">
+            <form className="ExamForm" onSubmit={onSubmit}>
                 <div id="doctorContainre">
+                    <h4>Exam:</h4>
+                    <div className="control">
+                        <label htmlFor="name">ExamType:</label>
+                        <input
+                            placeholder="ExamType"
+                            onChange={(e) => setType(e.target.value)}
+                            name="type"
+                            id="type"
+                        />
+                    </div>
+
                     <h4>Doctor:</h4>
                     <div className="control">
                         <label htmlFor="name">Firstname:</label>
                         <input
+                            value={doctor.firstName}
                             placeholder="Fristname"
                             onChange={(e) => setDoctorFirstName(e.target.value)}
                             name="doctorFristName"
@@ -59,6 +123,7 @@ const ExaminationCreater = () => {
                     <div className="control">
                         <label htmlFor="name">Lastname:</label>
                         <input
+                            value={doctor.lastName}
                             placeholder="Lastname"
                             onChange={(e) => setDoctorLastName(e.target.value)}
                             name="doctorLastName"
@@ -72,7 +137,7 @@ const ExaminationCreater = () => {
                         <label htmlFor="name">Ward:</label>
                         <select onChange={(e) => setCurrentWard(e.target.value)} >
                             <>
-                                <option value={"Chose wards"}>Chose wards</option>
+                                <option selected={doctor.ward}>Chose wards</option>
                                 {wards.map((val, i) => {
                                     return <option key={i} value={val} id={i}>{val}</option>
                                 })}
@@ -102,28 +167,45 @@ const ExaminationCreater = () => {
                         />
                     </div>
                     <div className="control">
-                        <div>{medicalNumbererror === true ? <>Only number allowed</>: <></>}</div>
+                        <div>{medicalNumbererror === true ? (
+                            <>Only number allowed</>
+                        ) : medicalNumbererror === "accept" ? (
+                            <>Valid Medical Number</>
+                        ) : (
+                            <>Required field!</>
+                        )}</div>
                         <label htmlFor="name">MedicalNumber:</label>
                         <input
-                            onChange={(e)=>handleMedicalNumberChange(e)}
+                            onChange={(e) => handleMedicalNumberChange(e)}
                             name="medicalNumber"
                             id="medicalNumber"
                         />
                     </div>
                 </div>
                 <div id="descriptionContainer">
-                <div className="control">
+                    <div className="control">
                         <h4>Description:</h4>
                         <textarea
-                            onChange={(e)=>handleMedicalNumberChange(e)}
+                            onChange={(e) => setDescription(e.target.value)}
                             name="medicalNumber"
                             id="medicalNumber"
                         />
                     </div>
                 </div>
+                <div className="buttons">
+                    {
+                        formError === true ? <div>Please fill every required field!</div> : <></>
+                    }
+                    <button type="submit">
+                        Submit
+                    </button>
+
+                </div>
             </form>
 
-        </div>
+        </div>] : [<div>Loading...</div>]
+
+
     )
 }
 

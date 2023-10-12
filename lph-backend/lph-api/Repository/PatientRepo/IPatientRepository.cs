@@ -9,4 +9,6 @@ public interface IPatientRepository
     void Add(Patient patient);
     void Delete(Patient patient);
     void Update(Patient patient);
+
+    Patient? GetByMedicalNumber(string number);
 }

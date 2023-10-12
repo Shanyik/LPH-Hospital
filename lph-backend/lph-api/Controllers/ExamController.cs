@@ -1,4 +1,5 @@
-﻿using lph_api.Repository.ExamRepo;
+﻿using lph_api.Model;
+using lph_api.Repository.ExamRepo;
 using Microsoft.AspNetCore.Mvc;
 
 namespace lph_api.Controllers;
@@ -54,5 +55,23 @@ public class ExamController : ControllerBase
         }
     }
     
-    //ADD
+    [HttpPost("Add")]
+    public IActionResult AddExam(Exam exam)
+    {
+        if (exam == null)
+        {
+            return BadRequest();
+        }
+        
+        try
+        {
+            _examRepository.Add(exam);
+            return Ok();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return BadRequest();
+        }
+    }
 }

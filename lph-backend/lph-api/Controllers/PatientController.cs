@@ -58,6 +58,26 @@ public class PatientController : ControllerBase
             return BadRequest();
         }
     }
+    
+    [HttpGet("GetByMedicalNumber:{medicalNumber}")]
+    public IActionResult GetByMedicalNumber(string medicalNumber)
+    {
+        try
+        {
+            var patient = _patientRepository.GetByMedicalNumber(medicalNumber);
+            
+            if (patient == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(patient);
+        }
+        catch (Exception e)
+        {
+            return BadRequest();
+        }
+    }
 
     [HttpPost("Add")]
     public IActionResult AddPatient(Patient patient)

@@ -27,7 +27,7 @@ function App() {
           <Route exact path="*" element={<NotFound/>}></Route> {/* 404 */}
           <Route path="/" element={<Home setUser={setUser}/>} />  
           <Route path="/patients" element={<DisplayPatients user={user} setUser= {setUser}/>} />   
-          <Route path="/examination"element={<ExaminationCreater />}></Route>
+          <Route path="/examination"element={<ExaminationCreater userId={userId}/>}></Route>
           <Route path="/doctors" element={<DisplayDoctors/>} />
           <Route path="/main" element={<DoctorMain user={user} setUser= {setUser}/>} />    
           <Route path="/patient/prescriptions" element={<Prescriptions userId={userId}/>} />    

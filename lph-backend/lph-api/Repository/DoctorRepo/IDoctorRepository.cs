@@ -9,4 +9,6 @@ public interface IDoctorRepository
     void Add(Doctor doctor);
     void Delete(Doctor doctor);
     void Update(Doctor doctor);
+
+    Doctor? GetById(int id);
 }

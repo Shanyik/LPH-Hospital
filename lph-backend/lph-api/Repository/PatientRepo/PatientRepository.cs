@@ -16,7 +16,12 @@ public class PatientRepository : IPatientRepository
         using var dbContext = new HospitalApiContext();
         return dbContext.Patients.FirstOrDefault(c => c.Username == username);
     }
-
+    
+    public Patient? GetByMedicalNumber(string number)
+    {
+        using var dbContext = new HospitalApiContext();
+        return dbContext.Patients.FirstOrDefault(c => c.MedicalNumber == number);
+    }
     public void Add(Patient patient)
     {
         using var dbContext = new HospitalApiContext();
