@@ -1,4 +1,4 @@
-/*table {
+table {
     width: 75%;
     position: relative;
     top: 20px;
@@ -36,10 +36,11 @@ button{
     text-decoration: none;
     background-color: rgb(55, 0, 255);
     color: aliceblue;
+    top: 0px;
 }
 
 button:hover{
     color: black;
     background-color: rgb(211, 50, 50);
     transition: 0.3s;
-}*/
+}

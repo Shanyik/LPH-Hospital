@@ -9,7 +9,7 @@ const ExaminationTable = ({examinations}) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {examinations.length == 0 ? 
+                    {examinations.length === 0 ? 
                     [<td colSpan="2">Examination not found </td>] 
                     : 
                     [examinations.map((exam)=>(

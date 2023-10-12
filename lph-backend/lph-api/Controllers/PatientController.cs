@@ -51,7 +51,7 @@ public class PatientController : ControllerBase
                 return NotFound();
             }
 
-            return Ok();
+            return Ok(patient);
         }
         catch (Exception e)
         {

@@ -8,12 +8,16 @@ import NotFound from './components/NotFound/NotFound';
 import DisplayDoctors from "./components/DisplayDoctors/DisplayDoctors";
 import { useState } from "react";
 import DoctorMain from "./components/Doctor/DoctorMain";
+import Prescriptions from "./components/Patient/Prescriptions/Prescriptions";
+import Documents from "./components/Patient/Documents/Documents";
+import Profile from "./components/Profile/Profile";
 
 
 function App() {
   
   const [user, setUser] = useState(null)
-  console.log(user)
+  const [userId, setUserID] = useState(1)
+  
   return (
     <Router>
       <div className="App">
@@ -24,6 +28,9 @@ function App() {
           <Route path="/patients" element={<DisplayPatients user={user} setUser= {setUser}/>} />   
           <Route path="/doctors" element={<DisplayDoctors/>} />
           <Route path="/main" element={<DoctorMain user={user} setUser= {setUser}/>} />    
+          <Route path="/patient/prescriptions" element={<Prescriptions userId={userId}/>} />    
+          <Route path="/patient/documents" element={<Documents />} />    
+          <Route path="/profile" element={<Profile />} /> 
         </Routes>
         
       </div>

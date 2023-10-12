@@ -4,3 +4,8 @@
     left: 25%;
     position: absolute;
 }
+
+button{
+    position: relative;
+    top: 50px;
+}

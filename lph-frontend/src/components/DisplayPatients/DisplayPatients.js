@@ -12,14 +12,12 @@ const deletePatient = (username) => {
 }
 
 const getExamDataByPatientID = (id) => {
-    const apiURL = process.env.REACT_APP_API_URL;
-    console.log(process.env.REACT_APP_API_URL)
+
     return fetch(`http://localhost:5274/Exam/GetByPatientId:${id}`).then((res => res.json()))
 }
 
 const getPresceptionDataByPatientID = (id) => {
-    const apiURL = process.env.REACT_APP_API_URL;
-    console.log(process.env.REACT_APP_API_URL)
+
     return fetch(`http://localhost:5274/Prescription/GetByPatientId:${id}`).then((res => res.json()))
 }
 
