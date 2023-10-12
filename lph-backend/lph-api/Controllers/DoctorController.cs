@@ -34,7 +34,8 @@ public class DoctorController : ControllerBase
             return BadRequest();
         }
     }
-
+    
+    
     [HttpGet("GetByUsername:{username}")]
     public IActionResult GetByUsername(string username)
     {

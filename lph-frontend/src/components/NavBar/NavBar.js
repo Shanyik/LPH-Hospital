@@ -45,7 +45,7 @@ const Navbar = (props) => {
           
             </Grid>
             <Grid item xs={3} >
-                <Link className='menuButton' to="/"><button onClick={()=>{props.setUser("null")}}>LogOut</button></Link>
+              <Link className='menuButton' to="/" onClick={()=>{props.setUser("null")}}> Log Out</Link>
             </Grid>
           </Grid>
         </Box>

@@ -19,7 +19,7 @@ const SearchField = ({ searchButton, setSearchValue}) => {
         <div id="searchField">
             <div id="displayError">
                 {
-                errorState === "Invalid input" ? <>Invalid Input</> : <></>
+                errorState === "Invalid input" ? <>Invalid Input</> : <> </>
                 }
             </div>
             <input type="text" placeholder="Seacrh Patient" onChange={(e) => { setSearchValue(e.target.value); setSearchVal(e.target.value) }}></input>

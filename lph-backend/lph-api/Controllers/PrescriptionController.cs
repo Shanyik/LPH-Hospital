@@ -1,5 +1,8 @@
-﻿using lph_api.Repository.PrescriptionRepo;
+﻿using lph_api.Context;
+using lph_api.Repository.PrescriptionRepo;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using lph_api.Model;
 
 namespace lph_api.Controllers;
 
@@ -8,10 +11,13 @@ namespace lph_api.Controllers;
 public class PrescriptionController : ControllerBase
 {
     private readonly IPrescriptionRepository _prescriptionRepository;
+    
+    
 
     public PrescriptionController(IPrescriptionRepository prescriptionRepository)
     {
         _prescriptionRepository = prescriptionRepository;
+        
     }
     
     [HttpGet("GetByPatientId:{id}")]
@@ -20,12 +26,12 @@ public class PrescriptionController : ControllerBase
         try
         {
             var prescriptions = _prescriptionRepository.GetByPatientId(id);
-            
+
             if (!prescriptions.Any())
             {
                 return NotFound();
             }
-
+            
             return Ok(prescriptions);
         }
         catch (Exception e)
