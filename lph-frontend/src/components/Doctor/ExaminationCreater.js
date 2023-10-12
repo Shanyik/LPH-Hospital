@@ -1,5 +1,8 @@
 
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import "./ExaminationCreater.css"
+import Typography from '@mui/material/Typography';
 
 const getDoctorById = (userId) => {
     return fetch(`/Doctor/GetById:${userId}`).then(res => res.json())
@@ -16,12 +19,14 @@ const addExam = (data) => {
             "Content-Type": "application/json",
         },
         body: JSON.stringify(data),
-    }).then((res) => res.json());
+    }).then((res) => console.log("success"));
 }
 
 
 
 const ExaminationCreater = ({ userId }) => {
+
+    const navigate = useNavigate();
 
     const [doctor, setDoctor] = useState(null)
     const [type, setType] = useState(null)
@@ -90,6 +95,7 @@ const ExaminationCreater = ({ userId }) => {
        }else{
         setFormError(true)
        }
+       navigate("/patients");
     };
 
 
@@ -100,7 +106,7 @@ const ExaminationCreater = ({ userId }) => {
                 <div id="doctorContainre">
                     <h4>Exam:</h4>
                     <div className="control">
-                        <label htmlFor="name">ExamType:</label>
+                        <Typography htmlFor="name">ExamType:</Typography>
                         <input
                             placeholder="ExamType"
                             onChange={(e) => setType(e.target.value)}
@@ -111,7 +117,7 @@ const ExaminationCreater = ({ userId }) => {
 
                     <h4>Doctor:</h4>
                     <div className="control">
-                        <label htmlFor="name">Firstname:</label>
+                        <Typography htmlFor="name">Firstname:</Typography>
                         <input
                             value={doctor.firstName}
                             placeholder="Fristname"
@@ -121,7 +127,7 @@ const ExaminationCreater = ({ userId }) => {
                         />
                     </div>
                     <div className="control">
-                        <label htmlFor="name">Lastname:</label>
+                        <Typography htmlFor="name">Lastname:</Typography>
                         <input
                             value={doctor.lastName}
                             placeholder="Lastname"
@@ -134,7 +140,7 @@ const ExaminationCreater = ({ userId }) => {
 
                         <div>{currentWard === "Chose wards" || currentWard === null ? <>Chose wards!</> : <></>}</div>
 
-                        <label htmlFor="name">Ward:</label>
+                        <Typography htmlFor="name">Ward:</Typography>
                         <select onChange={(e) => setCurrentWard(e.target.value)} >
                             <>
                                 <option selected={doctor.ward}>Chose wards</option>
@@ -149,7 +155,7 @@ const ExaminationCreater = ({ userId }) => {
                 <div id="PatientContainer">
                     <h4>Patient:</h4>
                     <div className="control">
-                        <label htmlFor="name">Firstname:</label>
+                        <Typography htmlFor="name">Firstname:</Typography>
                         <input
                             placeholder="Fristname"
                             onChange={(e) => setPatientFirstName(e.target.value)}
@@ -158,7 +164,7 @@ const ExaminationCreater = ({ userId }) => {
                         />
                     </div>
                     <div className="control">
-                        <label htmlFor="name">Lastname:</label>
+                        <Typography htmlFor="name">Lastname:</Typography>
                         <input
                             placeholder="Lastname"
                             onChange={(e) => setPatientLastName(e.target.value)}
@@ -174,7 +180,7 @@ const ExaminationCreater = ({ userId }) => {
                         ) : (
                             <>Required field!</>
                         )}</div>
-                        <label htmlFor="name">MedicalNumber:</label>
+                        <Typography htmlFor="name">MedicalNumber:</Typography>
                         <input
                             onChange={(e) => handleMedicalNumberChange(e)}
                             name="medicalNumber"
@@ -186,6 +192,7 @@ const ExaminationCreater = ({ userId }) => {
                     <div className="control">
                         <h4>Description:</h4>
                         <textarea
+                            className="descriptionTextArea"
                             onChange={(e) => setDescription(e.target.value)}
                             name="medicalNumber"
                             id="medicalNumber"

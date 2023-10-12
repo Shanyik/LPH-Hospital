@@ -1,0 +1,59 @@
+#examCreaterContainer {
+    border: 1px solid #ccc;
+    padding-bottom: 20px;
+    border-radius: 30px;
+    background-color: #f7f7f7;
+    width: 70%;
+    left: 15%;
+    position: absolute;
+    top: 8%;
+  }
+  
+ 
+  .ExamForm .control {
+    margin-bottom: 10px;
+  }
+  
+ 
+  .ExamForm input {
+    width: 80%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    left: 10%;
+  }
+  
+
+  .ExamForm select {
+    width: 80%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+
+  .ExamForm .control div {
+    color: red;
+    font-size: 14px;
+  }
+  
+
+  .ExamForm .buttons button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+
+  .ExamForm .buttons div {
+    color: red;
+    font-size: 14px;
+  }
+
+  .descriptionTextArea{
+    width: 80%;
+    height: 70px;
+  }
