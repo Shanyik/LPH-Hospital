@@ -4,6 +4,7 @@ import ExamModal from "./ExamModal";
 const ExaminationTable = ({ examinations, patients, doctor }) => {
 
     const [open, setOpen] = useState(false);
+    const [render, setRender] = useState(false);
     const [currentExam, setCurrenExam] = useState(null)
 
     const handleClose = () => {
@@ -17,7 +18,13 @@ const ExaminationTable = ({ examinations, patients, doctor }) => {
 
     };
 
+    useEffect(() => {
+        console.log(patients)
+        console.log(doctor)
+    });
+
     return (
+
         <div id="examTableContainer">
             <table id="examTable">
                 <thead>
@@ -42,12 +49,14 @@ const ExaminationTable = ({ examinations, patients, doctor }) => {
             </table>
             {
                 open === true ? [
-                    <ExamModal handleClose={handleClose} open={open} exam={currentExam} patients={patients} doctors={doctor}/>
+                    <ExamModal handleClose={handleClose} open={open} exam={currentExam} patients={patients} doctors={doctor} />
                 ] : [
 
                 ]
             }
         </div>
+
+
     )
 
 }

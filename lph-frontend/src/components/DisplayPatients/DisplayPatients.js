@@ -42,7 +42,11 @@ const DisplayPatients = () => {
                 setPatients(data)
             }
             )
-            .catch(error => console.log(error))
+            .catch(error => console.log(error)).then(
+                getAllDoctors().then(data => {
+                    setDoctors(data)
+                })
+            )
     }, [])
 
     const deleteButton = (username) => {
@@ -91,16 +95,13 @@ const DisplayPatients = () => {
             getPresceptionDataByPatientID(id).then(data => {
                 setPresciptions(data)
             })
-        ).then(
-            getAllDoctors().then(data=>{
-                setDoctors(data)
-             })
         )
 
     }
 
 
     return (
+
         <div id="container">
             <SearchField searchButton={searchButton} setSearchValue={setSearchValue} />
             <Box id="patientMain">
@@ -148,8 +149,8 @@ const DisplayPatients = () => {
 
                     </Grid>
                     <Grid item xs={4} >
-                        <ExaminationTable examinations={examinations} patients={patients}/>
-                        <PresceptionTable presciptions={presciptions} doctors={doctors} patients={patients} doctor={doctors}/>
+                        <ExaminationTable examinations={examinations} patients={patients} />
+                        <PresceptionTable presciptions={presciptions} doctors={doctors} patients={patients} doctor={doctors} />
                     </Grid>
                 </Grid>
 
