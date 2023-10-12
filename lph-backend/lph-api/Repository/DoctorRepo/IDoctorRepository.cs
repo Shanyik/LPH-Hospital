@@ -6,6 +6,7 @@ public interface IDoctorRepository
 {
     IEnumerable<Doctor> GetAll();
     Doctor? GetByUsername(string username);
+    public Doctor? GetById(int id);
     void Add(Doctor doctor);
     void Delete(Doctor doctor);
     void Update(Doctor doctor);

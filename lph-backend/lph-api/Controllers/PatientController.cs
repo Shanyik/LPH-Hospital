@@ -58,6 +58,26 @@ public class PatientController : ControllerBase
             return BadRequest();
         }
     }
+    
+    [HttpGet("GetById:{id}")]
+    public IActionResult GetById(int id)
+    {
+        try
+        {
+            var patient = _patientRepository.GetById(id);
+            
+            if (patient == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(patient);
+        }
+        catch (Exception e)
+        {
+            return BadRequest();
+        }
+    }
 
     [HttpPost("Add")]
     public IActionResult AddPatient(Patient patient)

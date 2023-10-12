@@ -55,6 +55,26 @@ public class DoctorController : ControllerBase
             return BadRequest();
         }
     }
+    
+    [HttpGet("GetById:{id}")]
+    public IActionResult GetById(int id)
+    {
+        try
+        {
+            var doctor = _doctorRepository.GetById(id);
+            
+            if (doctor == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(doctor);
+        }
+        catch (Exception e)
+        {
+            return BadRequest();
+        }
+    }
 
     [HttpPost("Add")]
     public IActionResult AddDoctor(Doctor doctor)

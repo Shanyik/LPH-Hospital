@@ -20,6 +20,7 @@ const style = {
     bgcolor: 'background.paper',
     border: '2px solid #000',
     boxShadow: 24,
+    borderRadius: "30px",
     p: 4,
   };
 
@@ -95,7 +96,7 @@ const ModalPrescription = (props) => {
             </AccordionDetails>
           </Accordion>
 
-          <Button onClick={props.close}>Close</Button>
+          <Button variant="contained" color="success" onClick={props.close} sx={{left: "43%", marginTop: "20px"}}>Close</Button>
         </Box>
       </Modal>
     </div>

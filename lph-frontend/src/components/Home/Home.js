@@ -4,15 +4,15 @@ import { Link } from 'react-router-dom'
 
 const Home = (props) => {
 
-
-
   return (
     <section>
-      <div className='title'>Welcome to Los Pollos Hermlanos Hospital!</div>
+      <div className='title'>Welcome to Los Pollos Hermanos Hospital!</div>
       <Link to="/main">
         <button onClick={() => { props.setUser("doctor") }}>Doctor</button>
       </Link>
-      <button onClick={() => { props.setUser("patient") }}>Patient</button>
+      <Link to="/patient/home">
+        <button onClick={() => { props.setUser("patient") }}>Patient</button>
+      </Link>
       
     </section>
 
