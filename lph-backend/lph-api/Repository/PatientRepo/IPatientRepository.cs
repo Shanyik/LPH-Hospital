@@ -6,6 +6,7 @@ public interface IPatientRepository
 {
     IEnumerable<Patient> GetAll();
     Patient? GetByUsername(string username);
+    public Patient? GetById(int id);
     void Add(Patient patient);
     void Delete(Patient patient);
     void Update(Patient patient);

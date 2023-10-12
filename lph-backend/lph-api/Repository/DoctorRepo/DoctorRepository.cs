@@ -20,6 +20,7 @@ public class DoctorRepository : IDoctorRepository
     public Doctor? GetById(int id)
     {
         using var dbContext = new HospitalApiContext();
+
         return dbContext.Doctors.FirstOrDefault(c => c.Id == (uint)id);
     }
 

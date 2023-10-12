@@ -59,13 +59,13 @@ public class PatientController : ControllerBase
         }
     }
     
-    [HttpGet("GetByMedicalNumber:{medicalNumber}")]
-    public IActionResult GetByMedicalNumber(string medicalNumber)
+    [HttpGet("GetById:{id}")]
+    public IActionResult GetById(int id)
     {
         try
         {
-            var patient = _patientRepository.GetByMedicalNumber(medicalNumber);
-            
+            var patient = _patientRepository.GetById(id);
+
             if (patient == null)
             {
                 return NotFound();
@@ -78,6 +78,8 @@ public class PatientController : ControllerBase
             return BadRequest();
         }
     }
+    
+    
 
     [HttpPost("Add")]
     public IActionResult AddPatient(Patient patient)
@@ -119,6 +121,24 @@ public class PatientController : ControllerBase
         }
     }
     
+    [HttpGet("GetByMedicalNumber:{medicalNumber}")]
+    public IActionResult GetByMedicalNumber(string medicalNumber)
+    {
+        try
+        {
+            var patient = _patientRepository.GetByMedicalNumber(medicalNumber);
+
+            if (patient == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(patient);
+        }
+        catch (Exception e)
+        {
+            return BadRequest();
+        }
+    }
     
-    // Medical number search
 }

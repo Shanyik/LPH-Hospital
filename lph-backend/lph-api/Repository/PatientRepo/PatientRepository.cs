@@ -17,11 +17,13 @@ public class PatientRepository : IPatientRepository
         return dbContext.Patients.FirstOrDefault(c => c.Username == username);
     }
     
-    public Patient? GetByMedicalNumber(string number)
+    public Patient? GetById(int id)
     {
         using var dbContext = new HospitalApiContext();
-        return dbContext.Patients.FirstOrDefault(c => c.MedicalNumber == number);
+        return dbContext.Patients.FirstOrDefault(c => c.Id == id);
     }
+
+
     public void Add(Patient patient)
     {
         using var dbContext = new HospitalApiContext();
@@ -42,4 +44,10 @@ public class PatientRepository : IPatientRepository
         dbContext.Update(patient);
         dbContext.SaveChanges();
     }
+    public Patient? GetByMedicalNumber(string number)
+    {
+        using var dbContext = new HospitalApiContext();
+        return dbContext.Patients.FirstOrDefault(c => c.MedicalNumber == number);
+    }
+    
 }
