@@ -53,4 +53,24 @@ public class ProductController : ControllerBase
             return BadRequest();
         }
     }
+    
+    [HttpGet("GetById:{id}")]
+    public IActionResult GetByUsername(int id)
+    {
+        try
+        {
+            var product = _productRepository.GetById(id);
+            
+            if (product == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(product);
+        }
+        catch (Exception e)
+        {
+            return BadRequest();
+        }
+    }
 }

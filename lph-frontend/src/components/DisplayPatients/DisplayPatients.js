@@ -6,21 +6,22 @@ import ExaminationTable from "../Doctor/ExaminationTable";
 import PresceptionTable from "../Doctor/PrescriptionTable";
 
 const deletePatient = (username) => {
-    return fetch(`http://localhost:5274/Patient/Delete:${username}`, { method: "DELETE" })
+    return fetch(`/Patient/Delete:${username}`, { method: "DELETE" })
         .then((res) => res.text())
         .then((res) => console.log(res))
 }
 
 const getExamDataByPatientID = (id) => {
-    const apiURL = process.env.REACT_APP_API_URL;
-    console.log(process.env.REACT_APP_API_URL)
-    return fetch(`http://localhost:5274/Exam/GetByPatientId:${id}`).then((res => res.json()))
+    return fetch(`/Exam/GetByPatientId:${id}`).then((res => res.json())) //proxy miatt -->json-ben
 }
 
 const getPresceptionDataByPatientID = (id) => {
-    const apiURL = process.env.REACT_APP_API_URL;
-    console.log(process.env.REACT_APP_API_URL)
-    return fetch(`http://localhost:5274/Prescription/GetByPatientId:${id}`).then((res => res.json()))
+
+    return fetch(`/Prescription/GetByPatientId:${id}`).then((res => res.json()))
+}
+
+const getAllDoctors = () => {
+    return fetch('/Doctor/GetAll').then(res => res.json())
 }
 
 
@@ -32,10 +33,10 @@ const DisplayPatients = () => {
     const [searchFetchValue, setSearchFetchValue] = useState(200);
     const [examinations, setExaminations] = useState([]);
     const [presciptions, setPresciptions] = useState([]);
-
+    const [doctors, setDoctors] = useState([]);
 
     useEffect(() => {
-        fetch('http://localhost:5274/Patient/GetAll') // env
+        fetch('/Patient/GetAll')
             .then(response => response.json())
             .then(data => {
                 setPatients(data)
@@ -52,7 +53,7 @@ const DisplayPatients = () => {
                 })))
     }
     const findPatient = (username) => {
-        return fetch(`http://localhost:5274/Patient/GetByUsername:${username}`)
+        return fetch(`/Patient/GetByUsername:${username}`)
             .then(res => res.json())
     }
     const searchButton = () => {
@@ -60,21 +61,14 @@ const DisplayPatients = () => {
         if (trimmedSearchValue !== "") {
             findPatient(searchValue).then(data => {
                 console.log(data)
-                if(data.status === 404){
+                if (data.status === 404) {
                     console.log("asdff")
                     setSearchFetchValue(404)
-                }else{
+                } else {
                     console.log("234")
                     setPatients([data])
                     setSearchFetchValue(200)
                 }
-               
-                /*if (!Object.keys(data).includes("message")) {
-                    setPatients([data])
-                    setSearchFetchValue([])
-                } else {
-                    setSearchFetchValue([data])
-                }*/
             })
         }
     }
@@ -91,58 +85,62 @@ const DisplayPatients = () => {
     }
 
     const rowController = (id) => {
-        console.log(id)
-        getExamDataByPatientID(id).then(data=> {
-            console.log(data)
+        getExamDataByPatientID(id).then(data => {
             setExaminations(data);
         }).then(
             getPresceptionDataByPatientID(id).then(data => {
-                console.log(data)
                 setPresciptions(data)
             })
+        ).then(
+            getAllDoctors().then(data=>{
+                setDoctors(data)
+             })
         )
 
     }
 
 
     return (
-        <div>
-            <SearchField searchButton={searchButton} setSearchValue={setSearchValue}  />
+        <div id="container">
+            <SearchField searchButton={searchButton} setSearchValue={setSearchValue} />
             <Box id="patientMain">
                 <Grid container alignItems="center">
                     <Grid item xs={8} >
-                        
+
                         {
                             patients.length > 0 ? [
-                                <table id="patientTable">
-                                    <thead>
-                                        <tr>
-                                            <th>First Name</th>
-                                            <th>Last Name</th>
-                                            <th>Email</th>
-                                            <th>Phone number</th>
-                                            <th></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {
-                                            searchFetchValue === 404 ? [
-                                                <td colSpan="5">Patient not found <div onClick={() => { refresPatient() }}>refress the list</div></td>
-                                            ] : [
-                                                Object.values(patients).map((patient) => (
-                                                    <tr key={patient.id} onClick={()=>{rowController(patient.id)}}>
-                                                        <td>{patient.firstName}</td>
-                                                        <td>{patient.lastName}</td>
-                                                        <td>{patient.email}</td>
-                                                        <td>{patient.phoneNumber}</td>
-                                                        <td><button onClick={() => deleteButton(patient.username)}>Delete</button></td>
-                                                    </tr>
-                                                ))
-                                            ]
-                                        }
+                                <div id="patientTableContainer">
+                                    <table id="patientTable">
+                                        <thead>
+                                            <tr>
+                                                <th>First Name</th>
+                                                <th>Last Name</th>
+                                                <th>Email</th>
+                                                <th>Phone number</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {
+                                                searchFetchValue === 404 ? [
+                                                    <td colSpan="5">Patient not found <div onClick={() => { refresPatient() }}>refress the list</div></td>
+                                                ] : [
+                                                    Object.values(patients).map((patient) => (
+                                                        <tr key={patient.id} onClick={() => { rowController(patient.id) }}>
+                                                            <td>{patient.firstName}</td>
+                                                            <td>{patient.lastName}</td>
+                                                            <td>{patient.email}</td>
+                                                            <td>{patient.phoneNumber}</td>
+                                                            <td><button onClick={() => deleteButton(patient.username)}>Delete</button></td>
+                                                        </tr>
+                                                    ))
+                                                ]
+                                            }
 
-                                    </tbody>
-                                </table>
+                                        </tbody>
+                                    </table>
+                                </div>
+
                             ] : [
                                 <div className="loading">Waiting for Data...</div>
                             ]
@@ -150,8 +148,8 @@ const DisplayPatients = () => {
 
                     </Grid>
                     <Grid item xs={4} >
-                        <ExaminationTable examinations={examinations}/>
-                        <PresceptionTable presciptions={presciptions}/>
+                        <ExaminationTable examinations={examinations} patients={patients}/>
+                        <PresceptionTable presciptions={presciptions} doctors={doctors} patients={patients} doctor={doctors}/>
                     </Grid>
                 </Grid>
 

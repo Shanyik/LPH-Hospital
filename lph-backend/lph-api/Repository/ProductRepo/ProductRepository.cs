@@ -16,4 +16,10 @@ public class ProductRepository : IProductRepository
         using var dbContext = new HospitalApiContext();
         return dbContext.Products.FirstOrDefault(c => c.Name == name);
     }
+    
+    public Product? GetById(int id)
+    {
+        using var dbContext = new HospitalApiContext();
+        return dbContext.Products.FirstOrDefault(c => c.Id == id);
+    }
 }

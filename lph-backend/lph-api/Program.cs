@@ -1,3 +1,4 @@
+using lph_api.Context;
 using lph_api.Model;
 using lph_api.Repository.DoctorRepo;
 using lph_api.Repository.EventRepo;
@@ -5,6 +6,7 @@ using lph_api.Repository.ExamRepo;
 using lph_api.Repository.PatientRepo;
 using lph_api.Repository.PrescriptionRepo;
 using lph_api.Repository.ProductRepo;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
