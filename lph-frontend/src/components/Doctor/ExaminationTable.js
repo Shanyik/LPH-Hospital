@@ -4,7 +4,6 @@ import ExamModal from "./ExamModal";
 const ExaminationTable = ({ examinations, patients, doctor }) => {
 
     const [open, setOpen] = useState(false);
-    const [render, setRender] = useState(false);
     const [currentExam, setCurrenExam] = useState(null)
 
     const handleClose = () => {

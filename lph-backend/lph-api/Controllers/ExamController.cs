@@ -58,10 +58,7 @@ public class ExamController : ControllerBase
     [HttpPost("Add")]
     public IActionResult AddExam(Exam exam)
     {
-        if (exam == null)
-        {
-            return BadRequest();
-        }
+        
         
         try
         {

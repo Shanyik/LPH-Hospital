@@ -33,7 +33,7 @@ const ExaminationCreater = ({ userId }) => {
     const [doctorFirstName, setDoctorFirstName] = useState("")
     const [doctorLastName, setDoctorLastName] = useState("")
     const [wards, setWards] = useState(["a", "b", "c", "d"])
-    const [currentWard, setCurrentWard] = useState(null)
+    const [currentWard, setCurrentWard] = useState("")
 
     const [patient, setPatient] = useState(null)
     const [patientFirstName, setPatientFirstName] = useState("")
@@ -73,29 +73,32 @@ const ExaminationCreater = ({ userId }) => {
             })
         } else if (input === "") {
             setMedicalNumberError(false)
+            setPatient(null)
         } else {
             setMedicalNumberError(true)
+            setPatient(null)
         }
+        setPatient(null)
     };
 
     const onSubmit = (e) => {
         e.preventDefault();
         console.log(description)
-       if(patient !== null && type !== null){
-        const data = {
-            type: type,
-            doctorid: userId,
-            patientId: patient.id,
-            result: description,
-            createdAt : new Date()
+        if (patient !== null && type !== null) {
+            const data = {
+                type: type,
+                doctorid: userId,
+                patientId: patient.id,
+                result: description,
+                createdAt: new Date()
+            }
+            console.log(data)
+            setFormError(false)
+            addExam(data)
+        } else {
+            setFormError(true)
         }
-        console.log(data)
-        setFormError(false)
-        addExam(data)
-       }else{
-        setFormError(true)
-       }
-       navigate("/patients");
+        navigate("/patients");
     };
 
 
@@ -139,44 +142,26 @@ const ExaminationCreater = ({ userId }) => {
                     <div className="control">
 
                         <div>{currentWard === "Chose wards" || currentWard === null ? <>Chose wards!</> : <></>}</div>
-
+                        {console.log(currentWard)}
                         <Typography htmlFor="name">Ward:</Typography>
-                        <select onChange={(e) => setCurrentWard(e.target.value)} >
-                            <>
-                                <option selected={doctor.ward}>Chose wards</option>
-                                {wards.map((val, i) => {
-                                    return <option key={i} value={val} id={i}>{val}</option>
-                                })}
-
-                            </>
+                        <select onChange={(e) => setCurrentWard(e.target.value)} defaultValue={doctor.ward}>
+                            <option value="Chose wards">Choose wards</option>
+                            {wards.map((val, i) => (
+                                <option key={i} value={val} id={i}>
+                                    {val}
+                                </option>
+                            ))}
                         </select>
                     </div>
                 </div>
                 <div id="PatientContainer">
                     <h4>Patient:</h4>
-                    <div className="control">
-                        <Typography htmlFor="name">Firstname:</Typography>
-                        <input
-                            placeholder="Fristname"
-                            onChange={(e) => setPatientFirstName(e.target.value)}
-                            name="patientFristName"
-                            id="patientFristName"
-                        />
-                    </div>
-                    <div className="control">
-                        <Typography htmlFor="name">Lastname:</Typography>
-                        <input
-                            placeholder="Lastname"
-                            onChange={(e) => setPatientLastName(e.target.value)}
-                            name="patientLastName"
-                            id="patientLastName"
-                        />
-                    </div>
+
                     <div className="control">
                         <div>{medicalNumbererror === true ? (
                             <>Only number allowed</>
                         ) : medicalNumbererror === "accept" ? (
-                            <>Valid Medical Number</>
+                            <div id="okMedicalNumber">Valid Medical Number</div>
                         ) : (
                             <>Required field!</>
                         )}</div>
@@ -187,6 +172,36 @@ const ExaminationCreater = ({ userId }) => {
                             id="medicalNumber"
                         />
                     </div>
+                    {
+                        patient !== null ? [
+                            <>
+                                <div className="control">
+                                    <Typography htmlFor="name">Firstname:</Typography>
+                                    <input
+                                        value={patient.firstName}
+                                        placeholder="Fristname"
+                                        onChange={(e) => setPatientFirstName(e.target.value)}
+                                        name="patientFristName"
+                                        id="patientFristName"
+                                    />
+                                </div>
+                                <div className="control">
+                                    <Typography htmlFor="name">Lastname:</Typography>
+                                    <input
+                                        value={patient.lastName}
+                                        placeholder="Lastname"
+                                        onChange={(e) => setPatientLastName(e.target.value)}
+                                        name="patientLastName"
+                                        id="patientLastName"
+                                    />
+                                </div>
+                            </>
+                        ] : [
+                            <></>
+                        ]
+                    }
+
+
                 </div>
                 <div id="descriptionContainer">
                     <div className="control">
