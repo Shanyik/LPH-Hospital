@@ -21,7 +21,7 @@ const Profile = (props) => {
   const [userData, setUserData] = useState(null)
 
   useEffect(() => {
-    if (props.user === "patient") {
+    if (props.role === "Patient") {
       fetch(`/Patient/GetById:${props.userId}`)
         .then(response => response.json())
         .then(data => {
@@ -32,6 +32,7 @@ const Profile = (props) => {
         .catch(error => console.log(error))
     }
     else{
+      console.log(props.userId)
       fetch(`/Doctor/GetById:${props.userId}`)
         .then(response => response.json())
         .then(data => {

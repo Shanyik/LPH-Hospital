@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using lph_api.Context;
 
@@ -11,9 +12,11 @@ using lph_api.Context;
 namespace lph_api.Migrations
 {
     [DbContext(typeof(HospitalApiContext))]
-    partial class HospitalApiContextModelSnapshot : ModelSnapshot
+    [Migration("20231024094454_updateMigration2")]
+    partial class updateMigration2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -239,9 +242,8 @@ namespace lph_api.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("IdentityId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<long>("IdentityId")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("LastName")
                         .IsRequired()
@@ -300,29 +302,29 @@ namespace lph_api.Migrations
                         new
                         {
                             Id = 1L,
-                            CreatedAt = new DateTime(2023, 10, 24, 13, 14, 19, 294, DateTimeKind.Local).AddTicks(4366),
+                            CreatedAt = new DateTime(2023, 10, 24, 11, 44, 54, 379, DateTimeKind.Local).AddTicks(7229),
                             Description = "EventDescription",
-                            End = new DateTime(2023, 10, 27, 13, 14, 19, 294, DateTimeKind.Local).AddTicks(4359),
+                            End = new DateTime(2023, 10, 27, 11, 44, 54, 379, DateTimeKind.Local).AddTicks(7224),
                             Name = "Donate Blood",
-                            Start = new DateTime(2023, 10, 24, 13, 14, 19, 294, DateTimeKind.Local).AddTicks(4357)
+                            Start = new DateTime(2023, 10, 24, 11, 44, 54, 379, DateTimeKind.Local).AddTicks(7223)
                         },
                         new
                         {
                             Id = 2L,
-                            CreatedAt = new DateTime(2023, 10, 24, 13, 14, 19, 294, DateTimeKind.Local).AddTicks(4371),
+                            CreatedAt = new DateTime(2023, 10, 24, 11, 44, 54, 379, DateTimeKind.Local).AddTicks(7234),
                             Description = "EventDescription",
-                            End = new DateTime(2023, 10, 29, 13, 14, 19, 294, DateTimeKind.Local).AddTicks(4370),
+                            End = new DateTime(2023, 10, 29, 11, 44, 54, 379, DateTimeKind.Local).AddTicks(7233),
                             Name = "General Exams",
-                            Start = new DateTime(2023, 10, 24, 13, 14, 19, 294, DateTimeKind.Local).AddTicks(4368)
+                            Start = new DateTime(2023, 10, 24, 11, 44, 54, 379, DateTimeKind.Local).AddTicks(7231)
                         },
                         new
                         {
                             Id = 3L,
-                            CreatedAt = new DateTime(2023, 10, 24, 13, 14, 19, 294, DateTimeKind.Local).AddTicks(4376),
+                            CreatedAt = new DateTime(2023, 10, 24, 11, 44, 54, 379, DateTimeKind.Local).AddTicks(7239),
                             Description = "EventDescription",
-                            End = new DateTime(2023, 11, 3, 13, 14, 19, 294, DateTimeKind.Local).AddTicks(4375),
+                            End = new DateTime(2023, 11, 3, 11, 44, 54, 379, DateTimeKind.Local).AddTicks(7238),
                             Name = "Donate Blood",
-                            Start = new DateTime(2023, 10, 29, 13, 14, 19, 294, DateTimeKind.Local).AddTicks(4373)
+                            Start = new DateTime(2023, 10, 29, 11, 44, 54, 379, DateTimeKind.Local).AddTicks(7236)
                         });
                 });
 
@@ -359,7 +361,7 @@ namespace lph_api.Migrations
                         new
                         {
                             Id = 1L,
-                            CreatedAt = new DateTime(2023, 10, 24, 13, 14, 19, 294, DateTimeKind.Local).AddTicks(4334),
+                            CreatedAt = new DateTime(2023, 10, 24, 11, 44, 54, 379, DateTimeKind.Local).AddTicks(7203),
                             DoctorId = 1L,
                             PatientId = 1L,
                             Result = "resultString",
@@ -368,7 +370,7 @@ namespace lph_api.Migrations
                         new
                         {
                             Id = 2L,
-                            CreatedAt = new DateTime(2023, 10, 24, 13, 14, 19, 294, DateTimeKind.Local).AddTicks(4337),
+                            CreatedAt = new DateTime(2023, 10, 24, 11, 44, 54, 379, DateTimeKind.Local).AddTicks(7207),
                             DoctorId = 2L,
                             PatientId = 3L,
                             Result = "resultString",
@@ -377,7 +379,7 @@ namespace lph_api.Migrations
                         new
                         {
                             Id = 3L,
-                            CreatedAt = new DateTime(2023, 10, 24, 13, 14, 19, 294, DateTimeKind.Local).AddTicks(4339),
+                            CreatedAt = new DateTime(2023, 10, 24, 11, 44, 54, 379, DateTimeKind.Local).AddTicks(7209),
                             DoctorId = 3L,
                             PatientId = 2L,
                             Result = "resultString",
@@ -404,9 +406,8 @@ namespace lph_api.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("IdentityId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<long>("IdentityId")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("LastName")
                         .IsRequired()
@@ -464,7 +465,7 @@ namespace lph_api.Migrations
                         new
                         {
                             Id = 1L,
-                            CreatedAt = new DateTime(2023, 10, 24, 13, 14, 19, 294, DateTimeKind.Local).AddTicks(4252),
+                            CreatedAt = new DateTime(2023, 10, 24, 11, 44, 54, 379, DateTimeKind.Local).AddTicks(7130),
                             Description = "1x2 for 10 days",
                             DoctorId = 1L,
                             PatientId = 1L,
@@ -473,7 +474,7 @@ namespace lph_api.Migrations
                         new
                         {
                             Id = 2L,
-                            CreatedAt = new DateTime(2023, 10, 24, 13, 14, 19, 294, DateTimeKind.Local).AddTicks(4307),
+                            CreatedAt = new DateTime(2023, 10, 24, 11, 44, 54, 379, DateTimeKind.Local).AddTicks(7177),
                             Description = "1x1 for 120 days",
                             DoctorId = 2L,
                             PatientId = 1L,
@@ -482,7 +483,7 @@ namespace lph_api.Migrations
                         new
                         {
                             Id = 3L,
-                            CreatedAt = new DateTime(2023, 10, 24, 13, 14, 19, 294, DateTimeKind.Local).AddTicks(4309),
+                            CreatedAt = new DateTime(2023, 10, 24, 11, 44, 54, 379, DateTimeKind.Local).AddTicks(7179),
                             Description = "1x1 for 30 days",
                             DoctorId = 3L,
                             PatientId = 2L,

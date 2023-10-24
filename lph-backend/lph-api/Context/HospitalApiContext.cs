@@ -1,9 +1,11 @@
 ﻿using lph_api.Model;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace lph_api.Context;
 
-public class HospitalApiContext : DbContext
+public class HospitalApiContext : IdentityDbContext<IdentityUser, IdentityRole, string>
 {
     public DbSet<Doctor> Doctors { get; set; }
     public DbSet<Patient> Patients { get; set; }
@@ -11,6 +13,7 @@ public class HospitalApiContext : DbContext
     public DbSet<Prescription> Prescriptions { get; set; }
     public DbSet<Exam> Exams { get; set; }
     public DbSet<Event> Events { get; set; }
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         optionsBuilder.UseSqlServer(
@@ -23,24 +26,10 @@ public class HospitalApiContext : DbContext
             .HasIndex(p => new {p.Username, p.MedicalNumber})
             .IsUnique();
 
-        builder.Entity<Patient>()
-            .HasData(
-                new Patient {Id = 1, MedicalNumber ="123-456-789", Username = "Smithy", Password = "Incorrect", Email = "Smith@gmail.com", PhoneNumber = "+3610123456", FirstName = "John", LastName = "Smith", CreatedAt = DateTime.Now},
-                new Patient {Id = 2, MedicalNumber ="123-456-781", Username = "Doughy", Password = "Incorrect", Email = "Doughy@gmail.com", PhoneNumber = "+3620123456", FirstName = "John", LastName = "Doe", CreatedAt = DateTime.Now},
-                new Patient {Id = 3, MedicalNumber ="123-456-782", Username = "Fizzy", Password = "Incorrect", Email = "Fizy@gmail.com", PhoneNumber = "+3630123456", FirstName = "Fizz", LastName = "Buzz", CreatedAt = DateTime.Now}
-            );
-        
         builder.Entity<Doctor>()
             .HasIndex(d => d.Username)
             .IsUnique();
-    
-        builder.Entity<Doctor>()
-            .HasData(
-                new Doctor {Id = 1, Username = "Smithy", Password = "Incorrect", Email = "Smith@gmail.com", PhoneNumber = "+3610123456", FirstName = "John", LastName = "Smith", Ward = "a", CreatedAt = DateTime.Now},
-                new Doctor {Id = 2, Username = "Doughy", Password = "Incorrect", Email = "Doughy@gmail.com", PhoneNumber = "+3620123456", FirstName = "John", LastName = "Doe", Ward = "b", CreatedAt = DateTime.Now},
-                new Doctor {Id = 3, Username = "Fizzy", Password = "Incorrect", Email = "Fizy@gmail.com", PhoneNumber = "+3630123456", FirstName = "Fizz", LastName = "Buzz", Ward = "c", CreatedAt = DateTime.Now}
-            );
-        
+
         builder.Entity<Product>()
             .HasIndex(p => p.Name)
             .IsUnique();
@@ -72,5 +61,7 @@ public class HospitalApiContext : DbContext
                 new Event {Id = 2, Name = "General Exams", Description = "EventDescription", Start = DateTime.Now, End = DateTime.Now.AddDays(5), CreatedAt = DateTime.Now},
                 new Event {Id = 3, Name = "Donate Blood", Description = "EventDescription", Start = DateTime.Now.AddDays(5), End = DateTime.Now.AddDays(10), CreatedAt = DateTime.Now}
             );
+        
+        base.OnModelCreating(builder);
     }
 }

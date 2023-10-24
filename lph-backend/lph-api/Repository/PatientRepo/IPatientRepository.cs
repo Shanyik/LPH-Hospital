@@ -12,4 +12,6 @@ public interface IPatientRepository
     void Update(Patient patient);
 
     Patient? GetByMedicalNumber(string number);
+    
+    Patient? GetByIdentityId(string id);
 }

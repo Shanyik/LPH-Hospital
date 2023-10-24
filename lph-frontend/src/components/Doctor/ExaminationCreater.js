@@ -107,9 +107,9 @@ const ExaminationCreater = ({ userId }) => {
         doctor !== null ? [<div id="examCreaterContainer">
             <form className="ExamForm" onSubmit={onSubmit}>
                 <div id="doctorContainre">
-                    <h4>Exam:</h4>
+                    <h4>Exam</h4>
                     <div className="control">
-                        <Typography htmlFor="name">ExamType:</Typography>
+                        <Typography htmlFor="name">ExamType</Typography>
                         <input
                             placeholder="ExamType"
                             onChange={(e) => setType(e.target.value)}
@@ -118,9 +118,9 @@ const ExaminationCreater = ({ userId }) => {
                         />
                     </div>
 
-                    <h4>Doctor:</h4>
+                    <h4>Doctor</h4>
                     <div className="control">
-                        <Typography htmlFor="name">Firstname:</Typography>
+                        <Typography htmlFor="name">Firstname</Typography>
                         <input
                             value={doctor.firstName}
                             placeholder="Fristname"
@@ -130,7 +130,7 @@ const ExaminationCreater = ({ userId }) => {
                         />
                     </div>
                     <div className="control">
-                        <Typography htmlFor="name">Lastname:</Typography>
+                        <Typography htmlFor="name">Lastname</Typography>
                         <input
                             value={doctor.lastName}
                             placeholder="Lastname"
@@ -143,7 +143,7 @@ const ExaminationCreater = ({ userId }) => {
 
                         <div>{currentWard === "Chose wards" || currentWard === null ? <>Chose wards!</> : <></>}</div>
                         {console.log(currentWard)}
-                        <Typography htmlFor="name">Ward:</Typography>
+                        <Typography htmlFor="name">Ward</Typography>
                         <select onChange={(e) => setCurrentWard(e.target.value)} defaultValue={doctor.ward}>
                             <option value="Chose wards">Choose wards</option>
                             {wards.map((val, i) => (
@@ -155,7 +155,7 @@ const ExaminationCreater = ({ userId }) => {
                     </div>
                 </div>
                 <div id="PatientContainer">
-                    <h4>Patient:</h4>
+                    <h4>Patient</h4>
 
                     <div className="control">
                         <div>{medicalNumbererror === true ? (
@@ -165,7 +165,7 @@ const ExaminationCreater = ({ userId }) => {
                         ) : (
                             <>Required field!</>
                         )}</div>
-                        <Typography htmlFor="name">MedicalNumber:</Typography>
+                        <Typography htmlFor="name">MedicalNumber</Typography>
                         <input
                             onChange={(e) => handleMedicalNumberChange(e)}
                             name="medicalNumber"
@@ -205,7 +205,7 @@ const ExaminationCreater = ({ userId }) => {
                 </div>
                 <div id="descriptionContainer">
                     <div className="control">
-                        <h4>Description:</h4>
+                        <h4>Description</h4>
                         <textarea
                             className="descriptionTextArea"
                             onChange={(e) => setDescription(e.target.value)}

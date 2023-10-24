@@ -141,4 +141,23 @@ public class PatientController : ControllerBase
         }
     }
     
+    [HttpGet("GetByIdentityId:{id}")]
+    public IActionResult GetByIdentityId(string id)
+    {
+        try
+        {
+            var patient = _patientRepository.GetByIdentityId(id);
+
+            if (patient == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(patient);
+        }
+        catch (Exception e)
+        {
+            return BadRequest();
+        }
+    }
 }

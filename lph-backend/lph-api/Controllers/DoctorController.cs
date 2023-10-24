@@ -114,4 +114,24 @@ public class DoctorController : ControllerBase
             return BadRequest();
         }
     }
+    
+    [HttpGet("GetByIdentityId:{id}")]
+    public IActionResult GetByIdentityId(string id)
+    {
+        try
+        {
+            var doctor = _doctorRepository.GetByIdentityId(id);
+
+            if (doctor == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(doctor);
+        }
+        catch (Exception e)
+        {
+            return BadRequest();
+        }
+    }
 }

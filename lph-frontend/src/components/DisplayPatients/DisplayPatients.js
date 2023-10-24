@@ -116,7 +116,7 @@ const DisplayPatients = () => {
                                             <tr>
                                                 <th>First Name</th>
                                                 <th>Last Name</th>
-                                                <th>MedicalNumber</th>
+                                                <th>Medical Number</th>
                                                 <th>Phone number</th>
                                                 <th></th>
                                             </tr>

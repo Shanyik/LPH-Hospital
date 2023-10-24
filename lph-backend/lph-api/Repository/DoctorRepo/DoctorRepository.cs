@@ -44,4 +44,12 @@ public class DoctorRepository : IDoctorRepository
         dbContext.Update(doctor);
         dbContext.SaveChanges();
     }
+    
+    public Doctor? GetByIdentityId(string id)
+    {
+        using var dbContext = new HospitalApiContext();
+
+        return dbContext.Doctors.FirstOrDefault(c => c.IdentityId == id);
+    }
+    
 }
