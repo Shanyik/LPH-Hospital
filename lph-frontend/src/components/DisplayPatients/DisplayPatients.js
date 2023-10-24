@@ -116,7 +116,7 @@ const DisplayPatients = () => {
                                             <tr>
                                                 <th>First Name</th>
                                                 <th>Last Name</th>
-                                                <th>Email</th>
+                                                <th>Medical Number</th>
                                                 <th>Phone number</th>
                                                 <th></th>
                                             </tr>
@@ -130,7 +130,7 @@ const DisplayPatients = () => {
                                                         <tr key={patient.id} onClick={() => { rowController(patient.id) }}>
                                                             <td>{patient.firstName}</td>
                                                             <td>{patient.lastName}</td>
-                                                            <td>{patient.email}</td>
+                                                            <td>{patient.medicalNumber}</td>
                                                             <td>{patient.phoneNumber}</td>
                                                             <td><button onClick={() => deleteButton(patient.username)}>Delete</button></td>
                                                         </tr>

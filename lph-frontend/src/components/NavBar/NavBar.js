@@ -17,7 +17,7 @@ const Navbar = (props) => {
                 <Link className='menuButton' to="/patient/prescriptions">Prescriptions</Link>
             </Grid>
             <Grid item xs={2.2} >
-                <Link className='menuButton' to="/patient/documents">Documents</Link>
+                {/*<Link className='menuButton' to="/patient/documents">Documents</Link>*/}
             </Grid>
             <Grid item xs={1} >
             </Grid>

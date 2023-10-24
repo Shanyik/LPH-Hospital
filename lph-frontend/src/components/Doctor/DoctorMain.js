@@ -9,10 +9,10 @@ const DoctorMain = () => {
             <Box className="MainMenu">
                 <Grid container alignItems="center">
                     <Grid item xs={8} >
-                        main
+                        
                     </Grid>
                     <Grid item xs={4} >
-                        side
+                        
                     </Grid>
                 </Grid>
                
