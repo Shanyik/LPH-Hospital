@@ -26,13 +26,13 @@ const Navbar = (props) => {
               <img src={logo} alt="Logo" className="mini-logo" />
             </Grid>
             <Grid item xs={2} >
-                <Link className='menuButton' to="/">Home</Link>
+                <Link className='menuButton' to="/patient/home">Home</Link>
             </Grid>
             <Grid item xs={2} >
                 <Link className='menuButton' to="/patient/prescriptions">Prescriptions</Link>
             </Grid>
             <Grid item xs={2} >
-                {/*<Link className='menuButton' to="/patient/documents">Documents</Link>*/}
+                <Link className='menuButton' to="/patient/documents">Documents</Link>
             </Grid>
             <Grid item xs={1} >
             </Grid>
