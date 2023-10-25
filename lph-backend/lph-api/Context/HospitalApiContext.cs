@@ -17,7 +17,7 @@ public class HospitalApiContext : IdentityDbContext<IdentityUser, IdentityRole, 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         optionsBuilder.UseSqlServer(
-            "Server=localhost,1433;Database=Hospital;User Id=sa;Password=yourStrong(!)Password;Encrypt=false;"); //env
+            "Server=localhost,1433;Database=LPHHospital;User Id=sa;Password=Incorrect!;Encrypt=false;"); //env
     }
     
     protected override void OnModelCreating(ModelBuilder builder)
