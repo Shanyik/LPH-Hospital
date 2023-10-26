@@ -19,43 +19,42 @@ import Login from "./components/Auth/Login";
 function App() {
 
   const [user, setUser] = useState(null)
-  const [userId, setUserID] = useState(1)
+  const [userId, setUserID] = useState(null)
   const [token, setToken] = useState(null)
   const [role, setRole] = useState(null)
-  //const [cookies, setCookie, removeCookie] = useCookies(['cookie-name']);
+  
 
   useEffect(() => {
-   if (token !== null ) {
+    if (token !== null) {
 
       localStorage.setItem('token', token)
       console.log(localStorage)
 
-    } else{
-      console.log(localStorage.getItem('token'))
+    } else {
+      console.log("asd")
       let refreshToken = localStorage.getItem('token');
-      setToken(refreshToken);
-      console.log(refreshToken)
-      let decoded = JSON.parse(atob(refreshToken.split(".")[1]));
-      let exp = decoded.exp;
-      const currentTimeInSeconds = Math.floor(Date.now() / 1000);
-      if (exp < currentTimeInSeconds) {
-        setRole(null)
-      } else {
-        console.log(decoded)
-        const role = decoded["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
-        console.log(decoded["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"])
-        setRole(role)
+      if (refreshToken !== null) {
+        let decoded = JSON.parse(atob(refreshToken.split(".")[1]));
+        let exp = decoded.exp;
+        const currentTimeInSeconds = Math.floor(Date.now() / 1000);
+        if (exp < currentTimeInSeconds) {
+          setRole(null)
+        } else {
+          console.log(decoded)
+          const role = decoded["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
+          console.log(decoded["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"])
+          setRole(role)
+        }
       }
-
-
+      let userId = localStorage.getItem('token');
+      if(userId >= 0){
+        setUserID(userId)
+      }
     }
 
   }, [token])
 
-  useEffect(()=>{
-    console.log("asd")
-    setUserID(localStorage.getItem('userId'))
-  },[window.location.pathname])
+  
 
   return (
     <Router>
@@ -64,7 +63,7 @@ function App() {
         <Routes>
           <Route exact path="*" element={<NotFound />}></Route> {/* 404 */}
           <Route path="/" element={<Home setUser={setUser} />} />
-          <Route path="/login" element={<Login token={token} setToken={setToken} role={role} setRole={setRole} setUserID={setUserID}/>} />
+          <Route path="/login" element={<Login token={token} setToken={setToken} role={role} setRole={setRole} setUserID={setUserID} />} />
           {
             role === "Doctor" ? [
               <>
@@ -81,7 +80,7 @@ function App() {
               </>
             ]
           }
-          <Route path="/profile" element={<Profile role={role} userId={userId}/>} />
+          <Route path="/profile" element={<Profile role={role} userId={userId} />} />
         </Routes>
 
       </div>

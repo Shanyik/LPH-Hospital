@@ -52,28 +52,21 @@ const Login = ({ token, setToken, role, setRole, setUserID }) => {
                 const token = res.token;
                 const decodedToken = JSON.parse(atob(token.split('.')[1]));
                 const role = decodedToken["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
+                const id = decodedToken["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"];
                 setRole(role)
                 setToken(token)
-
-                console.log(decodedToken)
+                getIdFetch(id, role).then(data => {
+                    setUserID(data.id);
+                    console.log(data.id)
+                    localStorage.setItem('userId', data.id);
+                });
+                
             }
             console.log(res)
         })
     }
 
-   useEffect(()=>{
-        if(token !== "" && token !== null){
-            const decodedToken = atob(token.split('.')[1]);
-            const role = decodedToken["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
-            const id = decodedToken["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"];
-            if (role && id) {
-                getIdFetch(id, role).then(data => {
-                    setUserID(data.id);
-                    localStorage.setItem('userId', data.id);
-                });
-            }
-        }
-    },[token])
+   
 
     return (
 
