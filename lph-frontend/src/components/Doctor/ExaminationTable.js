@@ -19,7 +19,7 @@ const ExaminationTable = ({ examinations, patients, doctor }) => {
 
     useEffect(() => {
         console.log(patients)
-        console.log(doctor)
+        console.log(examinations)
     });
 
     return (
@@ -33,16 +33,23 @@ const ExaminationTable = ({ examinations, patients, doctor }) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {examinations.length === 0 ?
-                        [<td colSpan="2">Examination not found </td>]
-                        :
-                        [examinations.map((exam) => (
+                    {examinations.length >= 1 ?
+                        [
+                            console.log(examinations.length),
+                            examinations.map((exam) => (
                             <tr onClick={() => (handleOpen(exam))}>
                                 <td>{exam.type}</td>
                                 <td>{new Date(exam.createdAt).toLocaleDateString()}{" "}
                                     {new Date(exam.createdAt).toLocaleTimeString()}
                                 </td>
-                            </tr>))]
+                            </tr>))
+
+                        
+                        ]
+                        :
+                        [
+                            <td colSpan="2">Examination not found </td>
+                           ]
                     }
                 </tbody>
             </table>

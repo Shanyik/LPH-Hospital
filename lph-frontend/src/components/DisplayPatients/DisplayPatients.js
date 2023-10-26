@@ -149,8 +149,8 @@ const DisplayPatients = () => {
 
                     </Grid>
                     <Grid item xs={4} >
-                        <ExaminationTable examinations={examinations} patients={patients} />
-                        <PresceptionTable presciptions={presciptions} doctors={doctors} patients={patients} doctor={doctors} />
+                        <ExaminationTable examinations={examinations} patients={patients} doctor={doctors}/>
+                        <PresceptionTable presciptions={presciptions} doctors={doctors} patients={patients}/>
                     </Grid>
                 </Grid>
 

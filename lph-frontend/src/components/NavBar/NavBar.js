@@ -11,7 +11,6 @@ const Navbar = (props) => {
   const handleLogOut = () => {
     props.removeCookie("id")
     props.removeCookie("role")
-    props.removeCookie()
     navigate("/")
     window.location.reload(true);
     
@@ -48,9 +47,7 @@ const Navbar = (props) => {
     </section>
     ] : props.cookie["role"] === "Doctor" ?[
       <section>
-       <Box className="navbar">
-
-       
+       <Box className="navbar">       
           <Grid container alignItems="center">
             <Grid item xs={1} >
               <img src={logo} alt="Logo" className="mini-logo" />

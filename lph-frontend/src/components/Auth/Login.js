@@ -87,7 +87,7 @@ const Login = (props) => {
         {result === false ? "Wrong Email or password" : ""}
       </div>
       <div className="form-group">
-        <label className="form-label">Username/Email:</label>
+        <label className="form-label">Email:</label>
         <input
           type="text"
           onChange={(e) => {
