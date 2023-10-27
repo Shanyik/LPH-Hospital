@@ -1,6 +1,6 @@
 .menuButton {
-    color: rgb(0, 0, 0);
-    font-size: 2vw;
+    color: rgb(61, 61, 61);
+    font-size: 1.5vw;
     margin: 1rem;
     text-align: center;
     text-decoration: none;
@@ -8,23 +8,29 @@
 }
 
 .menuButton:hover {
-    color: #2e7d32;
+    color: #000000;
     cursor: pointer;
     transition: 0.5s;
 }
 
 .navbar {
-    width: 80%;
-    min-Width: 80%;
-    left: 10%;
-    top: 10px;
+    width: 70%;
+    min-Width: 70%;
+    left: 15%;
+    top: 20px;
     height: 10%;
-    background-color: rgba(0, 0, 0, 0.1);
+    background-color: rgba(255, 255, 255, 0.801);
     position: relative;
     z-index: 100;
-    border-radius: 20px;
+    border-radius: 10px;
+    padding: 10px;
     
 }
+
+.mini-logo {
+    width: 50%;
+    height: 50%;
+  }
 
 @media screen and (max-width: 801px) {
     .menuButton {
@@ -33,8 +39,8 @@
     }
 
     .navbar {
-        width: 80%;
-        min-Width: 80%;
-        left: 10%;
+        width: 70%;
+        min-Width: 70%;
+        left: 15%;
     }
 }

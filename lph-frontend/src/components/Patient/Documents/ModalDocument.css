@@ -1,0 +1,20 @@
+.modal-prescription{
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+#modal-modal-title{
+   font-size: 40px; 
+   position: relative;
+   margin-bottom: 2%;
+}
+
+.modal-dropdown-description{
+    left: 10px;
+    position: relative;
+    
+}
+
+.modal-dropdown-title{
+    position: relative;
+}

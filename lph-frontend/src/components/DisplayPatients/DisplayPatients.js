@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import "./DisplayPatients.css";
-import { Box, Grid } from "@mui/material";
+import { Box, Button, Grid } from "@mui/material";
 import SearchField from "../Doctor/SearchPatient";
 import ExaminationTable from "../Doctor/ExaminationTable";
 import PresceptionTable from "../Doctor/PrescriptionTable";
+import DehazeIcon from '@mui/icons-material/Dehaze';
 
 const deletePatient = (username) => {
     return fetch(`/Patient/Delete:${username}`, { method: "DELETE" })
@@ -34,7 +35,7 @@ const DisplayPatients = () => {
     const [examinations, setExaminations] = useState([]);
     const [presciptions, setPresciptions] = useState([]);
     const [doctors, setDoctors] = useState([]);
-
+    
     useEffect(() => {
         fetch('/Patient/GetAll')
             .then(response => response.json())
@@ -44,6 +45,7 @@ const DisplayPatients = () => {
             )
             .catch(error => console.log(error)).then(
                 getAllDoctors().then(data => {
+                    console.log(data)
                     setDoctors(data)
                 })
             )
@@ -103,6 +105,7 @@ const DisplayPatients = () => {
     return (
 
         <div id="container">
+           
             <SearchField searchButton={searchButton} setSearchValue={setSearchValue} />
             <Box id="patientMain">
                 <Grid container alignItems="center">

@@ -7,8 +7,8 @@ const Profile = (props) => {
   const deleteButton = (username) => {
     console.log(username)
 
-    if (props.user === "patient") {
-      return fetch(`/Doctor/Patient:${username}`, { method: "DELETE" })
+    if (props.cookie["role"] === "Patient") {
+      return fetch(`/Patient/Delete:${username}`, { method: "DELETE" })
       .then((res) => res.text())
       .then((res) => console.log(res))
     }else{
@@ -21,8 +21,8 @@ const Profile = (props) => {
   const [userData, setUserData] = useState(null)
 
   useEffect(() => {
-    if (props.role === "Patient") {
-      fetch(`/Patient/GetById:${props.userId}`)
+    if (props.cookie["role"] === "Patient") {
+      fetch(`/Patient/GetById:${props.cookie["id"]}`)
         .then(response => response.json())
         .then(data => {
           console.log(data)
@@ -32,8 +32,7 @@ const Profile = (props) => {
         .catch(error => console.log(error))
     }
     else{
-      console.log(props.userId)
-      fetch(`/Doctor/GetById:${props.userId}`)
+      fetch(`/Doctor/GetById:${props.cookie["id"]}`)
         .then(response => response.json())
         .then(data => {
           setUserData(data);
@@ -46,7 +45,7 @@ const Profile = (props) => {
   return (
     userData !== null ? [
       <>
-      <Avatar  className="profileAvatar" sx={{ bgcolor: "orange", width: 100, height: 100, alignItems: "center", left: "47%",top: "10%", zIndex: "100", position: "absolute"}}>{Array.from(userData.username)[0]}</Avatar>
+      <Avatar  className="profileAvatar" sx={{ bgcolor: "orange", width: 100, height: 100, alignItems: "center", left: "47%",top: "15%", zIndex: "100", position: "absolute"}}>{Array.from(userData.username)[0]}</Avatar>
       <Box className="profileBox" alignItems={"center"} >
         <Grid sx={{width: "100%", height: "80%", position: "absolute", marginTop: "10%"}} container alignItems="center">
           <Grid item xs={6} >
@@ -65,7 +64,7 @@ const Profile = (props) => {
               {userData.lastName} 
             </Typography>
           </Grid>
-            {props.user === "patient" ? [
+            {props.cookie["role"] === "Patient" ? [
               <Grid item xs={6} >
               <Typography fontWeight={'bold'} sx={{fontSize: "30px"}}>
                 Medical Number

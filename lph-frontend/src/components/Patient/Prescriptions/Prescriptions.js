@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import ModalPrescription from './ModalPrescription';
+import Button from '@mui/material/Button';
 
 
 const Prescriptions = (props) => {
@@ -11,7 +12,7 @@ const Prescriptions = (props) => {
     const [currentId, setCurrentId] = useState(false)
     
     useEffect(() => {
-        fetch(`/Prescription/GetByPatientId:${props.userId}`)
+        fetch(`/Prescription/GetByPatientId:${props.cookie["id"]}`)
             .then(response => response.json())
             .then(data => {
                 setPresciptions(data);
@@ -35,7 +36,7 @@ const Prescriptions = (props) => {
             }
             )
             .catch(error => console.log(error))
-    }, [props.userId])
+    }, [props.cookie["id"]])
     
     const handleOpen = (presciption) => {
 
@@ -74,7 +75,7 @@ const Prescriptions = (props) => {
                     <tr key={presciption.id} >
                         <td>{doctors.find((doctor) => doctor.id === presciption.doctorId).firstName + " " + doctors.find((doctor) => doctor.id === presciption.doctorId).lastName }</td>
                         <td>{products.find(product => product.id === presciption.productId).name}</td>
-                        <td><button onClick={() => handleOpen(presciption, products, doctors)}>Expand</button></td>
+                        <td><Button variant="contained" color="success" onClick={() => handleOpen(presciption, products, doctors)}>Expand</Button></td>
                         <ModalPrescription show={showModal} close={() => setShowModal(false)} data={currentId}/>
                     </tr>
                 ))}

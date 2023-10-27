@@ -20,6 +20,10 @@ const ExamModal = ({open, handleClose, exam, patients, doctors}) => {
         pb: 3,
     };
 
+    useEffect(()=>{
+        console.log(doctors)
+    })
+
     return (
         <Modal
             open={open}

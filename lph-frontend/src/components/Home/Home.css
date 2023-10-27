@@ -1,11 +1,43 @@
-.title{
-    font-size: 50px;
-    top: 25%;
-    left: 25%;
-    position: absolute;
+.home-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  color: #fff;
+  font-size: 24px;
+  text-align: center;
 }
 
-button{
-    position: relative;
-    top: 50px;
+.home-title {
+    display: flex;
+    align-items: center;
+    font-size: 36px;
+    margin-bottom: 20px;
+}
+
+.home-logo {
+    margin-right: 10px;
+  }
+
+.home-button-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.home-button {
+  display: block;
+  margin: 10px 0;
+  padding: 10px 20px;
+  border-radius: 5px;
+  background-color: #33c9ff;
+  color: #fff;
+  text-align: center;
+  text-decoration: none;
+  transition: background-color 0.3s;
+}
+
+.home-button:hover {
+  background-color: #0074d9;
 }

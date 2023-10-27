@@ -14,77 +14,54 @@ import Profile from "./components/Profile/Profile";
 import ExaminationCreater from "./components/Doctor/ExaminationCreater";
 import PatientHome from "./components/Patient/PatientHome/PatientHome";
 import Login from "./components/Auth/Login";
-
+import { CookiesProvider, useCookies } from "react-cookie";
+import Registration from "./components/Auth/Registration";
 
 function App() {
 
-  const [user, setUser] = useState(null)
-  const [userId, setUserID] = useState(null)
-  const [token, setToken] = useState(null)
-  const [role, setRole] = useState(null)
-  
+  const [cookie, setCookie, removeCookie] = useCookies(['user-cookie']);
 
   useEffect(() => {
-    if (token !== null) {
-
-      localStorage.setItem('token', token)
-      console.log(localStorage)
-
-    } else {
-      console.log("asd")
-      let refreshToken = localStorage.getItem('token');
-      if (refreshToken !== null) {
-        let decoded = JSON.parse(atob(refreshToken.split(".")[1]));
-        let exp = decoded.exp;
-        const currentTimeInSeconds = Math.floor(Date.now() / 1000);
-        if (exp < currentTimeInSeconds) {
-          setRole(null)
-        } else {
-          console.log(decoded)
-          const role = decoded["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
-          console.log(decoded["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"])
-          setRole(role)
-        }
-      }
-      let userId = localStorage.getItem('token');
-      if(userId >= 0){
-        setUserID(userId)
-      }
-    }
-
-  }, [token])
-
-  
+    console.log(cookie)
+  },[cookie])
 
   return (
-    <Router>
-      <div className="App">
-        <Navbar user={user} setUser={setUser}></Navbar>
-        <Routes>
-          <Route exact path="*" element={<NotFound />}></Route> {/* 404 */}
-          <Route path="/" element={<Home setUser={setUser} />} />
-          <Route path="/login" element={<Login token={token} setToken={setToken} role={role} setRole={setRole} setUserID={setUserID} />} />
-          {
-            role === "Doctor" ? [
-              <>
-                <Route path="/patients" element={<DisplayPatients user={user} setUser={setUser} />} />
-                <Route path="/examination" element={<ExaminationCreater userId={userId} />}></Route>
-                <Route path="/main" element={<DoctorMain user={user} setUser={setUser} />} />
-              </>
-            ] : [
-              <>
-                <Route path="/doctors" element={<DisplayDoctors />} />
-                <Route path="/patient/prescriptions" element={<Prescriptions userId={userId} />} />
-                <Route path="/patient/documents" element={<Documents />} />
-                <Route path="/patient/home" element={<PatientHome />} />
-              </>
-            ]
-          }
-          <Route path="/profile" element={<Profile role={role} userId={userId} />} />
-        </Routes>
+    <CookiesProvider>
+      <Router>
+        <div className="App">
+          <Navbar cookie={cookie} removeCookie={removeCookie}></Navbar>
+          <Routes>
+            <Route exact path="*" element={<NotFound />}></Route> {/* 404 */}
+            {
+              cookie.role === "Doctor" ? [
+                <>
+                  <Route path="/patients" element={<DisplayPatients  />} />
+                  <Route path="/examination" element={<ExaminationCreater />}></Route>
+                  <Route path="/main" element={<DoctorMain />} />
+                  <Route path="/profile" element={<Profile cookie={cookie}/>} />
+                </>
+              ] : cookie.role ==="Patient" ?  [
+                <>
+                  <Route path="/doctors" element={<DisplayDoctors />} />
+                  <Route path="/patient/prescriptions" element={<Prescriptions cookie={cookie}/>} />
+                  <Route path="/patient/documents" element={<Documents cookie={cookie}/>} />
+                  <Route path="/patient/home" element={<PatientHome />} />
+                  <Route path="/profile" element={<Profile cookie={cookie}/>} />
+                </>
+              ] : [
+                <>
+                  <Route path="/" element={<Home />} />
+                  <Route path="/login" element={<Login setCookie={setCookie} cookie={cookie}/>} />
+                  <Route path="/registration" element={<Registration />} />
+                </>
+              ]
+            }
 
-      </div>
-    </Router>
+          </Routes>
+
+        </div>
+      </Router>
+    </CookiesProvider>
   );
 }
 

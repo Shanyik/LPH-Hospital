@@ -1,4 +1,5 @@
-﻿using lph_api.Repository.ProductRepo;
+﻿using lph_api.Model;
+using lph_api.Repository.ProductRepo;
 using Microsoft.AspNetCore.Mvc;
 
 namespace lph_api.Controllers;

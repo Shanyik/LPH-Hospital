@@ -10,5 +10,5 @@ public record RegistrationRequest(
     [Required]string PhoneNumber,
     [Required]string FirstName,
     [Required]string LastName,
-    [Required]string Ward, 
-    [Required]string MedicalNumber);
+    string? Ward, 
+    string? MedicalNumber);

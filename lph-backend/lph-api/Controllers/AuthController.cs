@@ -31,7 +31,8 @@ public class AuthController : ControllerBase
             return BadRequest(ModelState);
         }
         
-        var userRegistration = await _authenticationService.RegisterUserAsync(request.Email, request.Username, request.PhoneNumber, request.FirstName, request.LastName, request.Ward, request.MedicalNumber, request.Role,  identityRegistration.IdentityID);
+        var userRegistration = await _authenticationService.RegisterUserAsync(request.Email, request.Username, request.PhoneNumber, request.FirstName, 
+            request.LastName, request.Ward, request.MedicalNumber, request.Role,  identityRegistration.IdentityID);
 
         if (!userRegistration.Success)
         {

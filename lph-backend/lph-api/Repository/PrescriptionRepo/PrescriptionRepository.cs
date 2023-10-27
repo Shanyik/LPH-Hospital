@@ -9,15 +9,6 @@ public class PrescriptionRepository : IPrescriptionRepository
     {
         using var dbContext = new HospitalApiContext();
         return dbContext.Prescriptions.Where(c => c.PatientId == id).ToList();
-        
-        /*
-         var person = (
-            from p in dbContext.Prescriptions
-            join d in dbContext.Doctors 
-                on p.DoctorId equals d.Id    
-            where p.Id == id    
-            select p);
-         */
     }
     
     public IEnumerable<Prescription> GetByDoctorId(int id)

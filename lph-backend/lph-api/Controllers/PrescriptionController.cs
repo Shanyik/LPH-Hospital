@@ -60,5 +60,22 @@ public class PrescriptionController : ControllerBase
         }
     }
     
-    //ADD
+    [HttpPost("Add")]
+    public IActionResult Add(Prescription prescription)
+    {
+        if (prescription == null)
+        {
+            return BadRequest();
+        }
+        
+        try
+        {
+            _prescriptionRepository.Add(prescription);
+            return Ok();
+        }
+        catch (Exception e)
+        {
+            return BadRequest();
+        }
+    }
 }

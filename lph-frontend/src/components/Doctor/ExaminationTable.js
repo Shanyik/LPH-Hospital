@@ -19,7 +19,7 @@ const ExaminationTable = ({ examinations, patients, doctor }) => {
 
     useEffect(() => {
         console.log(patients)
-        console.log(doctor)
+        console.log(examinations)
     });
 
     return (
@@ -33,7 +33,7 @@ const ExaminationTable = ({ examinations, patients, doctor }) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {examinations.length === 0 ?
+                    {examinations.length !== 0 ?
                         [<td colSpan="2">Examination not found </td>]
                         :
                         [examinations.map((exam) => (
