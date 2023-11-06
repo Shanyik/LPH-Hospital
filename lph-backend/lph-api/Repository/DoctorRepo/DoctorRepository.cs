@@ -1,57 +1,55 @@
 ﻿using lph_api.Context;
 using lph_api.Model;
+using Microsoft.EntityFrameworkCore;
 
 namespace lph_api.Repository.DoctorRepo;
 
 public class DoctorRepository : IDoctorRepository
-{ 
-    
-    //úgy kellene csinálni mint a kontrollernél 
-    public IEnumerable<Doctor> GetAll()
+{
+
+    private readonly HospitalApiContext _context;
+
+    public DoctorRepository(HospitalApiContext context)
     {
-        using var dbContext = new HospitalApiContext();
-        return dbContext.Doctors.ToList();
+        _context = context;
     }
 
-    public Doctor? GetByUsername(string username)
+    public async Task<IEnumerable<Doctor>> GetAll()
     {
-        using var dbContext = new HospitalApiContext();
-        return dbContext.Doctors.FirstOrDefault(c => c.Username == username);
-    }
-    
-    public Doctor? GetById(int id)
-    {
-        using var dbContext = new HospitalApiContext();
-
-        return dbContext.Doctors.FirstOrDefault(c => c.Id == (uint)id);
+        return await _context.Doctors.ToListAsync();
     }
 
-    public void Add(Doctor doctor)
+    public async Task<Doctor?> GetByUsername(string username)
     {
-        using var dbContext = new HospitalApiContext();
-        dbContext.Add(doctor);
-        dbContext.SaveChanges();
-    }
-
-    public void Delete(Doctor doctor)
-    {
-        using var dbContext = new HospitalApiContext();
-        dbContext.Remove(doctor);
-        dbContext.SaveChanges();
-    }
-
-    public void Update(Doctor doctor)
-    {  
-        using var dbContext = new HospitalApiContext();
-        dbContext.Update(doctor);
-        dbContext.SaveChanges();
+        return await _context.Doctors.FirstOrDefaultAsync(c => c.Username == username);
     }
     
-    public Doctor? GetByIdentityId(string id)
+    public async Task<Doctor?> GetById(int id)
     {
-        using var dbContext = new HospitalApiContext();
+        return await _context.Doctors.FirstOrDefaultAsync(c => c.Id == (uint)id);
+    }
 
-        return dbContext.Doctors.FirstOrDefault(c => c.IdentityId == id);
+    public async Task Add(Doctor doctor)
+    {
+        await _context.AddAsync(doctor);
+        await _context.SaveChangesAsync();
+    }
+
+    public async Task Delete(Doctor doctor)
+    {
+        _context.Remove(doctor);
+        await _context.SaveChangesAsync();
+    }
+
+    public async Task Update(Doctor doctor)
+    { 
+        _context.Update(doctor);
+        await _context.SaveChangesAsync();
+    }
+    
+    public async Task<Doctor?> GetByIdentityId(string id)
+    {
+        return await _context.Doctors.FirstOrDefaultAsync(c => c.IdentityId == id);
     }
     
 }

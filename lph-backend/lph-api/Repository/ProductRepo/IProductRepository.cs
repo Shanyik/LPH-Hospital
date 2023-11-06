@@ -4,7 +4,7 @@ namespace lph_api.Repository.ProductRepo;
 
 public interface IProductRepository
 {
-    IEnumerable<Product> GetAll();
-    Product? GetByName(string name);
-    Product? GetById(int id);
+    Task<IEnumerable<Product>> GetAll();
+    Task<Product?> GetByName(string name);
+    Task<Product?> GetById(int id);
 }

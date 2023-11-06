@@ -1,40 +1,43 @@
 ﻿using lph_api.Context;
 using lph_api.Model;
+using Microsoft.EntityFrameworkCore;
 
 namespace lph_api.Repository.EventRepo;
 
 public class EventRepository : IEventRepository
 {
-    public IEnumerable<Event> GetAll()
+    private readonly HospitalApiContext _context;
+
+    public EventRepository(HospitalApiContext context)
     {
-        using var dbContext = new HospitalApiContext();
-        return dbContext.Events.ToList();
+        _context = context;
+    }
+
+    public async Task<IEnumerable<Event>> GetAll()
+    {
+        return await _context.Events.ToListAsync();
     }
     
-    public Event? GetById(int id)
+    public async Task<Event?> GetById(int id)
     {
-        using var dbContext = new HospitalApiContext();
-        return dbContext.Events.FirstOrDefault(c => c.Id == id);
+        return await _context.Events.FirstOrDefaultAsync(c => c.Id == id);
     }
 
-    public void Add(Event eventName)
+    public async Task Add(Event eventName)
     {
-        using var dbContext = new HospitalApiContext();
-        dbContext.Add(eventName);
-        dbContext.SaveChanges();
+        await _context.AddAsync(eventName);
+        await _context.SaveChangesAsync();
     }
 
-    public void Delete(Event eventName)
+    public async Task Delete(Event eventName)
     {
-        using var dbContext = new HospitalApiContext();
-        dbContext.Remove(eventName);
-        dbContext.SaveChanges();
+        _context.Remove(eventName);
+        await _context.SaveChangesAsync();
     }
 
-    public void Update(Event eventName)
-    {  
-        using var dbContext = new HospitalApiContext();
-        dbContext.Update(eventName);
-        dbContext.SaveChanges();
+    public async Task Update(Event eventName)
+    {
+        _context.Update(eventName);
+        await _context.SaveChangesAsync();
     }
 }

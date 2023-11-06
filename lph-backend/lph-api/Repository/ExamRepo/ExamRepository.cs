@@ -1,26 +1,34 @@
 ﻿using lph_api.Context;
 using lph_api.Model;
+using Microsoft.EntityFrameworkCore;
 
 namespace lph_api.Repository.ExamRepo;
 
 public class ExamRepository : IExamRepository
 {
-    public IEnumerable<Exam> GetByPatientId(int id)
+    private readonly HospitalApiContext _context;
+
+    public ExamRepository(HospitalApiContext context)
     {
-        using var dbContext = new HospitalApiContext();
-        return dbContext.Exams.Where(c => c.PatientId == id).ToList();
+        _context = context;
+    }
+
+    public async Task<IEnumerable<Exam>> GetByPatientId(int id)
+    {
+        
+        return await _context.Exams.Where(c => c.PatientId == id).ToListAsync();
     }
     
-    public IEnumerable<Exam> GetByDoctorId(int id)
+    public async Task<IEnumerable<Exam>> GetByDoctorId(int id)
     {
-        using var dbContext = new HospitalApiContext();
-        return dbContext.Exams.Where(c => c.DoctorId == id).ToList();
+        
+        return await _context.Exams.Where(c => c.DoctorId == id).ToListAsync();
     }
     
-    public void Add(Exam exam)
+    public async Task Add(Exam exam)
     {
-        using var dbContext = new HospitalApiContext();
-        dbContext.Add(exam);
-        dbContext.SaveChanges();
+        
+        await _context.AddAsync(exam);
+        await _context.SaveChangesAsync();
     }
 }

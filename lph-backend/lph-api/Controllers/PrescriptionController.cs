@@ -21,11 +21,11 @@ public class PrescriptionController : ControllerBase
     }
     
     [HttpGet("GetByPatientId:{id}")]
-    public IActionResult GetByPatientId(int id)
+    public async Task<IActionResult> GetByPatientId(int id)
     {
         try
         {
-            var prescriptions = _prescriptionRepository.GetByPatientId(id);
+            var prescriptions = await _prescriptionRepository.GetByPatientId(id);
 
             if (!prescriptions.Any())
             {
@@ -41,11 +41,11 @@ public class PrescriptionController : ControllerBase
     }
     
     [HttpGet("GetByDoctorId:{id}")]
-    public IActionResult GetByDoctorId(int id)
+    public async Task<IActionResult> GetByDoctorId(int id)
     {
         try
         {
-            var prescriptions = _prescriptionRepository.GetByDoctorId(id);
+            var prescriptions = await _prescriptionRepository.GetByDoctorId(id);
             
             if (!prescriptions.Any())
             {
@@ -61,7 +61,7 @@ public class PrescriptionController : ControllerBase
     }
     
     [HttpPost("Add")]
-    public IActionResult Add(Prescription prescription)
+    public async Task<IActionResult> Add(Prescription prescription)
     {
         if (prescription == null)
         {
@@ -70,7 +70,7 @@ public class PrescriptionController : ControllerBase
         
         try
         {
-            _prescriptionRepository.Add(prescription);
+            await _prescriptionRepository.Add(prescription);
             return Ok();
         }
         catch (Exception e)

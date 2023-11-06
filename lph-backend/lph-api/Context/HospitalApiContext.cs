@@ -14,10 +14,15 @@ public class HospitalApiContext : IdentityDbContext<IdentityUser, IdentityRole, 
     public DbSet<Exam> Exams { get; set; }
     public DbSet<Event> Events { get; set; }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    /*protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         optionsBuilder.UseSqlServer(
-            "Server=localhost,1433;Database=Hospital;User Id=sa;Password=yourStrong(!)Password;Encrypt=false;"); //env
+            "Server=localhost,1433;Database=Hospital;User Id=sa;Password=yourStrong(!)Password;Encrypt=false;");
+    }*/
+    
+    public HospitalApiContext (DbContextOptions<HospitalApiContext> options)
+        : base(options)
+    {
     }
     
     protected override void OnModelCreating(ModelBuilder builder)

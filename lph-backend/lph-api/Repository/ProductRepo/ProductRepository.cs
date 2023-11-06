@@ -1,25 +1,30 @@
 ﻿using lph_api.Context;
 using lph_api.Model;
+using Microsoft.EntityFrameworkCore;
 
 namespace lph_api.Repository.ProductRepo;
 
 public class ProductRepository : IProductRepository
 {
-    public IEnumerable<Product> GetAll()
+    private readonly HospitalApiContext _context;
+
+    public ProductRepository(HospitalApiContext context)
     {
-        using var dbContext = new HospitalApiContext();
-        return dbContext.Products.ToList();
+        _context = context;
     }
 
-    public Product? GetByName(string name)
+    public async Task<IEnumerable<Product>> GetAll()
     {
-        using var dbContext = new HospitalApiContext();
-        return dbContext.Products.FirstOrDefault(c => c.Name == name);
+        return await _context.Products.ToListAsync();
+    }
+
+    public async Task<Product?> GetByName(string name)
+    {
+        return await _context.Products.FirstOrDefaultAsync(c => c.Name == name);
     }
     
-    public Product? GetById(int id)
+    public async Task<Product?> GetById(int id)
     {
-        using var dbContext = new HospitalApiContext();
-        return dbContext.Products.FirstOrDefault(c => c.Id == id);
+        return await _context.Products.FirstOrDefaultAsync(c => c.Id == id);
     }
 }

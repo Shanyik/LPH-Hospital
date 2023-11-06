@@ -16,11 +16,11 @@ public class ProductController : ControllerBase
     }
     
     [HttpGet("GetAll")]
-    public IActionResult GetAll()
+    public async Task<IActionResult> GetAll()
     {
         try
         {
-            var products = _productRepository.GetAll();
+            var products = await _productRepository.GetAll();
 
             if (!products.Any())
             {
@@ -36,11 +36,11 @@ public class ProductController : ControllerBase
     }
 
     [HttpGet("GetByName:{name}")]
-    public IActionResult GetByUsername(string name)
+    public async Task<IActionResult> GetByUsername(string name)
     {
         try
         {
-            var product = _productRepository.GetByName(name);
+            var product = await _productRepository.GetByName(name);
             
             if (product == null)
             {
@@ -56,11 +56,11 @@ public class ProductController : ControllerBase
     }
     
     [HttpGet("GetById:{id}")]
-    public IActionResult GetByUsername(int id)
+    public async Task<IActionResult> GetByUsername(int id)
     {
         try
         {
-            var product = _productRepository.GetById(id);
+            var product = await _productRepository.GetById(id);
             
             if (product == null)
             {

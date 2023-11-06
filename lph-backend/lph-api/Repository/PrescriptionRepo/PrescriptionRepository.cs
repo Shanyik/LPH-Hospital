@@ -1,26 +1,32 @@
 ﻿using lph_api.Context;
 using lph_api.Model;
+using Microsoft.EntityFrameworkCore;
 
 namespace lph_api.Repository.PrescriptionRepo;
 
 public class PrescriptionRepository : IPrescriptionRepository
 {
-    public IEnumerable<Prescription> GetByPatientId(int id)
+
+    private readonly HospitalApiContext _context;
+
+    public PrescriptionRepository(HospitalApiContext context)
     {
-        using var dbContext = new HospitalApiContext();
-        return dbContext.Prescriptions.Where(c => c.PatientId == id).ToList();
+        _context = context;
+    }
+
+    public async Task<IEnumerable<Prescription>> GetByPatientId(int id)
+    {
+        return await _context.Prescriptions.Where(c => c.PatientId == id).ToListAsync();
     }
     
-    public IEnumerable<Prescription> GetByDoctorId(int id)
+    public async Task<IEnumerable<Prescription>> GetByDoctorId(int id)
     {
-        using var dbContext = new HospitalApiContext();
-        return dbContext.Prescriptions.Where(c => c.DoctorId == id).ToList();
+        return await _context.Prescriptions.Where(c => c.DoctorId == id).ToListAsync();
     }
     
-    public void Add(Prescription prescription)
+    public async Task Add(Prescription prescription)
     {
-        using var dbContext = new HospitalApiContext();
-        dbContext.Add(prescription);
-        dbContext.SaveChanges();
+       await _context.AddAsync(prescription);
+       await _context.SaveChangesAsync();
     }
 }

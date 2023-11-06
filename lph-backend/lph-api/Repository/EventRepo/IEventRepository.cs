@@ -4,9 +4,9 @@ namespace lph_api.Repository.EventRepo;
 
 public interface IEventRepository
 {
-    IEnumerable<Event> GetAll();
-    public Event? GetById(int id);
-    void Add(Event eventName);
-    void Delete(Event eventName);
-    void Update(Event eventName);
+    Task<IEnumerable<Event>> GetAll();
+    Task<Event?> GetById(int id);
+    Task Add(Event eventName);
+    Task Delete(Event eventName);
+    Task Update(Event eventName);
 }

@@ -4,12 +4,12 @@ namespace lph_api.Repository.DoctorRepo;
 
 public interface IDoctorRepository
 {
-    IEnumerable<Doctor> GetAll();
-    Doctor? GetByUsername(string username);
-    public Doctor? GetById(int id);
-    void Add(Doctor doctor);
-    void Delete(Doctor doctor);
-    void Update(Doctor doctor);
+    Task<IEnumerable<Doctor>> GetAll();
+    Task<Doctor?> GetByUsername(string username);
+    Task<Doctor?> GetById(int id);
+    Task Add(Doctor doctor);
+    Task Delete(Doctor doctor);
+    Task Update(Doctor doctor);
 
-    Doctor? GetByIdentityId(string id);
+    Task<Doctor?> GetByIdentityId(string id);
 }

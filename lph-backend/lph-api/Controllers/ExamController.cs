@@ -16,11 +16,11 @@ public class ExamController : ControllerBase
     }
     
     [HttpGet("GetByPatientId:{id}")]
-    public IActionResult GetByPatientId(int id)
+    public async Task<IActionResult> GetByPatientId(int id)
     {
         try
         {
-            var exams = _examRepository.GetByPatientId(id).ToList();
+            var exams = await _examRepository.GetByPatientId(id);
 
             if (!exams.Any())
             {
@@ -36,11 +36,11 @@ public class ExamController : ControllerBase
     }
     
     [HttpGet("GetByDoctorId:{id}")]
-    public IActionResult GetByDoctorId(int id)
+    public async Task<IActionResult> GetByDoctorId(int id)
     {
         try
         {
-            var exams = _examRepository.GetByDoctorId(id);
+            var exams = await _examRepository.GetByDoctorId(id);
             
             if (!exams.Any())
             {
@@ -56,13 +56,11 @@ public class ExamController : ControllerBase
     }
     
     [HttpPost("Add")]
-    public IActionResult AddExam(Exam exam)
+    public async Task<IActionResult> AddExam(Exam exam)
     {
-        
-        
         try
         {
-            _examRepository.Add(exam);
+            await _examRepository.Add(exam);
             return Ok();
         }
         catch (Exception e)

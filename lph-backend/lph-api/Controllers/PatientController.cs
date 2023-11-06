@@ -18,11 +18,11 @@ public class PatientController : ControllerBase
     }
     
     [HttpGet("GetAll")]
-    public IActionResult GetAll()
+    public async Task<IActionResult> GetAll()
     {
         try
         {
-            var patients = _patientRepository.GetAll();
+            var patients = await _patientRepository.GetAll();
 
             if (!patients.Any())
             {
@@ -40,11 +40,11 @@ public class PatientController : ControllerBase
     }
 
     [HttpGet("GetByUsername:{username}")]
-    public IActionResult GetByUsername(string username)
+    public async Task<IActionResult> GetByUsername(string username)
     {
         try
         {
-            var patient = _patientRepository.GetByUsername(username);
+            var patient = await _patientRepository.GetByUsername(username);
             
             if (patient == null)
             {
@@ -60,11 +60,11 @@ public class PatientController : ControllerBase
     }
     
     [HttpGet("GetById:{id}")]
-    public IActionResult GetById(int id)
+    public async Task<IActionResult> GetById(int id)
     {
         try
         {
-            var patient = _patientRepository.GetById(id);
+            var patient = await _patientRepository.GetById(id);
 
             if (patient == null)
             {
@@ -82,7 +82,7 @@ public class PatientController : ControllerBase
     
 
     [HttpPost("Add")]
-    public IActionResult AddPatient(Patient patient)
+    public async Task<IActionResult> AddPatient(Patient patient)
     {
         if (patient == null)
         {
@@ -91,7 +91,7 @@ public class PatientController : ControllerBase
         
         try
         {
-            _patientRepository.Add(patient);
+            await _patientRepository.Add(patient);
             return Ok();
         }
         catch (Exception e)
@@ -102,17 +102,17 @@ public class PatientController : ControllerBase
     }
 
     [HttpDelete("Delete:{username}")]
-    public IActionResult Delete(string username)
+    public async Task<IActionResult> Delete(string username)
     {
         try
         {
-            var patient = _patientRepository.GetByUsername(username);
+            var patient = await _patientRepository.GetByUsername(username);
             
             if (patient == null)
             {
                 return NotFound();
             }
-            _patientRepository.Delete(patient);
+            await _patientRepository.Delete(patient);
             return Ok();
         }
         catch (Exception e)
@@ -122,11 +122,11 @@ public class PatientController : ControllerBase
     }
     
     [HttpGet("GetByMedicalNumber:{medicalNumber}")]
-    public IActionResult GetByMedicalNumber(string medicalNumber)
+    public async Task<IActionResult> GetByMedicalNumber(string medicalNumber)
     {
         try
         {
-            var patient = _patientRepository.GetByMedicalNumber(medicalNumber);
+            var patient = await _patientRepository.GetByMedicalNumber(medicalNumber);
 
             if (patient == null)
             {
@@ -142,11 +142,11 @@ public class PatientController : ControllerBase
     }
     
     [HttpGet("GetByIdentityId:{id}")]
-    public IActionResult GetByIdentityId(string id)
+    public async Task<IActionResult> GetByIdentityId(string id)
     {
         try
         {
-            var patient = _patientRepository.GetByIdentityId(id);
+            var patient = await _patientRepository.GetByIdentityId(id);
 
             if (patient == null)
             {

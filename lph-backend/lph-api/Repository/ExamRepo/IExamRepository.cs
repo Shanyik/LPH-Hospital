@@ -4,7 +4,7 @@ namespace lph_api.Repository.ExamRepo;
 
 public interface IExamRepository
 {
-    IEnumerable<Exam> GetByPatientId(int id);
-    IEnumerable<Exam> GetByDoctorId(int id);
-    void Add(Exam exam);
+    Task<IEnumerable<Exam>> GetByPatientId(int id);
+    Task<IEnumerable<Exam>> GetByDoctorId(int id);
+    Task Add(Exam exam);
 }

@@ -15,11 +15,11 @@ public class EventController : ControllerBase
     }
     
     [HttpGet("GetAll")]
-    public IActionResult GetAll()
+    public async Task<IActionResult> GetAll()
     {
         try
         {
-            var events = _eventRepository.GetAll();
+            var events = await _eventRepository.GetAll();
 
             if (!events.Any())
             {
@@ -35,7 +35,7 @@ public class EventController : ControllerBase
     }
 
     [HttpPost("Add")]
-    public IActionResult AddEvent(Event eventName)
+    public async Task<IActionResult> AddEvent(Event eventName)
     {
         if (eventName == null)
         {
@@ -44,7 +44,7 @@ public class EventController : ControllerBase
         
         try
         {
-            _eventRepository.Add(eventName);
+            await _eventRepository.Add(eventName);
             return Ok();
         }
         catch (Exception e)
@@ -55,17 +55,17 @@ public class EventController : ControllerBase
     }
 
     [HttpDelete("Delete:{id}")]
-    public IActionResult Delete(int id)
+    public async Task<IActionResult> Delete(int id)
     {
         try
         {
-            var eventName = _eventRepository.GetById(id);
+            var eventName = await _eventRepository.GetById(id);
             
             if (eventName == null)
             {
                 return NotFound();
             }
-            _eventRepository.Delete(eventName);
+            await _eventRepository.Delete(eventName);
             return Ok();
         }
         catch (Exception e)

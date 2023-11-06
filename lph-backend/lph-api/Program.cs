@@ -79,12 +79,12 @@ void AddServices()
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
     builder.Services.AddEndpointsApiExplorer();
     
-    builder.Services.AddSingleton<IPatientRepository, PatientRepository>();  //ál
-    builder.Services.AddSingleton<IDoctorRepository, DoctorRepository>();
-    builder.Services.AddSingleton<IProductRepository, ProductRepository>();
-    builder.Services.AddSingleton<IPrescriptionRepository, PrescriptionRepository>();
-    builder.Services.AddSingleton<IExamRepository, ExamRepository>(); //AddScoped-ben kellene használni helyesen
-    builder.Services.AddSingleton<IEventRepository, EventRepository>();
+    builder.Services.AddScoped<IPatientRepository, PatientRepository>();  
+    builder.Services.AddScoped<IDoctorRepository, DoctorRepository>();
+    builder.Services.AddScoped<IProductRepository, ProductRepository>();
+    builder.Services.AddScoped<IPrescriptionRepository, PrescriptionRepository>();
+    builder.Services.AddScoped<IExamRepository, ExamRepository>(); //AddScoped-ben kellene használni helyesen
+    builder.Services.AddScoped<IEventRepository, EventRepository>();
     builder.Services.AddScoped<IAuthService, AuthService>(); //biztosabb, jobban preferáltabb 
     builder.Services.AddScoped<ITokenService, TokenService>();
 }
@@ -122,14 +122,9 @@ void ConfigureSwagger()
 
 void AddDbContext()
 {
-    builder.Services.AddDbContext<HospitalApiContext>();
+    builder.Services.AddDbContext<HospitalApiContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("Hospital") ?? throw new InvalidOperationException("Connection string 'Hospital' not found.")));
     
-    void InitializeDb()
-    {
-        using var db = new HospitalApiContext();
-    }
-
-    InitializeDb();
 }
 
 void AddAuthentication()

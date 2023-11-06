@@ -1,60 +1,61 @@
-﻿using lph_api.Context;
+﻿using System.Formats.Asn1;
+using lph_api.Context;
 using lph_api.Model;
+using Microsoft.EntityFrameworkCore;
 
 namespace lph_api.Repository.PatientRepo;
 
 public class PatientRepository : IPatientRepository
 {
-    public IEnumerable<Patient> GetAll()
+    private HospitalApiContext _context;
+
+    public PatientRepository(HospitalApiContext context)
     {
-        using var dbContext = new HospitalApiContext();
-        return dbContext.Patients.ToList();
+        _context = context;
     }
 
-    public Patient? GetByUsername(string username)
+    public async Task<IEnumerable<Patient>> GetAll()
     {
-        using var dbContext = new HospitalApiContext();
-        return dbContext.Patients.FirstOrDefault(c => c.Username == username);
+        return await _context.Patients.ToListAsync();
     }
 
-    public Patient? GetById(int id)
+    public async Task<Patient?> GetByUsername(string username)
     {
-        using var dbContext = new HospitalApiContext();
-        return dbContext.Patients.FirstOrDefault(c => c.Id == id);
+        return await _context.Patients.FirstOrDefaultAsync(c => c.Username == username);
+    }
+
+    public async Task<Patient?> GetById(int id)
+    {
+        return await _context.Patients.FirstOrDefaultAsync(c => c.Id == id);
     }
 
 
-    public void Add(Patient patient)
+    public async Task Add(Patient patient)
     {
-        using var dbContext = new HospitalApiContext();
-        dbContext.Add(patient);
-        dbContext.SaveChanges();
+        await _context.AddAsync(patient);
+        await _context.SaveChangesAsync();
     }
 
-    public void Delete(Patient patient)
+    public async Task Delete(Patient patient)
     {
-        using var dbContext = new HospitalApiContext();
-        dbContext.Remove(patient);
-        dbContext.SaveChanges();
+        _context.Remove(patient);
+        await _context.SaveChangesAsync();
     }
 
-    public void Update(Patient patient)
+    public async Task Update(Patient patient)
     {
-        using var dbContext = new HospitalApiContext();
-        dbContext.Update(patient);
-        dbContext.SaveChanges();
+        _context.Update(patient);
+        await _context.SaveChangesAsync();
     }
 
-    public Patient? GetByMedicalNumber(string number)
+    public async Task<Patient?> GetByMedicalNumber(string number)
     {
-        using var dbContext = new HospitalApiContext();
-        return dbContext.Patients.FirstOrDefault(c => c.MedicalNumber == number);
+        return await _context.Patients.FirstOrDefaultAsync(c => c.MedicalNumber == number);
     }
 
-    public Patient? GetByIdentityId(string id)
+    public async Task<Patient?> GetByIdentityId(string id)
     {
-        using var dbContext = new HospitalApiContext();
-        return dbContext.Patients.FirstOrDefault(c => c.IdentityId == id);
+        return await _context.Patients.FirstOrDefaultAsync(c => c.IdentityId == id);
     }
 
 }
