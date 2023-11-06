@@ -14,6 +14,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
@@ -34,14 +35,38 @@ if (app.Environment.IsDevelopment())
     app.UseDeveloperExceptionPage();
 }
 
+using (var serviceScope = app.Services.GetRequiredService<IServiceScopeFactory>().CreateScope())
+{
+    var logger = serviceScope.ServiceProvider.GetRequiredService<ILogger<Program>>();
+    var db = serviceScope.ServiceProvider.GetRequiredService<HospitalApiContext>().Database;
+
+    logger.LogInformation("Migrating database...");
+
+    while (!db.CanConnect())
+    {
+        logger.LogInformation("Database not ready yet; waiting...");
+        Thread.Sleep(1000);
+    }
+
+    try
+    {
+        serviceScope.ServiceProvider.GetRequiredService<HospitalApiContext>().Database.Migrate();
+        logger.LogInformation("Database migrated successfully.");
+    }
+    catch (Exception ex)
+    {
+        logger.LogError(ex, "An error occurred while migrating the database.");
+    }
+}
+
 app.UseHttpsRedirection();
 
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.UseCors(builder =>
+app.UseCors(corsPolicyBuilder =>
 {
-    builder
+    corsPolicyBuilder
         .WithOrigins("http://localhost:3000")
         .AllowAnyMethod()
         .AllowAnyHeader();
@@ -50,6 +75,16 @@ app.UseCors(builder =>
 app.MapControllers();
 
 AddRoles();
+
+using (var serviceScope = ((IApplicationBuilder)app).ApplicationServices
+           .GetRequiredService<IServiceScopeFactory>()
+           .CreateScope())
+{
+    using (var context = serviceScope.ServiceProvider.GetService<HospitalApiContext>())
+    {
+        context.Database.Migrate();
+    }
+}
 
 app.Run();
 
@@ -124,7 +159,6 @@ void AddDbContext()
 {
     builder.Services.AddDbContext<HospitalApiContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("Hospital") ?? throw new InvalidOperationException("Connection string 'Hospital' not found.")));
-    
 }
 
 void AddAuthentication()
@@ -177,3 +211,4 @@ async Task CreatePatientRole(RoleManager<IdentityRole> roleManager)
 {
     await roleManager.CreateAsync(new IdentityRole("Patient")); 
 }
+

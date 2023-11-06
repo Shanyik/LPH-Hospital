@@ -1,0 +1,22 @@
+services:
+  lphh_backend:
+    image: lphh_backend
+    build: .
+    container_name: lphh-backend
+    ports:
+      - "5274:80"
+    depends_on:
+      - db
+    command: ["dotnet", "ef" , "database update"]
+  db:
+    image: "mcr.microsoft.com/mssql/server"
+    container_name: db
+    ports: 
+      - "1433:1433" 
+    environment:
+      - ACCEPT_EULA=y
+      - SA_PASSWORD=Incorrect!
+      - ENCRYPT=false
+      - MSSQL_DB=LPHHospital
+      - DATABASE=LPHHospital
+    
