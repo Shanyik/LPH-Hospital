@@ -33,7 +33,7 @@ const PresceptionTable = ({ presciptions, doctors, patients }) => {
                         <table id="prescriptionTable">
                             <thead>
                                 <tr>
-                                    <th>Medication name</th>
+                                    <th>Doctor</th>
                                     <th>Created</th>
                                 </tr>
                             </thead>

@@ -20,9 +20,7 @@ const ExamModal = ({open, handleClose, exam, patients, doctors}) => {
         pb: 3,
     };
 
-    useEffect(()=>{
-        console.log(doctors)
-    })
+    useEffect(() => {console.log(doctors)})
 
     return (
         <Modal
@@ -37,8 +35,8 @@ const ExamModal = ({open, handleClose, exam, patients, doctors}) => {
                 <h2 id="parent-modal-title">{exam.type}</h2>
                 <h4 id="parent-modal-description">Details:</h4>
                 <div>
-                    Doctor: {patients.find((doctors)=>doctors.id === exam.patientId).firstName}{" "}
-                                {patients.find((doctors)=>doctors.id === exam.patientId).lastName}
+                    Doctor: {doctors.find((doctors)=>doctors.id === exam.doctorId).firstName}{" "}
+                                {doctors.find((doctors)=>doctors.id === exam.doctorId).lastName}
                 </div>
                 <div>
                     Patient: {patients.find((patient)=>patient.id === exam.patientId).firstName}{" "}

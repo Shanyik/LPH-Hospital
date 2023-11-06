@@ -79,13 +79,13 @@ void AddServices()
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
     builder.Services.AddEndpointsApiExplorer();
     
-    builder.Services.AddSingleton<IPatientRepository, PatientRepository>();
+    builder.Services.AddSingleton<IPatientRepository, PatientRepository>();  //ál
     builder.Services.AddSingleton<IDoctorRepository, DoctorRepository>();
     builder.Services.AddSingleton<IProductRepository, ProductRepository>();
     builder.Services.AddSingleton<IPrescriptionRepository, PrescriptionRepository>();
-    builder.Services.AddSingleton<IExamRepository, ExamRepository>();
+    builder.Services.AddSingleton<IExamRepository, ExamRepository>(); //AddScoped-ben kellene használni helyesen
     builder.Services.AddSingleton<IEventRepository, EventRepository>();
-    builder.Services.AddScoped<IAuthService, AuthService>();
+    builder.Services.AddScoped<IAuthService, AuthService>(); //biztosabb, jobban preferáltabb 
     builder.Services.AddScoped<ITokenService, TokenService>();
 }
 

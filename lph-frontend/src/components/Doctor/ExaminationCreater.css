@@ -1,12 +1,20 @@
 #examCreaterContainer {
-    border: 1px solid #ccc;
-    padding-bottom: 20px;
-    border-radius: 30px;
-    background-color: #f7f7f7;
-    width: 70%;
-    left: 15%;
+
     position: absolute;
-    top: 8%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    /* Additional styling properties */
+    max-width: 600px; /* Set your desired maximum width */
+    width: 100%; /* Ensures the container doesn't exceed its parent's width */
+    padding: 20px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    margin-top: 100px;
+    margin-bottom: 100px;
+    
   }
   
  

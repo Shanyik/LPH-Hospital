@@ -36,7 +36,7 @@ function App() {
               cookie.role === "Doctor" ? [
                 <>
                   <Route path="/patients" element={<DisplayPatients  />} />
-                  <Route path="/examination" element={<ExaminationCreater />}></Route>
+                  <Route path="/examination" element={<ExaminationCreater userId={cookie.id}/>}></Route>
                   <Route path="/main" element={<DoctorMain />} />
                   <Route path="/profile" element={<Profile cookie={cookie}/>} />
                 </>

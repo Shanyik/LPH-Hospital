@@ -9,17 +9,16 @@ const Navbar = (props) => {
 
   const navigate = useNavigate()
 
-  const handleLogOut = () => {
-    props.removeCookie("id")
-    props.removeCookie("role")
-    props.removeCookie()
-    navigate("/")
+  const handleLogOut = async () => {
+    await props.removeCookie("id", {path: "/"})
+    await props.removeCookie("role", {path: "/"})
+    //navigate("/")
     //window.location.reload(true);
     
   }
 
   return (
-    props.cookie["role"] === "Patient" ? [
+    props.cookie["role"] === "Patient" ? (
       <section>
        <Box className="navbar">
           <Grid container alignItems="center">
@@ -47,11 +46,9 @@ const Navbar = (props) => {
           </Grid>
         </Box>
     </section>
-    ] : props.cookie["role"] === "Doctor" ?[
+    ) : props.cookie["role"] === "Doctor" ?(
       <section>
-       <Box className="navbar">
-
-       
+       <Box className="navbar">       
           <Grid container alignItems="center">
             <Grid item xs={1} >
               <img src={logo} alt="Logo" className="mini-logo" />
@@ -71,11 +68,11 @@ const Navbar = (props) => {
           </Grid>
         </Box>
     </section>
-    ] : [
+    ) : (
       <section>
 
       </section>
-    ]
+    )
   );
 }
 

@@ -4,7 +4,9 @@ using lph_api.Model;
 namespace lph_api.Repository.DoctorRepo;
 
 public class DoctorRepository : IDoctorRepository
-{
+{ 
+    
+    //úgy kellene csinálni mint a kontrollernél 
     public IEnumerable<Doctor> GetAll()
     {
         using var dbContext = new HospitalApiContext();

@@ -62,8 +62,8 @@ const Login = (props) => {
           ];
 
         getIdFetch(id, role).then((data) => {
-          props.setCookie("id", data.id, { maxAge: 3600 });
-          props.setCookie("role", role, { maxAge: 3600 });
+          props.setCookie("id", data.id, { maxAge: 3600, path: "/" });
+          props.setCookie("role", role, { maxAge: 3600, path: "/" });
           navigateToUrl(role);
           window.location.reload(true);
         });
@@ -87,7 +87,7 @@ const Login = (props) => {
         {result === false ? "Wrong Email or password" : ""}
       </div>
       <div className="form-group">
-        <label className="form-label">Username/Email:</label>
+        <label className="form-label">Email:</label>
         <input
           type="text"
           onChange={(e) => {

@@ -56,5 +56,8 @@ html, body, #root {
     /* További stílusok ... */
 }
 
+#container {
+    margin-top: 40px;
+}
 
 
