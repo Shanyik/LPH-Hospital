@@ -4,25 +4,26 @@ import { Box, Button, Grid } from "@mui/material";
 import SearchField from "../Doctor/SearchPatient";
 import ExaminationTable from "../Doctor/ExaminationTable";
 import PresceptionTable from "../Doctor/PrescriptionTable";
-import DehazeIcon from '@mui/icons-material/Dehaze';
+const backendURL = process.env.BACKEND_URL || 'http://localhost:5274';
+
 
 const deletePatient = (username) => {
-    return fetch(`/Patient/Delete:${username}`, { method: "DELETE" })
+    return fetch(`${backendURL}/Patient/Delete:${username}`, { method: "DELETE" })
         .then((res) => res.text())
         .then((res) => console.log(res))
 }
 
 const getExamDataByPatientID = (id) => {
-    return fetch(`/Exam/GetByPatientId:${id}`).then((res => res.json())) //proxy miatt -->json-ben
+    return fetch(`${backendURL}/Exam/GetByPatientId:${id}`).then((res => res.json())) //proxy miatt -->json-ben
 }
 
 const getPresceptionDataByPatientID = (id) => {
 
-    return fetch(`/Prescription/GetByPatientId:${id}`).then((res => res.json()))
+    return fetch(`${backendURL}/Prescription/GetByPatientId:${id}`).then((res => res.json()))
 }
 
 const getAllDoctors = () => {
-    return fetch('/Doctor/GetAll').then(res => res.json())
+    return fetch(`${backendURL}/Doctor/GetAll`).then(res => res.json())
 }
 
 
@@ -37,7 +38,7 @@ const DisplayPatients = () => {
     const [doctors, setDoctors] = useState([]);
     
     useEffect(() => {
-        fetch('/Patient/GetAll')
+        fetch(`${backendURL}/Patient/GetAll`)
             .then(response => response.json())
             .then(data => {
                 setPatients(data)
@@ -59,7 +60,7 @@ const DisplayPatients = () => {
                 })))
     }
     const findPatient = (username) => {
-        return fetch(`/Patient/GetByUsername:${username}`)
+        return fetch(`${backendURL}/Patient/GetByUsername:${username}`)
             .then(res => res.json())
     }
     const searchButton = () => {
@@ -80,7 +81,7 @@ const DisplayPatients = () => {
     }
 
     const refresPatient = () => {
-        fetch('http://localhost:5274/Patient/GetAll') // env
+        fetch(`${backendURL}http://localhost:5274/Patient/GetAll`) // env
             .then(response => response.json())
             .then(data => {
                 setPatients(data)

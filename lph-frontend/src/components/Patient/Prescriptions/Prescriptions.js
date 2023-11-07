@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import ModalPrescription from './ModalPrescription';
 import Button from '@mui/material/Button';
+const backendURL = process.env.BACKEND_URL || 'http://localhost:5274';
 
 
 const Prescriptions = (props) => {
@@ -12,7 +13,7 @@ const Prescriptions = (props) => {
     const [currentId, setCurrentId] = useState(false)
     
     useEffect(() => {
-        fetch(`/Prescription/GetByPatientId:${props.cookie["id"]}`)
+        fetch(`${backendURL}/Prescription/GetByPatientId:${props.cookie["id"]}`)
             .then(response => response.json())
             .then(data => {
                 setPresciptions(data);
@@ -20,7 +21,7 @@ const Prescriptions = (props) => {
             }
             )
             .catch(error => console.log(error))
-        fetch(`/Doctor/GetAll`)
+        fetch(`${backendURL}/Doctor/GetAll`)
             .then(response => response.json())
             .then(data => {
                 setDoctors(data);
@@ -28,7 +29,7 @@ const Prescriptions = (props) => {
             }
             )
             .catch(error => console.log(error))
-        fetch(`/Product/GetAll`)
+        fetch(`${backendURL}/Product/GetAll`)
             .then(response => response.json())
             .then(data => {
                 setProducts(data);

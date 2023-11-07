@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
-import DoctorMain from "../Doctor/DoctorMain";
-import PatientMain from "../Patient/PatientHome/PatientHome";
 import { useNavigate } from "react-router-dom";
+const backendURL = process.env.BACKEND_URL || 'http://localhost:5274';
 
 const loginFetch = (data) => {
-  return fetch("/Auth/Login", {
+  return fetch(`${backendURL}/Auth/Login`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -14,7 +13,7 @@ const loginFetch = (data) => {
 };
 
 const getIdFetch = (id, role) => {
-  return fetch(`/${role}/GetByIdentityId:${id}`).then((res) => res.json());
+  return fetch(`${backendURL}/${role}/GetByIdentityId:${id}`).then((res) => res.json());
 };
 
 const Login = (props) => {

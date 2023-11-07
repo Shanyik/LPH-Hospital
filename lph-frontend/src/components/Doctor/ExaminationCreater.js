@@ -1,19 +1,19 @@
-
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./ExaminationCreater.css"
 import Typography from '@mui/material/Typography';
+const backendURL = process.env.BACKEND_URL || 'http://localhost:5274';
 
 const getDoctorById = (userId) => {
-    return fetch(`/Doctor/GetById:${userId}`).then(res => res.json())
+    return fetch(`${backendURL}/Doctor/GetById:${userId}`).then(res => res.json())
 }
 
 const getPatientByMedicalNumber = (medicalNumber) => {
-    return fetch(`/Patient/GetByMedicalNumber:${medicalNumber}`).then(res => res.json())
+    return fetch(`${backendURL}/Patient/GetByMedicalNumber:${medicalNumber}`).then(res => res.json())
 }
 
 const addExam = (data) => {
-    return fetch(`/Exam/Add`, {
+    return fetch(`${backendURL}/Exam/Add`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",

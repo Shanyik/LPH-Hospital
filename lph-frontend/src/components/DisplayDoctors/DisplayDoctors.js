@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import "./DisplayDoctors.css"
+const backendURL = process.env.BACKEND_URL || 'http://localhost:5274';
 
 const DisplayDoctors = () => {
 
@@ -12,7 +13,7 @@ const DisplayDoctors = () => {
     }
 
      const deleteDoctor = (username) =>{
-        return fetch(`http://localhost:5274/Doctor/Delete:${username}`, {method: "DELETE"})
+        return fetch(`${backendURL}/Doctor/Delete:${username}`, {method: "DELETE"})
         .then((res) => res.text())
         .then((res) => console.log(res))
     }
@@ -20,7 +21,7 @@ const DisplayDoctors = () => {
     const [doctors, setDoctors] = useState([])
     
     useEffect(() => {
-      fetch('http://localhost:5274/Doctor/GetAll') // env
+      fetch(`${backendURL}/Doctor/GetAll`) // env
         .then(response => response.json())
         .then(data => setDoctors(data))
         .catch(error => console.log(error))

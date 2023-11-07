@@ -3,10 +3,10 @@ import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import Button from '@mui/material/Button';
 import { useEffect, useState } from 'react';
-
+const backendURL = process.env.BACKEND_URL || 'http://localhost:5274';
 
 const getProduct = (id) => {
-    return fetch(`/Product/GetById:${id}`).then(response => response.json())
+    return fetch(`${backendURL}/Product/GetById:${id}`).then(response => response.json())
 }
 
 const PrescreptionModal = ({ doctors, prescription, patients, handleClose, open }) => {

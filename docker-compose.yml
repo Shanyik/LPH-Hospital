@@ -1,3 +1,5 @@
+version: '3'
+
 services:
   lphh_backend:
     image: lphh_backend
@@ -8,6 +10,23 @@ services:
     depends_on:
       - db
     command: ["dotnet", "ef" , "database update"]
+    networks:
+      - my-network
+
+  lphh-frontend:
+    container_name: lphh-frontend
+    image: lphh_frontend
+    build: 
+      context: .
+    ports:
+      - "3000:80"
+    networks:
+      - my-network
+    depends_on:
+      - lphh_backend
+    environment:      
+      BACKEND_URL: 'http://lphh_backend:5274'
+
   db:
     image: "mcr.microsoft.com/mssql/server"
     container_name: db
@@ -19,4 +38,10 @@ services:
       - ENCRYPT=false
       - MSSQL_DB=LPHHospital
       - DATABASE=LPHHospital
+    networks:
+      - my-network
+  
+networks:
+  my-network:
+  
     

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Box, Grid, Avatar, Typography, Button } from "@mui/material"
 import "./Profile.css"
+const backendURL = process.env.BACKEND_URL || 'http://localhost:5274';
 
 const Profile = (props) => {
 
@@ -8,11 +9,11 @@ const Profile = (props) => {
     console.log(username)
 
     if (props.cookie["role"] === "Patient") {
-      return fetch(`/Patient/Delete:${username}`, { method: "DELETE" })
+      return fetch(`${backendURL}/Patient/Delete:${username}`, { method: "DELETE" })
       .then((res) => res.text())
       .then((res) => console.log(res))
     }else{
-      return fetch(`/Doctor/Delete:${username}`, { method: "DELETE" })
+      return fetch(`${backendURL}/Doctor/Delete:${username}`, { method: "DELETE" })
         .then((res) => res.text())
         .then((res) => console.log(res))
     }
@@ -22,7 +23,7 @@ const Profile = (props) => {
 
   useEffect(() => {
     if (props.cookie["role"] === "Patient") {
-      fetch(`/Patient/GetById:${props.cookie["id"]}`)
+      fetch(`${backendURL}/Patient/GetById:${props.cookie["id"]}`)
         .then(response => response.json())
         .then(data => {
           console.log(data)
@@ -32,7 +33,7 @@ const Profile = (props) => {
         .catch(error => console.log(error))
     }
     else{
-      fetch(`/Doctor/GetById:${props.cookie["id"]}`)
+      fetch(`${backendURL}/Doctor/GetById:${props.cookie["id"]}`)
         .then(response => response.json())
         .then(data => {
           setUserData(data);
