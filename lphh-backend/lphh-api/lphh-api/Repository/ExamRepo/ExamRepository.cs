@@ -15,7 +15,6 @@ public class ExamRepository : IExamRepository
 
     public async Task<IEnumerable<Exam>> GetByPatientId(int id)
     {
-        
         return await _context.Exams.Where(c => c.PatientId == id).ToListAsync();
     }
     
