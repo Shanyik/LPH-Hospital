@@ -4,10 +4,10 @@ services:
   lphh_backend:
     image: lphh_backend
     build: 
-      context: .
+      context: ./lphh-backend/lphh-api/lphh-api
     container_name: lphh-backend
     ports:
-      - "5274:80"
+      - "5274:5274"
     depends_on:
       - db
     command: ["dotnet", "ef" , "database update"]
@@ -18,9 +18,9 @@ services:
     container_name: lphh-frontend
     image: lphh_frontend
     build: 
-      context: .
+      context: ./lphh-frontend
     ports:
-      - "3000:80"
+      - "3000:3000"
     networks:
       - my-network
     depends_on:
