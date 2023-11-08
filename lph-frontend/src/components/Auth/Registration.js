@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import './Registration.css'; // Import the CSS file
 import { useNavigate } from 'react-router-dom';
-const backendURL = process.env.BACKEND_URL || 'http://localhost:5274';
-
 
 const Registration = () => {
 
@@ -35,7 +33,7 @@ const Registration = () => {
   };
 
   const registerFetch = (formData) => {
-    return fetch(`${backendURL}/Auth/Register`,
+    return fetch(`/Auth/Register`,
         {
             method: "POST",
             headers: {

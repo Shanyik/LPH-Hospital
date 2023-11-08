@@ -3,7 +3,8 @@ version: '3'
 services:
   lphh_backend:
     image: lphh_backend
-    build: .
+    build: 
+      context: .
     container_name: lphh-backend
     ports:
       - "5274:80"
@@ -40,8 +41,11 @@ services:
       - DATABASE=LPHHospital
     networks:
       - my-network
+    volumes:
+      - ./init-database.sh:/init-database.sh:rw
+    command: ["bash", "/init-database.sh"]
   
 networks:
   my-network:
-  
+
     
