@@ -54,7 +54,7 @@ const DisplayPatients = (props) => {
     const [doctors, setDoctors] = useState([]);
     
     useEffect(() => {
-        fetch(`$api/Patient/GetAll`, {
+        fetch('/api/Patient/GetAll', {
             method: 'GET',
             headers: {
             'Authorization': 'Bearer ' + props.cookie["token"]
@@ -81,7 +81,7 @@ const DisplayPatients = (props) => {
                 })))
     }
     const findPatient = (username) => {
-        return fetch(`api/Patient/GetByUsername:${username}`, {
+        return fetch(`/api/Patient/GetByUsername:${username}`, {
             method: 'GET',
             headers: {
             'Authorization': 'Bearer ' + props.cookie["token"]

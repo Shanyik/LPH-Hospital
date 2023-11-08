@@ -9,7 +9,7 @@ const Documents = (props) => {
     const [currentId, setCurrentId] = useState(false)
     
     useEffect(() => {
-        fetch(`api/Exam/GetByPatientId:${props.cookie["id"]}`, {
+        fetch(`/api/Exam/GetByPatientId:${props.cookie["id"]}`, {
             method: 'GET',
             headers: {
             'Authorization': 'Bearer ' + props.cookie["token"]
@@ -17,12 +17,13 @@ const Documents = (props) => {
         })
             .then(response => response.json())
             .then(data => {
+                console.log("asd")
                 setDocuments(data);
                 console.log(data);
             }
             )
             .catch(error => console.log(error))
-        fetch(`api/Doctor/GetAll`, {
+        fetch('/api/Doctor/GetAll', {
             method: 'GET',
             headers: {
             'Authorization': 'Bearer ' + props.cookie["token"]

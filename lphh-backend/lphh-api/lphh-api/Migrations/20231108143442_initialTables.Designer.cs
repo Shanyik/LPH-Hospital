@@ -12,8 +12,8 @@ using lphh_api.Context;
 namespace lphh_api.Migrations
 {
     [DbContext(typeof(HospitalApiContext))]
-    [Migration("20231108122423_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20231108143442_initialTables")]
+    partial class initialTables
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -303,29 +303,29 @@ namespace lphh_api.Migrations
                         new
                         {
                             Id = 1L,
-                            CreatedAt = new DateTime(2023, 11, 8, 13, 24, 23, 711, DateTimeKind.Local).AddTicks(7788),
+                            CreatedAt = new DateTime(2023, 11, 8, 15, 34, 42, 602, DateTimeKind.Local).AddTicks(6066),
                             Description = "EventDescription",
-                            End = new DateTime(2023, 11, 11, 13, 24, 23, 711, DateTimeKind.Local).AddTicks(7784),
+                            End = new DateTime(2023, 11, 11, 15, 34, 42, 602, DateTimeKind.Local).AddTicks(6062),
                             Name = "Donate Blood",
-                            Start = new DateTime(2023, 11, 8, 13, 24, 23, 711, DateTimeKind.Local).AddTicks(7782)
+                            Start = new DateTime(2023, 11, 8, 15, 34, 42, 602, DateTimeKind.Local).AddTicks(6059)
                         },
                         new
                         {
                             Id = 2L,
-                            CreatedAt = new DateTime(2023, 11, 8, 13, 24, 23, 711, DateTimeKind.Local).AddTicks(7795),
+                            CreatedAt = new DateTime(2023, 11, 8, 15, 34, 42, 602, DateTimeKind.Local).AddTicks(6072),
                             Description = "EventDescription",
-                            End = new DateTime(2023, 11, 13, 13, 24, 23, 711, DateTimeKind.Local).AddTicks(7793),
+                            End = new DateTime(2023, 11, 13, 15, 34, 42, 602, DateTimeKind.Local).AddTicks(6070),
                             Name = "General Exams",
-                            Start = new DateTime(2023, 11, 8, 13, 24, 23, 711, DateTimeKind.Local).AddTicks(7792)
+                            Start = new DateTime(2023, 11, 8, 15, 34, 42, 602, DateTimeKind.Local).AddTicks(6068)
                         },
                         new
                         {
                             Id = 3L,
-                            CreatedAt = new DateTime(2023, 11, 8, 13, 24, 23, 711, DateTimeKind.Local).AddTicks(7800),
+                            CreatedAt = new DateTime(2023, 11, 8, 15, 34, 42, 602, DateTimeKind.Local).AddTicks(6079),
                             Description = "EventDescription",
-                            End = new DateTime(2023, 11, 18, 13, 24, 23, 711, DateTimeKind.Local).AddTicks(7798),
+                            End = new DateTime(2023, 11, 18, 15, 34, 42, 602, DateTimeKind.Local).AddTicks(6077),
                             Name = "Donate Blood",
-                            Start = new DateTime(2023, 11, 13, 13, 24, 23, 711, DateTimeKind.Local).AddTicks(7797)
+                            Start = new DateTime(2023, 11, 13, 15, 34, 42, 602, DateTimeKind.Local).AddTicks(6075)
                         });
                 });
 
@@ -362,7 +362,7 @@ namespace lphh_api.Migrations
                         new
                         {
                             Id = 1L,
-                            CreatedAt = new DateTime(2023, 11, 8, 13, 24, 23, 711, DateTimeKind.Local).AddTicks(7752),
+                            CreatedAt = new DateTime(2023, 11, 8, 15, 34, 42, 602, DateTimeKind.Local).AddTicks(6032),
                             DoctorId = 1L,
                             PatientId = 1L,
                             Result = "resultString",
@@ -371,7 +371,7 @@ namespace lphh_api.Migrations
                         new
                         {
                             Id = 2L,
-                            CreatedAt = new DateTime(2023, 11, 8, 13, 24, 23, 711, DateTimeKind.Local).AddTicks(7755),
+                            CreatedAt = new DateTime(2023, 11, 8, 15, 34, 42, 602, DateTimeKind.Local).AddTicks(6035),
                             DoctorId = 2L,
                             PatientId = 3L,
                             Result = "resultString",
@@ -380,7 +380,7 @@ namespace lphh_api.Migrations
                         new
                         {
                             Id = 3L,
-                            CreatedAt = new DateTime(2023, 11, 8, 13, 24, 23, 711, DateTimeKind.Local).AddTicks(7758),
+                            CreatedAt = new DateTime(2023, 11, 8, 15, 34, 42, 602, DateTimeKind.Local).AddTicks(6038),
                             DoctorId = 3L,
                             PatientId = 2L,
                             Result = "resultString",
@@ -467,7 +467,7 @@ namespace lphh_api.Migrations
                         new
                         {
                             Id = 1L,
-                            CreatedAt = new DateTime(2023, 11, 8, 13, 24, 23, 711, DateTimeKind.Local).AddTicks(7604),
+                            CreatedAt = new DateTime(2023, 11, 8, 15, 34, 42, 602, DateTimeKind.Local).AddTicks(5961),
                             Description = "1x2 for 10 days",
                             DoctorId = 1L,
                             PatientId = 1L,
@@ -476,7 +476,7 @@ namespace lphh_api.Migrations
                         new
                         {
                             Id = 2L,
-                            CreatedAt = new DateTime(2023, 11, 8, 13, 24, 23, 711, DateTimeKind.Local).AddTicks(7666),
+                            CreatedAt = new DateTime(2023, 11, 8, 15, 34, 42, 602, DateTimeKind.Local).AddTicks(6005),
                             Description = "1x1 for 120 days",
                             DoctorId = 2L,
                             PatientId = 1L,
@@ -485,7 +485,7 @@ namespace lphh_api.Migrations
                         new
                         {
                             Id = 3L,
-                            CreatedAt = new DateTime(2023, 11, 8, 13, 24, 23, 711, DateTimeKind.Local).AddTicks(7669),
+                            CreatedAt = new DateTime(2023, 11, 8, 15, 34, 42, 602, DateTimeKind.Local).AddTicks(6008),
                             Description = "1x1 for 30 days",
                             DoctorId = 3L,
                             PatientId = 2L,

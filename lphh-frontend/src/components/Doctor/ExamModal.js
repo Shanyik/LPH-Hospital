@@ -3,7 +3,7 @@ import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import { useEffect } from 'react';
 
-const ExamModal = ({open, handleClose, exam, patients, doctors}) => {
+const ExamModal = ({ open, handleClose, exam, patients, doctors }) => {
 
     const style = {
         position: 'absolute',
@@ -19,7 +19,7 @@ const ExamModal = ({open, handleClose, exam, patients, doctors}) => {
         pb: 3,
     };
 
-    useEffect(() => {console.log(doctors)})
+    useEffect(() => { console.log(exam.doctorId)}, [])
 
     return (
         <Modal
@@ -28,18 +28,18 @@ const ExamModal = ({open, handleClose, exam, patients, doctors}) => {
             aria-labelledby="parent-modal-title"
             aria-describedby="parent-modal-description"
         >
-
+            
             <Box sx={{ ...style, width: 400 }}>
 
                 <h2 id="parent-modal-title">{exam.type}</h2>
                 <h4 id="parent-modal-description">Details:</h4>
                 <div>
-                    Doctor: {doctors.find((doctors)=>doctors.id === exam.doctorId).firstName}{" "}
-                                {doctors.find((doctors)=>doctors.id === exam.doctorId).lastName}
+                    Doctor: {doctors.find((doctors) => doctors.id === exam.doctorId+1).firstName}{" "}
+                    {doctors.find((doctors) => doctors.id === exam.doctorId+1).lastName}
                 </div>
                 <div>
-                    Patient: {patients.find((patient)=>patient.id === exam.patientId).firstName}{" "}
-                                {patients.find((patient)=>patient.id === exam.patientId).lastName}
+                    Patient: {patients.find((patient) => patient.id === exam.patientId).firstName}{" "}
+                    {patients.find((patient) => patient.id === exam.patientId).lastName}
                 </div>
                 <h4>
                     Result:
@@ -48,7 +48,6 @@ const ExamModal = ({open, handleClose, exam, patients, doctors}) => {
                     {exam.result}
                 </div>
             </Box>
-
         </Modal>
     )
 
