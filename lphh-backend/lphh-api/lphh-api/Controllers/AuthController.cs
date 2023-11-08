@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace lphh_api.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("api/[controller]")]
 public class AuthController : ControllerBase
 {
     private readonly IAuthService _authenticationService;
@@ -66,7 +66,16 @@ public class AuthController : ControllerBase
             AddErrors(result);
             return BadRequest(ModelState);
         }
-
+        
+        Response.Cookies.Append("acces_token", result.Token);
         return Ok(new AuthResponse(result.Email, result.UserName, result.Token));
+    }
+    
+    [HttpPost("Logout")]
+    public IActionResult Logout()
+    {
+        Response.Cookies.Delete("acces_token");
+        
+        return NoContent(); 
     }
 }

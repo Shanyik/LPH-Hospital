@@ -1,12 +1,13 @@
 ﻿using System.Text.Json.Nodes;
 using lphh_api.Model;
 using lphh_api.Repository.PatientRepo;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace lphh_api.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("api/[controller]")]
 public class PatientController : ControllerBase
 {
 
@@ -18,6 +19,7 @@ public class PatientController : ControllerBase
     }
     
     [HttpGet("GetAll")]
+    [Authorize(Roles = "Doctor, Patient, Admin")]
     public async Task<IActionResult> GetAll()
     {
         try
@@ -40,6 +42,7 @@ public class PatientController : ControllerBase
     }
 
     [HttpGet("GetByUsername:{username}")]
+    [Authorize(Roles = "Doctor, Patient, Admin")]
     public async Task<IActionResult> GetByUsername(string username)
     {
         try
@@ -60,6 +63,7 @@ public class PatientController : ControllerBase
     }
     
     [HttpGet("GetById:{id}")]
+    [Authorize(Roles = "Doctor, Patient, Admin")]
     public async Task<IActionResult> GetById(int id)
     {
         try
@@ -82,6 +86,7 @@ public class PatientController : ControllerBase
     
 
     [HttpPost("Add")]
+    [Authorize(Roles = "Doctor, Admin")]
     public async Task<IActionResult> AddPatient(Patient patient)
     {
         if (patient == null)
@@ -102,6 +107,7 @@ public class PatientController : ControllerBase
     }
 
     [HttpDelete("Delete:{username}")]
+    [Authorize(Roles = "Doctor, Admin")]
     public async Task<IActionResult> Delete(string username)
     {
         try
@@ -122,6 +128,7 @@ public class PatientController : ControllerBase
     }
     
     [HttpGet("GetByMedicalNumber:{medicalNumber}")]
+    [Authorize(Roles = "Doctor, Patient, Admin")]
     public async Task<IActionResult> GetByMedicalNumber(string medicalNumber)
     {
         try
@@ -142,6 +149,7 @@ public class PatientController : ControllerBase
     }
     
     [HttpGet("GetByIdentityId:{id}")]
+    [Authorize(Roles = "Doctor, Patient, Admin")]
     public async Task<IActionResult> GetByIdentityId(string id)
     {
         try

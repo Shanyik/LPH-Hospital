@@ -1,11 +1,12 @@
 ﻿using lphh_api.Model;
 using lphh_api.Repository.ProductRepo;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace lphh_api.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("api/[controller]")]
 public class ProductController : ControllerBase
 {
     private readonly IProductRepository _productRepository;
@@ -16,6 +17,7 @@ public class ProductController : ControllerBase
     }
     
     [HttpGet("GetAll")]
+    [Authorize(Roles = "Doctor, Patient, Admin")]
     public async Task<IActionResult> GetAll()
     {
         try
@@ -36,6 +38,7 @@ public class ProductController : ControllerBase
     }
 
     [HttpGet("GetByName:{name}")]
+    [Authorize(Roles = "Doctor, Patient, Admin")]
     public async Task<IActionResult> GetByUsername(string name)
     {
         try
@@ -56,6 +59,7 @@ public class ProductController : ControllerBase
     }
     
     [HttpGet("GetById:{id}")]
+    [Authorize(Roles = "Doctor, Patient, Admin")]
     public async Task<IActionResult> GetByUsername(int id)
     {
         try

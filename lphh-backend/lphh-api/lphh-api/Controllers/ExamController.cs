@@ -1,11 +1,12 @@
 ﻿using lphh_api.Model;
 using lphh_api.Repository.ExamRepo;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace lphh_api.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("api/[controller]")]
 public class ExamController : ControllerBase
 {
     private readonly IExamRepository _examRepository;
@@ -16,6 +17,7 @@ public class ExamController : ControllerBase
     }
     
     [HttpGet("GetByPatientId:{id}")]
+    [Authorize(Roles = "Doctor, Patient, Admin")]
     public async Task<IActionResult> GetByPatientId(int id)
     {
         try
@@ -36,6 +38,7 @@ public class ExamController : ControllerBase
     }
     
     [HttpGet("GetByDoctorId:{id}")]
+    [Authorize(Roles = "Doctor, Patient, Admin")]
     public async Task<IActionResult> GetByDoctorId(int id)
     {
         try
@@ -56,6 +59,7 @@ public class ExamController : ControllerBase
     }
     
     [HttpPost("Add")]
+    [Authorize(Roles = "Doctor, Admin")]
     public async Task<IActionResult> AddExam(Exam exam)
     {
         try

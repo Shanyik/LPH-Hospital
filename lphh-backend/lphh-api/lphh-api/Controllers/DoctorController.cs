@@ -1,11 +1,12 @@
 ﻿using lphh_api.Model;
 using lphh_api.Repository.DoctorRepo;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace lphh_api.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("api/[controller]")]
 public class DoctorController : ControllerBase
 {
     private readonly IDoctorRepository _doctorRepository;
@@ -16,6 +17,7 @@ public class DoctorController : ControllerBase
     }
     
     [HttpGet("GetAll")]
+    [Authorize(Roles = "Doctor, Patient, Admin")]
     public async Task<IActionResult> GetAll()
     {
         try
@@ -37,6 +39,7 @@ public class DoctorController : ControllerBase
     
     
     [HttpGet("GetByUsername:{username}")]
+    [Authorize(Roles = "Doctor, Patient, Admin")]
     public async Task<IActionResult> GetByUsername(string username)
     {
         try
@@ -57,6 +60,7 @@ public class DoctorController : ControllerBase
     }
     
     [HttpGet("GetById:{id}")]
+    [Authorize(Roles = "Doctor, Patient, Admin")]
     public async Task<IActionResult> GetById(int id)
     {
         try
@@ -77,6 +81,7 @@ public class DoctorController : ControllerBase
     }
 
     [HttpPost("Add")]
+    [Authorize(Roles = "Doctor, Admin")]
     public async Task<IActionResult> AddDoctor(Doctor doctor)
     {
         if (doctor == null)
@@ -96,6 +101,7 @@ public class DoctorController : ControllerBase
     }
 
     [HttpDelete("Delete:{username}")]
+    [Authorize(Roles = "Doctor, Admin")]
     public async Task<IActionResult> Delete(string username)
     {
         try
@@ -116,6 +122,7 @@ public class DoctorController : ControllerBase
     }
     
     [HttpGet("GetByIdentityId:{id}")]
+    [Authorize(Roles = "Doctor, Admin")]
     public async Task<IActionResult> GetByIdentityId(string id)
     {
         try

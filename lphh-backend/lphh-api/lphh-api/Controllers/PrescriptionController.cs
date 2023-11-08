@@ -3,11 +3,12 @@ using lphh_api.Repository.PrescriptionRepo;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using lphh_api.Model;
+using Microsoft.AspNetCore.Authorization;
 
 namespace lphh_api.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("api/[controller]")]
 public class PrescriptionController : ControllerBase
 {
     private readonly IPrescriptionRepository _prescriptionRepository;
@@ -21,6 +22,7 @@ public class PrescriptionController : ControllerBase
     }
     
     [HttpGet("GetByPatientId:{id}")]
+    [Authorize(Roles = "Doctor, Patient, Admin")]
     public async Task<IActionResult> GetByPatientId(int id)
     {
         try
@@ -41,6 +43,7 @@ public class PrescriptionController : ControllerBase
     }
     
     [HttpGet("GetByDoctorId:{id}")]
+    [Authorize(Roles = "Doctor, Patient, Admin")]
     public async Task<IActionResult> GetByDoctorId(int id)
     {
         try
@@ -61,6 +64,7 @@ public class PrescriptionController : ControllerBase
     }
     
     [HttpPost("Add")]
+    [Authorize(Roles = "Doctor, Admin")]
     public async Task<IActionResult> Add(Prescription prescription)
     {
         if (prescription == null)

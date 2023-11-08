@@ -1,10 +1,11 @@
 ﻿using lphh_api.Model;
 using lphh_api.Repository.EventRepo;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace lphh_api.Controllers;
 [ApiController]
-[Route("[controller]")]
+[Route("api/[controller]")]
 public class EventController : ControllerBase
 {
     private readonly IEventRepository _eventRepository;
@@ -35,6 +36,7 @@ public class EventController : ControllerBase
     }
 
     [HttpPost("Add")]
+    [Authorize(Roles = "Doctor, Admin")]
     public async Task<IActionResult> AddEvent(Event eventName)
     {
         if (eventName == null)
@@ -55,6 +57,7 @@ public class EventController : ControllerBase
     }
 
     [HttpDelete("Delete:{id}")]
+    [Authorize(Roles = "Doctor, Admin")]
     public async Task<IActionResult> Delete(int id)
     {
         try
