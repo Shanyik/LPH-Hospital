@@ -41,9 +41,7 @@ services:
       - DATABASE=LPHHospital
     networks:
       - my-network
-    volumes:
-      - ./init-database.sh:/init-database.sh:rw
-    command: ["bash", "/init-database.sh"]
+    
   
 networks:
   my-network:
