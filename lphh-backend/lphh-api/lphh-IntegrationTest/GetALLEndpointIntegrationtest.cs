@@ -35,12 +35,12 @@ public class GetALLEndpointIntegrationtest  : IClassFixture<CustomWebApplication
             })
             .CreateClient(new WebApplicationFactoryClientOptions
             {
-                AllowAutoRedirect = false,
+                AllowAutoRedirect = true,
             });
 
         client.DefaultRequestHeaders.Authorization =
             new AuthenticationHeaderValue(scheme: "Admin");
-
+        
         // Act
         var response = await client.GetAsync(url);
 
