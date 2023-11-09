@@ -29,20 +29,13 @@ services:
       BACKEND_URL: 'http://lphh_backend:5274'
 
   db:
-    image: "mcr.microsoft.com/mssql/server"
     container_name: db
-    ports: 
-      - "1433:1433" 
-    environment:
-      - ACCEPT_EULA=y
-      - SA_PASSWORD=Incorrect!
-      - ENCRYPT=false
-      - MSSQL_DB=LPHHospital
-      - DATABASE=LPHHospital
+    build: ./Db
+    ports:
+      - "1433:1433"
     networks:
       - my-network
-    
-  
+
 networks:
   my-network:
 
