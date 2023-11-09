@@ -38,7 +38,7 @@ public class Program
             app.UseSwaggerUI();
             app.UseDeveloperExceptionPage();
         }
-
+        
         using (var serviceScope = app.Services.GetRequiredService<IServiceScopeFactory>().CreateScope())
         {
             var logger = serviceScope.ServiceProvider.GetRequiredService<ILogger<Program>>();
@@ -62,6 +62,8 @@ public class Program
                 logger.LogError(ex, "An error occurred while migrating the database.");
             }
         }
+        
+        
 
         app.UseHttpsRedirection();
 
@@ -81,7 +83,9 @@ public class Program
         AddRoles();
         AddAdmin();
         AddDoctor();
+        AddPatient();
         
+        /*
         using (var serviceScope = ((IApplicationBuilder)app).ApplicationServices
                .GetRequiredService<IServiceScopeFactory>()
                .CreateScope())
@@ -91,10 +95,12 @@ public class Program
                 context.Database.Migrate();
             }
         }
-
+        */
         app.Run();
 
 //methods
+
+        #region AddIdentity()
 
         void AddIdentity()
         {
@@ -113,11 +119,14 @@ public class Program
                 .AddEntityFrameworkStores<HospitalApiContext>();
         }
 
+        #endregion
+
+        #region AddServices()
+
         void AddServices()
         {
             builder.Services.AddControllers(
                 options => options.SuppressImplicitRequiredAttributeForNonNullableReferenceTypes = true);
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
     
             builder.Services.AddScoped<IPatientRepository, PatientRepository>();  
@@ -129,6 +138,10 @@ public class Program
             builder.Services.AddScoped<IAuthService, AuthService>(); //biztosabb, jobban preferáltabb 
             builder.Services.AddScoped<ITokenService, TokenService>();
         }
+
+        #endregion
+
+        #region ConfigureSwagger()
 
         void ConfigureSwagger()
         {
@@ -161,12 +174,20 @@ public class Program
             });
         }
 
+        #endregion
+
+        #region AddDbContext()
+
         void AddDbContext()
         {
             builder.Services.AddDbContext<HospitalApiContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("Hospital") ?? throw new InvalidOperationException("Connection string 'Hospital' not found.")));
         }
 
+        #endregion
+        
+        #region AddAuthentication()
+        
         void AddAuthentication()
         {
             builder.Services
@@ -189,7 +210,7 @@ public class Program
                 });
         }
         
-        
+        #endregion
 
         #region AddRole
 
@@ -254,8 +275,8 @@ public class Program
 
         void AddDoctor()
         {
-            var tAdmin = CreateDoctorIfNotExists();
-            tAdmin.Wait();
+            var tDoctor = CreateDoctorIfNotExists();
+            tDoctor.Wait();
         }
 
         async Task CreateDoctorIfNotExists()
@@ -263,28 +284,140 @@ public class Program
             using var scope = app.Services.CreateScope();
             var userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
             var doctorRepo = scope.ServiceProvider.GetRequiredService<IDoctorRepository>();
-            var adminInDb = await userManager.FindByEmailAsync("doctor@test.com");
-            if (adminInDb == null)
+            var doctorInDb = await userManager.FindByEmailAsync("drww@lphh.com");
+            if (doctorInDb == null)
             {
-                var doctor = new IdentityUser { UserName = "doctor", Email = "doctor@test.com" };
-                var doctorCreated = await userManager.CreateAsync(doctor, "string");
+                var doctor1 = new IdentityUser { UserName = "drWalterW", Email = "drww@lphh.com" };
+                var doctor2 = new IdentityUser { UserName = "drJesseP", Email = "drjp@lphh.com" };
+                var doctor3 = new IdentityUser { UserName = "drGus", Email = "drgf@lphh.com" };
                 
-                if (doctorCreated.Succeeded)
+                var doctorCreated1 = await userManager.CreateAsync(doctor1, "string");
+                var doctorCreated2 = await userManager.CreateAsync(doctor2, "string");
+                var doctorCreated3 = await userManager.CreateAsync(doctor3, "string");
+                
+                if (doctorCreated1.Succeeded && doctorCreated2.Succeeded && doctorCreated3.Succeeded)
                 {
-                    await userManager.AddToRoleAsync(doctor, "Doctor");
-                    var doctorID =  await userManager.FindByEmailAsync("doctor@test.com");
-                    var newDoctor = new Doctor
+                    await userManager.AddToRoleAsync(doctor1, "Doctor");
+                    await userManager.AddToRoleAsync(doctor2, "Doctor");
+                    await userManager.AddToRoleAsync(doctor3, "Doctor");
+                    
+                    var doctorID1 =  await userManager.FindByEmailAsync("drww@lphh.com");
+                    var doctorID2 =  await userManager.FindByEmailAsync("drjp@lphh.com");
+                    var doctorID3 =  await userManager.FindByEmailAsync("drgf@lphh.com");
+                    
+                    var newDoctor1 = new Doctor
                     {
-                        Username = "doctor",
-                        Email = "doctor@test.com",
+                        Username = "drWalterW",
+                        Email = "drww@lphh.com",
                         Ward = "a",
-                        IdentityId = doctorID.Id,
-                        PhoneNumber = "+11111111",
-                        FirstName = "firstName",
-                        LastName = "lastName"
+                        IdentityId = doctorID1.Id,
+                        PhoneNumber = "+36701111111",
+                        FirstName = "Walter",
+                        LastName = "White"
+                    };
+                    
+                    var newDoctor2 = new Doctor
+                    {
+                        Username = "drJesseP",
+                        Email = "drjp@lphh.com",
+                        Ward = "b",
+                        IdentityId = doctorID2.Id,
+                        PhoneNumber = "+36701111112",
+                        FirstName = "Jesse",
+                        LastName = "Pinkman"
+                    };
+                    
+                    var newDoctor3 = new Doctor
+                    {
+                        Username = "drGus",
+                        Email = "drjp@lphh.com",
+                        Ward = "c",
+                        IdentityId = doctorID3.Id,
+                        PhoneNumber = "+36701111113",
+                        FirstName = "Gustavo",
+                        LastName = "Fring"
                     };
             
-                    await doctorRepo.Add(newDoctor);
+                    await doctorRepo.Add(newDoctor1);
+                    await doctorRepo.Add(newDoctor2);
+                    await doctorRepo.Add(newDoctor3);
+                }
+                
+            }
+        }
+
+        #endregion
+
+        #region AddPatient
+
+        void AddPatient()
+        {
+            var tPatient = CreatePatientIfNotExists();
+            tPatient.Wait();
+        }
+
+        async Task CreatePatientIfNotExists()
+        {
+            using var scope = app.Services.CreateScope();
+            var userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
+            var patientRepo = scope.ServiceProvider.GetRequiredService<IPatientRepository>();
+            var patientInDb = await userManager.FindByEmailAsync("intis@gmail.com");
+            if (patientInDb == null)
+            {
+                var patient1 = new IdentityUser { UserName = "Inti", Email = "intis@gmail.com" };
+                var patient2 = new IdentityUser { UserName = "Egidio", Email = "egidiok@gmail.com" };
+                var patient3 = new IdentityUser { UserName = "Lage", Email = "lagen@gmail.com" };
+                
+                var patientCreated1 = await userManager.CreateAsync(patient1, "string");
+                var patientCreated2 = await userManager.CreateAsync(patient2, "string");
+                var patientCreated3 = await userManager.CreateAsync(patient3, "string");
+                
+                if (patientCreated1.Succeeded && patientCreated2.Succeeded &&patientCreated3.Succeeded)
+                {
+                    await userManager.AddToRoleAsync(patient1, "Patient");
+                    await userManager.AddToRoleAsync(patient2, "Patient");
+                    await userManager.AddToRoleAsync(patient3, "Patient");
+                    
+                    var patientID1 =  await userManager.FindByEmailAsync("intis@gmail.com");
+                    var patientID2 =  await userManager.FindByEmailAsync("egidiok@gmail.com");
+                    var patientID3 =  await userManager.FindByEmailAsync("lagen@gmail.com");
+                    
+                    var newPatient1 = new Patient
+                    {
+                        Username = "Inti",
+                        Email = "intis@gmail.com",
+                        MedicalNumber = "111-111-111",
+                        IdentityId = patientID1.Id,
+                        PhoneNumber = "+36302111111",
+                        FirstName = "Inti",
+                        LastName = "Sílvia"
+                    };
+                    
+                    var newPatient2 = new Patient
+                    {
+                        Username = "Egidio",
+                        Email = "egidiok@gmail.com",
+                        MedicalNumber = "111-111-112",
+                        IdentityId = patientID2.Id,
+                        PhoneNumber = "+36302111112",
+                        FirstName = "Egidio",
+                        LastName = "Kim"
+                    };
+                    
+                    var newPatient3 = new Patient
+                    {
+                        Username = "Lage",
+                        Email = "lagen@gmail.com",
+                        MedicalNumber = "111-111-113",
+                        IdentityId = patientID3.Id,
+                        PhoneNumber = "+36302111113",
+                        FirstName = "Lage",
+                        LastName = "Ndidi"
+                    };
+            
+                    await patientRepo.Add(newPatient1);
+                    await patientRepo.Add(newPatient2);
+                    await patientRepo.Add(newPatient3);
                 }
                 
             }

@@ -8,7 +8,7 @@ import PresceptionTable from "../Doctor/PrescriptionTable";
 const DisplayPatients = (props) => {
 
     const deletePatient = (username) => {
-        return fetch(`api/Patient/Delete:${username}`, {
+        return fetch(`/api/Patient/Delete:${username}`, {
             method: 'DELETE',
             headers: {
             'Authorization': 'Bearer ' + props.cookie["token"]
@@ -19,7 +19,7 @@ const DisplayPatients = (props) => {
     }
     
     const getExamDataByPatientID = (id) => {
-        return fetch(`api/Exam/GetByPatientId:${id}`, {
+        return fetch(`/api/Exam/GetByPatientId:${id}`, {
             method: 'GET',
             headers: {
             'Authorization': 'Bearer ' + props.cookie["token"]
@@ -29,7 +29,7 @@ const DisplayPatients = (props) => {
     
     const getPresceptionDataByPatientID = (id) => {
     
-        return fetch(`api/Prescription/GetByPatientId:${id}`, {
+        return fetch(`/api/Prescription/GetByPatientId:${id}`, {
             method: 'GET',
             headers: {
             'Authorization': 'Bearer ' + props.cookie["token"]
@@ -38,7 +38,7 @@ const DisplayPatients = (props) => {
     }
     
     const getAllDoctors = () => {
-        return fetch(`api/Doctor/GetAll`, {
+        return fetch('/api/Doctor/GetAll', {
             method: 'GET',
             headers: {
             'Authorization': 'Bearer ' + props.cookie["token"]
@@ -107,7 +107,7 @@ const DisplayPatients = (props) => {
     }
 
     const refresPatient = () => {
-        fetch(`api/Patient/GetAll`, {
+        fetch('/api/Patient/GetAll', {
             method: 'GET',
             headers: {
             'Authorization': 'Bearer ' + props.cookie["token"]

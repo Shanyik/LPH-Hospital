@@ -34,8 +34,8 @@ const ExamModal = ({ open, handleClose, exam, patients, doctors }) => {
                 <h2 id="parent-modal-title">{exam.type}</h2>
                 <h4 id="parent-modal-description">Details:</h4>
                 <div>
-                    Doctor: {doctors.find((doctors) => doctors.id === exam.doctorId+1).firstName}{" "}
-                    {doctors.find((doctors) => doctors.id === exam.doctorId+1).lastName}
+                    Doctor: {doctors.find((doctors) => doctors.id === exam.doctorId).firstName}{" "}
+                    {doctors.find((doctors) => doctors.id === exam.doctorId).lastName}
                 </div>
                 <div>
                     Patient: {patients.find((patient) => patient.id === exam.patientId).firstName}{" "}

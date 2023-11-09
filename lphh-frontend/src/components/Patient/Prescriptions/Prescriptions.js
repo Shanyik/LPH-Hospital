@@ -12,7 +12,7 @@ const Prescriptions = (props) => {
     const [currentId, setCurrentId] = useState(false)
     
     useEffect(() => {
-        fetch(`$api/Prescription/GetByPatientId:${props.cookie["id"]}`, {
+        fetch(`/api/Prescription/GetByPatientId:${props.cookie["id"]}`, {
             method: 'GET',
             headers: {
             'Authorization': 'Bearer ' + props.cookie["token"]
@@ -25,7 +25,7 @@ const Prescriptions = (props) => {
             }
             )
             .catch(error => console.log(error))
-        fetch(`api/Doctor/GetAll`, {
+        fetch('/api/Doctor/GetAll', {
             method: 'GET',
             headers: {
             'Authorization': 'Bearer ' + props.cookie["token"]
@@ -38,7 +38,7 @@ const Prescriptions = (props) => {
             }
             )
             .catch(error => console.log(error))
-        fetch(`api/Product/GetAll`, {
+        fetch('/api/Product/GetAll', {
             method: 'GET',
             headers: {
             'Authorization': 'Bearer ' + props.cookie["token"]
