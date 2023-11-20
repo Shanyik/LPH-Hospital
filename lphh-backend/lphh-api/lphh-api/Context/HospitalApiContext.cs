@@ -14,7 +14,7 @@ public class HospitalApiContext : IdentityDbContext<IdentityUser, IdentityRole, 
     public DbSet<Exam> Exams { get; set; }
     public DbSet<Event> Events { get; set; }
     
-    public DbSet<Admin> Adims { get; set; }
+    public DbSet<Admin> Admins { get; set; }
 
     /*protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {

@@ -7,4 +7,6 @@ public interface IAdminRepository
     Task<Admin?> GetById(int id);
 
     Task Add(Admin admin);
+
+    Task<Admin?> GetByIdentityId(string id);
 }

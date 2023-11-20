@@ -15,7 +15,12 @@ public class AdminRepository : IAdminRepository
     
     public async Task<Admin?> GetById(int id)
     {
-        return await _context.Adims.FirstOrDefaultAsync(c => c.Id == (uint)id);
+        return await _context.Admins.FirstOrDefaultAsync(c => c.Id == (uint)id);
+    }
+    
+    public async Task<Admin?> GetByIdentityId(string id)
+    {
+        return await _context.Admins.FirstOrDefaultAsync(c => c.IdentityId == id);
     }
     
     public async Task Add(Admin admin)

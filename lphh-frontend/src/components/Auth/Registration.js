@@ -46,6 +46,15 @@ const Registration = (props) => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    if ( props.cookie["role"] === "Admin") {
+      formData.role = "Doctor"
+      formData.medicalNumber = "a"
+    }
+    else{
+      formData.role = "Patient"
+      formData.ward = "a"
+    }
+
     const newErrors = {};
     let hasError = false;
 
@@ -81,11 +90,7 @@ const Registration = (props) => {
 
     } else {
 
-      props.cookie["role"] === "Admin" ? (
-        formData.role = "Doctor"
-       ) : (
-        formData.role = "Patient"
-       )
+      
 
       console.log('Form submitted with data:', formData);
       /*

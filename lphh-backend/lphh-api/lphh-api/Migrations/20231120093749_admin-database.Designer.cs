@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using lphh_api.Context;
 
@@ -11,9 +12,11 @@ using lphh_api.Context;
 namespace lphh_api.Migrations
 {
     [DbContext(typeof(HospitalApiContext))]
-    partial class HospitalApiContextModelSnapshot : ModelSnapshot
+    [Migration("20231120093749_admin-database")]
+    partial class admindatabase
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
