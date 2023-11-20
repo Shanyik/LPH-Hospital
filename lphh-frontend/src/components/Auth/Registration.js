@@ -77,6 +77,20 @@ const Registration = (props) => {
       }
     }
 
+    if ( props.cookie["role"] === "Admin") {
+      formData.role = "Doctor"
+      formData.medicalNumber = "a"
+    }
+    else{
+      formData.role = "Patient"
+      formData.ward = "a"
+      
+      if (!validateMedicalNumber(formData.medicalNumber)) {
+        newErrors.medicalNumber = 'Invalid medical number format';
+        hasError = true;
+      }
+    }
+
     for (const field in formData) {
       if (!formData[field]) {
         newErrors[field] = 'This field is required';
