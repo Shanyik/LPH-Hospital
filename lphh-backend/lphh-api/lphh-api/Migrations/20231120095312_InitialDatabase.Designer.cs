@@ -12,8 +12,8 @@ using lphh_api.Context;
 namespace lphh_api.Migrations
 {
     [DbContext(typeof(HospitalApiContext))]
-    [Migration("20231109100920_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20231120095312_InitialDatabase")]
+    partial class InitialDatabase
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -223,6 +223,49 @@ namespace lphh_api.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("lphh_api.Model.Admin", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("IdentityId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Email")
+                        .IsUnique();
+
+                    b.ToTable("Admins");
+                });
+
             modelBuilder.Entity("lphh_api.Model.Doctor", b =>
                 {
                     b.Property<long>("Id")
@@ -303,29 +346,29 @@ namespace lphh_api.Migrations
                         new
                         {
                             Id = 1L,
-                            CreatedAt = new DateTime(2023, 11, 9, 11, 9, 20, 790, DateTimeKind.Local).AddTicks(5334),
+                            CreatedAt = new DateTime(2023, 11, 20, 10, 53, 12, 234, DateTimeKind.Local).AddTicks(1371),
                             Description = "EventDescription",
-                            End = new DateTime(2023, 11, 12, 11, 9, 20, 790, DateTimeKind.Local).AddTicks(5329),
+                            End = new DateTime(2023, 11, 23, 10, 53, 12, 234, DateTimeKind.Local).AddTicks(1367),
                             Name = "Donate Blood",
-                            Start = new DateTime(2023, 11, 9, 11, 9, 20, 790, DateTimeKind.Local).AddTicks(5328)
+                            Start = new DateTime(2023, 11, 20, 10, 53, 12, 234, DateTimeKind.Local).AddTicks(1365)
                         },
                         new
                         {
                             Id = 2L,
-                            CreatedAt = new DateTime(2023, 11, 9, 11, 9, 20, 790, DateTimeKind.Local).AddTicks(5341),
+                            CreatedAt = new DateTime(2023, 11, 20, 10, 53, 12, 234, DateTimeKind.Local).AddTicks(1377),
                             Description = "EventDescription",
-                            End = new DateTime(2023, 11, 14, 11, 9, 20, 790, DateTimeKind.Local).AddTicks(5339),
+                            End = new DateTime(2023, 11, 25, 10, 53, 12, 234, DateTimeKind.Local).AddTicks(1375),
                             Name = "General Exams",
-                            Start = new DateTime(2023, 11, 9, 11, 9, 20, 790, DateTimeKind.Local).AddTicks(5338)
+                            Start = new DateTime(2023, 11, 20, 10, 53, 12, 234, DateTimeKind.Local).AddTicks(1374)
                         },
                         new
                         {
                             Id = 3L,
-                            CreatedAt = new DateTime(2023, 11, 9, 11, 9, 20, 790, DateTimeKind.Local).AddTicks(5346),
+                            CreatedAt = new DateTime(2023, 11, 20, 10, 53, 12, 234, DateTimeKind.Local).AddTicks(1382),
                             Description = "EventDescription",
-                            End = new DateTime(2023, 11, 19, 11, 9, 20, 790, DateTimeKind.Local).AddTicks(5345),
+                            End = new DateTime(2023, 11, 30, 10, 53, 12, 234, DateTimeKind.Local).AddTicks(1381),
                             Name = "Donate Blood",
-                            Start = new DateTime(2023, 11, 14, 11, 9, 20, 790, DateTimeKind.Local).AddTicks(5343)
+                            Start = new DateTime(2023, 11, 25, 10, 53, 12, 234, DateTimeKind.Local).AddTicks(1379)
                         });
                 });
 
@@ -362,7 +405,7 @@ namespace lphh_api.Migrations
                         new
                         {
                             Id = 1L,
-                            CreatedAt = new DateTime(2023, 11, 9, 11, 9, 20, 790, DateTimeKind.Local).AddTicks(5306),
+                            CreatedAt = new DateTime(2023, 11, 20, 10, 53, 12, 234, DateTimeKind.Local).AddTicks(1340),
                             DoctorId = 1L,
                             PatientId = 1L,
                             Result = "resultString",
@@ -371,7 +414,7 @@ namespace lphh_api.Migrations
                         new
                         {
                             Id = 2L,
-                            CreatedAt = new DateTime(2023, 11, 9, 11, 9, 20, 790, DateTimeKind.Local).AddTicks(5308),
+                            CreatedAt = new DateTime(2023, 11, 20, 10, 53, 12, 234, DateTimeKind.Local).AddTicks(1343),
                             DoctorId = 2L,
                             PatientId = 3L,
                             Result = "resultString",
@@ -380,7 +423,7 @@ namespace lphh_api.Migrations
                         new
                         {
                             Id = 3L,
-                            CreatedAt = new DateTime(2023, 11, 9, 11, 9, 20, 790, DateTimeKind.Local).AddTicks(5311),
+                            CreatedAt = new DateTime(2023, 11, 20, 10, 53, 12, 234, DateTimeKind.Local).AddTicks(1346),
                             DoctorId = 3L,
                             PatientId = 2L,
                             Result = "resultString",
@@ -467,7 +510,7 @@ namespace lphh_api.Migrations
                         new
                         {
                             Id = 1L,
-                            CreatedAt = new DateTime(2023, 11, 9, 11, 9, 20, 790, DateTimeKind.Local).AddTicks(5227),
+                            CreatedAt = new DateTime(2023, 11, 20, 10, 53, 12, 234, DateTimeKind.Local).AddTicks(1276),
                             Description = "1x2 for 10 days",
                             DoctorId = 1L,
                             PatientId = 1L,
@@ -476,7 +519,7 @@ namespace lphh_api.Migrations
                         new
                         {
                             Id = 2L,
-                            CreatedAt = new DateTime(2023, 11, 9, 11, 9, 20, 790, DateTimeKind.Local).AddTicks(5284),
+                            CreatedAt = new DateTime(2023, 11, 20, 10, 53, 12, 234, DateTimeKind.Local).AddTicks(1316),
                             Description = "1x1 for 120 days",
                             DoctorId = 2L,
                             PatientId = 1L,
@@ -485,7 +528,7 @@ namespace lphh_api.Migrations
                         new
                         {
                             Id = 3L,
-                            CreatedAt = new DateTime(2023, 11, 9, 11, 9, 20, 790, DateTimeKind.Local).AddTicks(5286),
+                            CreatedAt = new DateTime(2023, 11, 20, 10, 53, 12, 234, DateTimeKind.Local).AddTicks(1319),
                             Description = "1x1 for 30 days",
                             DoctorId = 3L,
                             PatientId = 2L,
