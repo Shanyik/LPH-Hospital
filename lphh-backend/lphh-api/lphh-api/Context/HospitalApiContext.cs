@@ -13,6 +13,8 @@ public class HospitalApiContext : IdentityDbContext<IdentityUser, IdentityRole, 
     public DbSet<Prescription> Prescriptions { get; set; }
     public DbSet<Exam> Exams { get; set; }
     public DbSet<Event> Events { get; set; }
+    
+    public DbSet<Admin> Adims { get; set; }
 
     /*protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -34,7 +36,11 @@ public class HospitalApiContext : IdentityDbContext<IdentityUser, IdentityRole, 
         builder.Entity<Doctor>()
             .HasIndex(d => d.Username)
             .IsUnique();
-
+        
+        builder.Entity<Admin>()
+            .HasIndex(d => d.Email)
+            .IsUnique();
+        
         builder.Entity<Product>()
             .HasIndex(p => p.Name)
             .IsUnique();

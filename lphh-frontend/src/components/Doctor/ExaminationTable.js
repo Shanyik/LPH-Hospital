@@ -14,7 +14,7 @@ const ExaminationTable = ({ examinations, patients, doctor }) => {
     const handleOpen = (exam) => {
         setCurrenExam(exam)
         setOpen(true)
-
+       
     };
 
     useEffect(() => {

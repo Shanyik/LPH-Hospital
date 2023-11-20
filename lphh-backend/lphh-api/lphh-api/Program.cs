@@ -1,6 +1,7 @@
 using System.Text;
 using lphh_api.Context;
 using lphh_api.Model;
+using lphh_api.Repository.AdminRepo;
 using lphh_api.Repository.DoctorRepo;
 using lphh_api.Repository.EventRepo;
 using lphh_api.Repository.ExamRepo;
@@ -137,6 +138,7 @@ public class Program
             builder.Services.AddScoped<IEventRepository, EventRepository>();
             builder.Services.AddScoped<IAuthService, AuthService>(); //biztosabb, jobban preferáltabb 
             builder.Services.AddScoped<ITokenService, TokenService>();
+            builder.Services.AddScoped<IAdminRepository, AdminRepository>();
         }
 
         #endregion
@@ -258,6 +260,7 @@ public class Program
             using var scope = app.Services.CreateScope();
             var userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
             var adminInDb = await userManager.FindByEmailAsync("admin@admin.com");
+            var adminRepo = scope.ServiceProvider.GetRequiredService<IAdminRepository>();
             if (adminInDb == null)
             {
                 var admin = new IdentityUser { UserName = "admin", Email = "admin@admin.com" };
@@ -265,7 +268,21 @@ public class Program
 
                 if (adminCreated.Succeeded)
                 {
-                    await userManager.AddToRoleAsync(admin, "admin");
+                    await userManager.AddToRoleAsync(admin, "Admin");
+                    
+                    var adminID1 =  await userManager.FindByEmailAsync("admin@admin.com");
+
+                    var newAdmin = new Admin
+                    {
+                        Username = "admin",
+                        Email = "admin@admin.com",
+                        IdentityId = adminID1.Id,
+                        PhoneNumber = "+36701111111",
+                        FirstName = "Walter",
+                        LastName = "White"
+                    };
+                    
+                    await adminRepo.Add(newAdmin);
                 }
             }
         }
