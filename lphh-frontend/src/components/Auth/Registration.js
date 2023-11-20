@@ -81,11 +81,11 @@ const Registration = (props) => {
 
     } else {
 
-      props.cookie["role"] === "Admin" ? [
+      props.cookie["role"] === "Admin" ? (
         formData.role = "Doctor"
-      ] : [
+       ) : (
         formData.role = "Patient"
-      ]
+       )
 
       console.log('Form submitted with data:', formData);
       /*
