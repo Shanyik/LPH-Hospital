@@ -46,6 +46,9 @@ const Registration = (props) => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    const newErrors = {};
+    let hasError = false;
+
     if ( props.cookie["role"] === "Admin") {
       formData.role = "Doctor"
       formData.medicalNumber = "a"
@@ -53,10 +56,12 @@ const Registration = (props) => {
     else{
       formData.role = "Patient"
       formData.ward = "a"
+      
+      if (!validateMedicalNumber(formData.medicalNumber)) {
+        newErrors.medicalNumber = 'Invalid medical number format';
+        hasError = true;
+      }
     }
-
-    const newErrors = {};
-    let hasError = false;
 
     for (const field in formData) {
       if (!formData[field]) {
@@ -72,11 +77,6 @@ const Registration = (props) => {
 
     if (!validatePhoneNumber(formData.phoneNumber)) {
       newErrors.phoneNumber = 'Invalid phone number format';
-      hasError = true;
-    }
-
-    if (!validateMedicalNumber(formData.medicalNumber)) {
-      newErrors.medicalNumber = 'Invalid medical number format';
       hasError = true;
     }
 

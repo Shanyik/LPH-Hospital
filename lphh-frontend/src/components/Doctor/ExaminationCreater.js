@@ -3,10 +3,6 @@ import { useNavigate } from "react-router-dom";
 import "./ExaminationCreater.css"
 import Typography from '@mui/material/Typography';
 
-
-
-
-
 const ExaminationCreater = ({ userId, cookie }) => {
 
     const getDoctorById = (userId) => {
@@ -205,7 +201,7 @@ const ExaminationCreater = ({ userId, cookie }) => {
                                         onChange={(e) => setPatientLastName(e.target.value)}
                                         name="patientLastName"
                                         id="patientLastName"
-                                    />Presc
+                                    />
                                 </div>
                             </>
                         ] : [

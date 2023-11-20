@@ -53,16 +53,19 @@ const Navbar = (props) => {
             <Grid item xs={1} >
               <img src={logo} alt="Logo" className="mini-logo" />
             </Grid>
-            <Grid item xs={2.75} >
+            <Grid item xs={2.2} >
                 <Link className='menuButton' to="/patients">Patients </Link>
             </Grid>
-            <Grid item xs={2.75} >
+            <Grid item xs={2.2} >
                 <Link className='menuButton' to="/examination"> Examination</Link>
             </Grid>
-            <Grid item xs={2.75} >
+            <Grid item xs={2.2} >
+                <Link className='menuButton' to="/prescriptioncreator">Prescription </Link>
+            </Grid>
+            <Grid item xs={2.2} >
               <Link className='menuButton' to="/profile"> Profile</Link>
             </Grid>
-            <Grid item xs={2.75} >
+            <Grid item xs={2.2} >
               <Link className='menuButton' to="/" onClick={()=>{handleLogOut()}}> Log Out</Link>
             </Grid>
           </Grid>
