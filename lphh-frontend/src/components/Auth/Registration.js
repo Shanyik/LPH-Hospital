@@ -49,6 +49,20 @@ const Registration = (props) => {
     const newErrors = {};
     let hasError = false;
 
+    if ( props.cookie["role"] === "Admin") {
+      formData.role = "Doctor"
+      formData.medicalNumber = "a"
+    }
+    else{
+      formData.role = "Patient"
+      formData.ward = "a"
+      
+      if (!validateMedicalNumber(formData.medicalNumber)) {
+        newErrors.medicalNumber = 'Invalid medical number format';
+        hasError = true;
+      }
+    }
+
     for (const field in formData) {
       if (!formData[field]) {
         newErrors[field] = 'This field is required';
@@ -66,11 +80,6 @@ const Registration = (props) => {
       hasError = true;
     }
 
-    if (!validateMedicalNumber(formData.medicalNumber)) {
-      newErrors.medicalNumber = 'Invalid medical number format';
-      hasError = true;
-    }
-
     if (formData.password.length < 6) {
         newErrors.password = 'Password must be at least 6 characters long';
         hasError = true;
@@ -81,11 +90,7 @@ const Registration = (props) => {
 
     } else {
 
-      props.cookie["role"] === "Admin" ? (
-        formData.role = "Doctor"
-       ) : (
-        formData.role = "Patient"
-       )
+      
 
       console.log('Form submitted with data:', formData);
       /*

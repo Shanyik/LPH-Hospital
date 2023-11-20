@@ -37,20 +37,41 @@ public class AdminController : ControllerBase
         }
     }
     
-    [HttpGet("GetByIdentityId:{id}")]
-    [Authorize(Roles = "Doctor, Admin")]
-    public async Task<IActionResult> GetByIdentityId(string id)
+    [HttpGet("GetById:{id}")]
+    [Authorize(Roles = "Admin")]
+    public async Task<IActionResult> GetById(int id)
     {
         try
         {
-            var doctor = await _adminRepository.GetByIdentityId(id);
-
-            if (doctor == null)
+            var admin = await _adminRepository.GetById(id);
+            
+            if (admin == null)
             {
                 return NotFound();
             }
 
-            return Ok(doctor);
+            return Ok(admin);
+        }
+        catch (Exception e)
+        {
+            return BadRequest();
+        }
+    }
+    
+    [HttpGet("GetByIdentityId:{id}")]
+    [Authorize(Roles = "Admin")]
+    public async Task<IActionResult> GetByIdentityId(string id)
+    {
+        try
+        {
+            var admin = await _adminRepository.GetByIdentityId(id);
+
+            if (admin == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(admin);
         }
         catch (Exception e)
         {

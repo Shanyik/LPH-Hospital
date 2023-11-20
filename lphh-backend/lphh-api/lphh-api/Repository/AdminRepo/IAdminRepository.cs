@@ -4,7 +4,9 @@ namespace lphh_api.Repository.AdminRepo;
 
 public interface IAdminRepository
 {
-    Task<Doctor?> GetByIdentityId(string id);
+    Task<Admin?> GetById(int id);
 
     Task Add(Admin admin);
+
+    Task<Admin?> GetByIdentityId(string id);
 }
