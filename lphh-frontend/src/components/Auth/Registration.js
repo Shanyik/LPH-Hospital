@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './Registration.css'; // Import the CSS file
 import { useNavigate } from 'react-router-dom';
 
-const Registration = () => {
+const Registration = (props) => {
 
   const navigate = useNavigate()
 
@@ -14,8 +14,8 @@ const Registration = () => {
     email: '',
     phoneNumber: '',
     medicalNumber: '',
-    role: 'Patient',
-    ward: 'a'
+    role: '',
+    ward: ''
   });
 
   const [errors, setErrors] = useState({});
@@ -71,17 +71,24 @@ const Registration = () => {
       hasError = true;
     }
 
-
     if (formData.password.length < 6) {
         newErrors.password = 'Password must be at least 6 characters long';
         hasError = true;
-      }
+    }
 
     if (hasError) {
       setErrors(newErrors);
 
     } else {
+
+      props.cookie["role"] === "Admin" ? [
+        formData.role = "Doctor"
+      ] : [
+        formData.role = "Patient"
+      ]
+
       console.log('Form submitted with data:', formData);
+      /*
       setFormData({
         username: '',
         password: '',
@@ -90,28 +97,23 @@ const Registration = () => {
         email: '',
         phoneNumber: '',
         medicalNumber: '',
-        role: 'Patient',
-        ward: 'a'
+        role: '',
+        ward: ''
       });
+      */
       setErrors({});
       console.log("asd")
       registerFetch(formData).then(res => {
         console.log(res)
         navigate("/")
     })
-    }
-
-    
-
-    
+    }    
   };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
-
- 
 
   const handleGoBack = () => {
     navigate("/")
@@ -199,18 +201,36 @@ const Registration = () => {
           {errors.phoneNumber && <p className="form-error">{errors.phoneNumber}</p>}
         </div>
 
-        <div className="form-group">
-          <label className="form-label">Medical Number:</label>
-          <input
-            type="text"
-            name="medicalNumber"
-            value={formData.medicalNumber}
-            onChange={handleChange}
-            className="form-input"
-            required
-          />
-          {errors.medicalNumber && <p className="form-error">{errors.medicalNumber}</p>}
-        </div>
+        {props.cookie["role"] === "Admin" ? [
+
+          <div className="form-group">
+            <label className="form-label">Ward:</label>
+            <input
+              type="text"
+              name="ward"
+              value={formData.ward}
+              onChange={handleChange}
+              className="form-input"
+              required
+            />
+            {errors.ward && <p className="form-error">{errors.ward}</p>}
+          </div>
+
+        ] : [
+          <div className="form-group">
+            <label className="form-label">Medical Number:</label>
+            <input
+              type="text"
+              name="medicalNumber"
+              value={formData.medicalNumber}
+              onChange={handleChange}
+              className="form-input"
+              required
+            />
+            {errors.medicalNumber && <p className="form-error">{errors.medicalNumber}</p>}
+          </div>
+        ]}
+
         <button onClick={() => (handleGoBack())} className="form-goBack">Go Back</button>
         <button type="submit" className="form-submit">Register</button>
       </form>

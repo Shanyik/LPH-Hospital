@@ -10,9 +10,9 @@ services:
       - "5274:5274"
     depends_on:
       - db
-    command: ["dotnet", "ef" , "database update"]
+    # command: ["dotnet", "ef" , "database update"] // probably not working correctly, backend migrates based on program.cs method
     networks:
-      - my-network
+      - lphh-network
 
   lphh-frontend:
     container_name: lphh-frontend
@@ -22,7 +22,7 @@ services:
     ports:
       - "3000:3000"
     networks:
-      - my-network
+      - lphh-network
     depends_on:
       - lphh_backend
     environment:      
@@ -34,9 +34,9 @@ services:
     ports:
       - "1433:1433"
     networks:
-      - my-network
+      - lphh-network
 
 networks:
-  my-network:
+  lphh-network:
 
     

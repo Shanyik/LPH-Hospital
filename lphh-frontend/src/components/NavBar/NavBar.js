@@ -68,10 +68,27 @@ const Navbar = (props) => {
           </Grid>
         </Box>
     </section>
-    ) : (
+    ) : props.cookie["role"] === "Admin" ? (
       <section>
-
+        <Box className="navbar">       
+          <Grid container alignItems="center">
+            <Grid item xs={1} >
+              <img src={logo} alt="Logo" className="mini-logo" />
+            </Grid>
+            <Grid item xs={4} >
+                <Link className='menuButton' to="/registration">Doctor registration </Link>
+            </Grid>
+            <Grid item xs={4} >
+              <Link className='menuButton' to="/profile"> Profile</Link>
+            </Grid>
+            <Grid item xs={3} >
+              <Link className='menuButton' to="/" onClick={()=>{handleLogOut()}}> Log Out</Link>
+            </Grid>
+          </Grid>
+        </Box>
       </section>
+    ) : (
+      null
     )
   );
 }

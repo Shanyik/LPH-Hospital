@@ -52,7 +52,7 @@ function App() {
                 <>
                   <Route path="/" element={<Home />} />
                   <Route path="/login" element={<Login setCookie={setCookie} cookie={cookie}/>} />
-                  <Route path="/registration" element={<Registration />} />
+                  <Route path="/registration" element={<Registration cookie={cookie}/>} />
                 </>
               ]
             }
