@@ -77,6 +77,7 @@ public class Program
                 .WithOrigins("http://localhost:3000")
                 .AllowAnyMethod()
                 .AllowAnyHeader();
+                //credentials: true nézzük meg itt, stackoverflow link: https://stackoverflow.com/questions/63351799/react-fetch-credentials-include-breaks-my-entire-request-and-i-get-an-error
         });
 
         app.MapControllers();
