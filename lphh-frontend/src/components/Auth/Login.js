@@ -41,8 +41,10 @@ const Login = (props) => {
   const navigateToUrl = (role) => {
     if (role === "Doctor") {
       navigate("/main");
-    } else {
+    } else if(role === "Patient"){
       navigate("/patient/home");
+    }else{
+      navigate("/adminHome");
     }
   };
 

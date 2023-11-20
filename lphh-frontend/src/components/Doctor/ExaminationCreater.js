@@ -28,7 +28,7 @@ const ExaminationCreater = ({ userId, cookie }) => {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                'Autherization': 'Bearer ' + cookie["token"]
+                'Authorization': 'Bearer ' + cookie["token"]
             },
             body: JSON.stringify(data),
         }).then((res) => console.log("success"));
@@ -40,12 +40,7 @@ const ExaminationCreater = ({ userId, cookie }) => {
     const [type, setType] = useState(null)
     const [doctorFirstName, setDoctorFirstName] = useState("")
     const [doctorLastName, setDoctorLastName] = useState("")
-    const [wards, setWards] = useState(["a", "b", "c", "d"])
-    const [currentWard, setCurrentWard] = useState("")
-
     const [patient, setPatient] = useState(null)
-    const [patientFirstName, setPatientFirstName] = useState("")
-    const [patientLastName, setPatientLastName] = useState("")
     const [medicalNumber, setMedicalNumber] = useState("")
     const [medicalNumbererror, setMedicalNumberError] = useState(false)
 
@@ -103,10 +98,11 @@ const ExaminationCreater = ({ userId, cookie }) => {
             console.log(data)
             setFormError(false)
             addExam(data)
+            navigate("/patients");
         } else {
             setFormError(true)
         }
-        navigate("/patients");
+       
     };
 
 
@@ -126,41 +122,7 @@ const ExaminationCreater = ({ userId, cookie }) => {
                         />
                     </div>
 
-                    <h4>Doctor</h4>
-                    <div className="control">
-                        <Typography htmlFor="name">Firstname</Typography>
-                        <input
-                            value={doctor.firstName}
-                            placeholder="Fristname"
-                            onChange={(e) => setDoctorFirstName(e.target.value)}
-                            name="doctorFristName"
-                            id="doctorFristName"
-                        />
-                    </div>
-                    <div className="control">
-                        <Typography htmlFor="name">Lastname</Typography>
-                        <input
-                            value={doctor.lastName}
-                            placeholder="Lastname"
-                            onChange={(e) => setDoctorLastName(e.target.value)}
-                            name="doctorLastName"
-                            id="doctorLastName"
-                        />
-                    </div>
-                    <div className="control">
-
-                        <div>{currentWard === "Chose wards" || currentWard === null ? <>Chose wards!</> : <></>}</div>
-                        {console.log(currentWard)}
-                        <Typography htmlFor="name">Ward</Typography>
-                        <select onChange={(e) => setCurrentWard(e.target.value)} defaultValue={doctor.ward}>
-                            <option value="Chose wards">Choose wards</option>
-                            {wards.map((val, i) => (
-                                <option key={i} value={val} id={i}>
-                                    {val}
-                                </option>
-                            ))}
-                        </select>
-                    </div>
+                    
                 </div>
                 <div id="PatientContainer">
                     <h4>Patient</h4>
@@ -182,28 +144,20 @@ const ExaminationCreater = ({ userId, cookie }) => {
                     </div>
                     {
                         patient !== null ? [
-                            <>
+                            <div id="patientDataContainer">
                                 <div className="control">
-                                    <Typography htmlFor="name">Firstname:</Typography>
-                                    <input
-                                        value={patient.firstName}
-                                        placeholder="Fristname"
-                                        onChange={(e) => setPatientFirstName(e.target.value)}
-                                        name="patientFristName"
-                                        id="patientFristName"
-                                    />
+                                    <Typography htmlFor="name">Firstname</Typography>
+                                    <div id="patinetData">
+                                        {patient.firstName}
+                                    </div>
                                 </div>
                                 <div className="control">
-                                    <Typography htmlFor="name">Lastname:</Typography>
-                                    <input
-                                        value={patient.lastName}
-                                        placeholder="Lastname"
-                                        onChange={(e) => setPatientLastName(e.target.value)}
-                                        name="patientLastName"
-                                        id="patientLastName"
-                                    />
+                                    <Typography htmlFor="name">Lastname</Typography>
+                                    <div id="patinetData">
+                                        {patient.lastName}
+                                    </div>
                                 </div>
-                            </>
+                            </div>
                         ] : [
                             <></>
                         ]

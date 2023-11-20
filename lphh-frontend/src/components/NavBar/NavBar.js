@@ -82,7 +82,7 @@ const Navbar = (props) => {
                 <Link className='menuButton' to="/registration">Doctor registration </Link>
             </Grid>
             <Grid item xs={4} >
-              <Link className='menuButton' to="/profile"> Profile</Link>
+              <Link className='menuButton' to="/adminHome"> Home</Link>
             </Grid>
             <Grid item xs={3} >
               <Link className='menuButton' to="/" onClick={()=>{handleLogOut()}}> Log Out</Link>

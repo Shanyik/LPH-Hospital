@@ -16,7 +16,7 @@ import PatientHome from "./components/Patient/PatientHome/PatientHome";
 import Login from "./components/Auth/Login";
 import { CookiesProvider, useCookies } from "react-cookie";
 import Registration from "./components/Auth/Registration";
-import PrescriptionCreator from "./components/Doctor/PrescriptionCreator/PrescriptionCreator";
+import AdminHome from "./components/Admin/AdminHome";
 
 function App() {
 
@@ -40,7 +40,6 @@ function App() {
                   <Route path="/examination" element={<ExaminationCreater userId={cookie.id} cookie={cookie}/>}></Route>
                   <Route path="/main" element={<DoctorMain />} />
                   <Route path="/profile" element={<Profile cookie={cookie}/>} />
-                  <Route path="/prescriptioncreator" element={<PrescriptionCreator cookie={cookie}/>} />
                 </>
               ] : cookie.role ==="Patient" ?  [
                 <>
@@ -50,8 +49,9 @@ function App() {
                   <Route path="/patient/home" element={<PatientHome />} />
                   <Route path="/profile" element={<Profile cookie={cookie}/>} />
                 </>
-              ] : [
+              ] :[
                 <>
+                 <Route path="/adminHome" element={<AdminHome cookie={cookie}/>} />
                   <Route path="/" element={<Home />} />
                   <Route path="/login" element={<Login setCookie={setCookie} cookie={cookie}/>} />
                   <Route path="/registration" element={<Registration cookie={cookie}/>} />

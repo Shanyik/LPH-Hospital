@@ -45,9 +45,23 @@ const Registration = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
     const newErrors = {};
     let hasError = false;
+    if ( props.cookie["role"] === "Admin") {
+      formData.role = "Doctor"
+      formData.medicalNumber = "a"
+     
+    }
+    else{
+      formData.role = "Patient"
+      formData.ward = "a"
+      if (!validateMedicalNumber(formData.medicalNumber)) {
+        newErrors.medicalNumber = 'Invalid medical number format';
+        hasError = true;
+      }
+    }
+
+    
 
     if ( props.cookie["role"] === "Admin") {
       formData.role = "Doctor"
@@ -80,12 +94,14 @@ const Registration = (props) => {
       hasError = true;
     }
 
+  
     if (formData.password.length < 6) {
         newErrors.password = 'Password must be at least 6 characters long';
         hasError = true;
     }
 
     if (hasError) {
+      console.log("error")
       setErrors(newErrors);
 
     } else {
@@ -107,10 +123,15 @@ const Registration = (props) => {
       });
       */
       setErrors({});
-      console.log("asd")
+      
       registerFetch(formData).then(res => {
         console.log(res)
-        navigate("/")
+        if(props.cookie["role"] === "Admin"){
+          navigate("/adminHome")
+        }else{
+          navigate("/")
+        }
+        
     })
     }    
   };
@@ -121,7 +142,12 @@ const Registration = (props) => {
   };
 
   const handleGoBack = () => {
-    navigate("/")
+    if(props.cookie["role"] === "Admin"){
+      console.log("asdertre")
+      navigate("/adminHome")
+    }else{
+      navigate("/")
+    }
   }
 
   return (

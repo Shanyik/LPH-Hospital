@@ -52,6 +52,9 @@ public class AuthService : IAuthService
             };
             
             await _doctorRepository.Add(newDoctor);
+
+           await _doctorRepository.Add(newDoctor);
+
         }
         else if (role == "Patient")
         {
@@ -66,7 +69,11 @@ public class AuthService : IAuthService
                 IdentityId = identityId
             };
             
+
             await _patientRepository.Add(newPatient);
+
+           await _patientRepository.Add(newPatient);
+
         }
         else
         {
