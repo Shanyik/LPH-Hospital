@@ -3,6 +3,7 @@ import "./PrescriptionCreator.css"
 import Typography from '@mui/material/Typography';
 import { useNavigate } from 'react-router-dom';
 import { Grid } from "@mui/material";
+import Button from '@mui/material/Button';
 
 const PrescriptionCreator = (props) => {
 
@@ -62,10 +63,10 @@ const PrescriptionCreator = (props) => {
 
     const handleMedicalNumberChange = (event) => {
         setMedicalNumber(event.target.value);
-        const isNumeric = /^\d{3}-\d{3}-\d{3}$/.test(medicalNumber);
+        const isNumeric = /^\d{3}-\d{3}-\d{3}$/.test(event.target.value);
 
         if (isNumeric) {
-            getPatientByMedicalNumber(medicalNumber).then(data => {
+            getPatientByMedicalNumber(event.target.value).then(data => {
                 if (data.status === 404) {
                     console.log(data)
                 } else {
@@ -128,7 +129,7 @@ const PrescriptionCreator = (props) => {
     };
 
     return (
-        doctor != null ? [
+        doctor != null ? (
             <div id="examCreaterContainer">
                 <form className="ExamForm" onSubmit={onSubmit}>
 
@@ -144,7 +145,7 @@ const PrescriptionCreator = (props) => {
                 </div>
 
                 {
-                    patient !== null ? [
+                    patient !== null ? (
                         <>
                             <div> {/* margin */}
                                 <Grid container alignItems="center">
@@ -183,11 +184,20 @@ const PrescriptionCreator = (props) => {
                                         <option value="" disabled>
                                         Select a product
                                         </option>
-                                        {filteredProducts.map((product, index) => (
-                                        <option key={index} value={product.name}>
-                                            {product.name}
-                                        </option>
-                                        ))}
+                                        {
+                                            filteredProducts.length === 0 ? (
+                                                products.map((product, index) => (
+                                                    <option key={index} value={product.name}>
+                                                        {product.name}
+                                                    </option>
+                                                ))
+                                            ) : (
+                                                filteredProducts.map((product, index) => (
+                                                    <option key={index} value={product.name}>
+                                                        {product.name}
+                                                    </option>
+                                                ))
+                                            )}
                                     </select>
                                 </div>
                             </div>
@@ -204,21 +214,19 @@ const PrescriptionCreator = (props) => {
                                 </div>
                             </div>
                             
-                            <button type="submit">
+                            <Button variant="contained" color="success" type="submit">
                                 Submit
-                            </button>
+                            </Button>
                         </>
-                    ] : [
+                     ) : (
                         <></>
-                    ]
-                }
-                    
-                    
+                     )
+                }  
                 </form>
             </div>
-        ] : [
+         ) : (
             null
-        ]
+        )
     )
 }
 
