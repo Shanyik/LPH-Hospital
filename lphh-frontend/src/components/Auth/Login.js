@@ -15,9 +15,6 @@ const loginFetch = (data) => {
 const getIdFetch = (id, role, token) => {
   return fetch(`api/${role}/GetByIdentityId:${id}`, {
     method: 'GET',
-    headers: {
-        'Authorization': 'Bearer ' + token
-    }
   }).then((res) => res.json());
 };
 

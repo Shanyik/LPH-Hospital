@@ -33,7 +33,7 @@ const Registration = (props) => {
   };
 
   const registerFetch = (formData) => {
-    return fetch(`api/Auth/Register`,
+    return fetch('api/Auth/Register',
         {
             method: "POST",
             headers: {

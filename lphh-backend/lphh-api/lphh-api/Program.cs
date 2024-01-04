@@ -87,20 +87,9 @@ public class Program
         AddDoctor();
         AddPatient();
         
-        /*
-        using (var serviceScope = ((IApplicationBuilder)app).ApplicationServices
-               .GetRequiredService<IServiceScopeFactory>()
-               .CreateScope())
-        {
-            using (var context = serviceScope.ServiceProvider.GetService<HospitalApiContext>())
-            {
-                context.Database.Migrate();
-            }
-        }
-        */
+        
         app.Run();
 
-//methods
 
         #region AddIdentity()
 
@@ -204,11 +193,20 @@ public class Program
                         ValidateAudience = true,
                         ValidateLifetime = true,
                         ValidateIssuerSigningKey = true,
-                        ValidIssuer = "apiWithAuthBackend",
-                        ValidAudience = "apiWithAuthBackend",
+                        ValidIssuer = builder.Configuration["Jwt:Issuer"],
+                        ValidAudience = builder.Configuration["Jwt:Audience"],
                         IssuerSigningKey = new SymmetricSecurityKey(
-                            Encoding.UTF8.GetBytes("!SomethingSecret!")
+                            Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"])
                         ),
+                    };
+                    
+                    options.Events = new JwtBearerEvents()
+                    {
+                        OnMessageReceived = contex =>
+                        {
+                            contex.Token = contex.Request.Cookies["access_token"];
+                            return Task.CompletedTask;
+                        } 
                     };
                 });
         }

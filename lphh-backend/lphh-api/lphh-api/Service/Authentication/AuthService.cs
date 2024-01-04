@@ -49,11 +49,10 @@ public class AuthService : IAuthService
                 LastName = lastName,
                 Ward = ward,
                 IdentityId = identityId
-            };
+            }; 
             
-            await _doctorRepository.Add(newDoctor);
-
-           await _doctorRepository.Add(newDoctor);
+             _doctorRepository.Add(newDoctor);
+            
 
         }
         else if (role == "Patient")
@@ -70,9 +69,8 @@ public class AuthService : IAuthService
             };
             
 
-            await _patientRepository.Add(newPatient);
+             _patientRepository.Add(newPatient);
 
-           await _patientRepository.Add(newPatient);
 
         }
         else
@@ -95,39 +93,43 @@ public class AuthService : IAuthService
         return authResult;
     }
     
-    public async Task<AuthResult> LoginAsync(string email, string password)
+    public async Task<AuthResult> LoginAsync(string input, string password)
     {
-        var managedUser = await _userManager.FindByEmailAsync(email);
+        var managedUserByEmail = await _userManager.FindByEmailAsync(input);
 
-        if (managedUser == null)
+        var managedUserByUserName = await _userManager.FindByNameAsync(input);
+
+        if (managedUserByEmail == null && managedUserByUserName == null)
         {
-            return InvalidEmail(email);
+            return InvalidEmailOrUsername(input);
         }
 
-        var isPasswordValid = await _userManager.CheckPasswordAsync(managedUser, password);
+        var validInput = managedUserByEmail != null ? managedUserByEmail : managedUserByUserName;
+        
+        var isPasswordValid = await _userManager.CheckPasswordAsync(validInput, password);
         if (!isPasswordValid)
         {
-            return InvalidPassword(email, managedUser.UserName);
+            return InvalidPassword(input, validInput.UserName);
         }
 
 
         // get the role and pass it to the TokenService
-        var roles = await _userManager.GetRolesAsync(managedUser);
-        var accessToken = _tokenService.CreateToken(managedUser, roles[0]);
+        var roles = await _userManager.GetRolesAsync(validInput);
+        var accessToken = _tokenService.CreateToken(validInput, roles[0]);
 
-        return new AuthResult(true, managedUser.Email, managedUser.UserName, managedUser.Id, accessToken);
+        return new AuthResult(true, validInput.Email, validInput.UserName, validInput.Id, accessToken);
     }
-
-    private static AuthResult InvalidEmail(string email)
+    
+    private static AuthResult InvalidEmailOrUsername(string input)
     {
-        var result = new AuthResult(false, email, "", "", "");
-        result.ErrorMessages.Add("Bad credentials", "Invalid email");
+        var result = new AuthResult(false, input, "", "", "");
+        result.ErrorMessages.Add("Bad credentials", "Invalid email or username");
         return result;
     }
 
-    private static AuthResult InvalidPassword(string email, string userName)
+    private static AuthResult InvalidPassword(string input, string userName)
     {
-        var result = new AuthResult(false, email, userName, "", "");
+        var result = new AuthResult(false, input, userName, "", "");
         result.ErrorMessages.Add("Bad credentials", "Invalid password");
         return result;
     }

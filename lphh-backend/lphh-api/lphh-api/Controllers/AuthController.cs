@@ -67,14 +67,14 @@ public class AuthController : ControllerBase
             return BadRequest(ModelState);
         }
         
-        HttpContext.Response.Cookies.Append("acces_token", result.Token);
+        HttpContext.Response.Cookies.Append("access_token", result.Token);
         return Ok(new AuthResponse(result.Email, result.UserName, result.Token));
     }
     
     [HttpPost("Logout")]
     public IActionResult Logout()
     {
-        Response.Cookies.Delete("acces_token");
+        Response.Cookies.Delete("access_token");
         
         return NoContent(); 
     }

@@ -10,6 +10,13 @@ namespace lphh_api.Service.Authentication;
 public class TokenService : ITokenService
 {
     private const int ExpirationMinutes = 30;
+    
+    private IConfiguration _configuration;
+
+    public TokenService(IConfiguration configurationBinder)
+    {
+        _configuration = configurationBinder;
+    }
 
     public string CreateToken(IdentityUser user, string role)
     {
@@ -26,8 +33,8 @@ public class TokenService : ITokenService
     private JwtSecurityToken CreateJwtToken(List<Claim> claims, SigningCredentials credentials,
         DateTime expiration) =>
         new(
-            "apiWithAuthBackend",
-            "apiWithAuthBackend",
+            _configuration["Jwt:Issuer"],
+            _configuration["Jwt:Audience"],
             claims,
             expires: expiration,
             signingCredentials: credentials
@@ -60,7 +67,7 @@ public class TokenService : ITokenService
     {
         return new SigningCredentials(
             new SymmetricSecurityKey(
-                Encoding.UTF8.GetBytes("!SomethingSecret!") //user secret
+                Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]) //user secret
             ),
             SecurityAlgorithms.HmacSha256
         );
