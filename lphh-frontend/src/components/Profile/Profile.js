@@ -9,19 +9,13 @@ const Profile = (props) => {
 
     if (props.cookie["role"] === "Patient") {
       return fetch(`api/Patient/Delete:${username}`, {
-        method: 'DELETE',
-        headers: {
-        'Authorization': 'Bearer ' + props.cookie["token"]
-        }
+        method: 'DELETE'
     })
       .then((res) => res.text())
       .then((res) => console.log(res))
     }else{
       return fetch(`api/Doctor/Delete:${username}`, {
-        method: 'DELETE',
-        headers: {
-        'Authorization': 'Bearer ' + props.cookie["token"]
-        }
+        method: 'DELETE'
     })
         .then((res) => res.text())
         .then((res) => console.log(res))
@@ -33,10 +27,7 @@ const Profile = (props) => {
   useEffect(() => {
     if (props.cookie["role"] === "Patient") {
       fetch(`api/Patient/GetById:${props.cookie["id"]}`, {
-        method: 'GET',
-        headers: {
-        'Authorization': 'Bearer ' + props.cookie["token"]
-        }
+        method: 'GET'
     })
         .then(response => response.json())
         .then(data => {
@@ -48,10 +39,7 @@ const Profile = (props) => {
     }
     else{
       fetch(`api/Doctor/GetById:${props.cookie["id"]}`, {
-        method: 'GET',
-        headers: {
-        'Authorization': 'Bearer ' + props.cookie["token"]
-        }
+        method: 'GET'
     })
         .then(response => response.json())
         .then(data => {

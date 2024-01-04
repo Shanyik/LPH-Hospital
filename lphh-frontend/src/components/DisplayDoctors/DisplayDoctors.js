@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import "./DisplayDoctors.css"
 
-const DisplayDoctors = (props) => {
+const DisplayDoctors = () => {
 
     const deleteButton = (username) =>{
         deleteDoctor(username)
@@ -14,9 +14,6 @@ const DisplayDoctors = (props) => {
      const deleteDoctor = (username) =>{
         return fetch(`$api/Doctor/Delete:${username}`, {
             method: 'DELETE',
-            headers: {
-            'Authorization': 'Bearer ' + props.cookie["token"]
-            }
         })
         .then((res) => res.text())
         .then((res) => console.log(res))
@@ -27,9 +24,6 @@ const DisplayDoctors = (props) => {
     useEffect(() => {
       fetch(`api/Doctor/GetAll`,  {
         method: 'GET',
-        headers: {
-        'Authorization': 'Bearer ' + props.cookie["token"]
-        }
     })
         .then(response => response.json())
         .then(data => setDoctors(data))

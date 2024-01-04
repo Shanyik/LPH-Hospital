@@ -12,6 +12,13 @@ const Navbar = (props) => {
   const handleLogOut = async () => {
     await props.removeCookie("id", {path: "/"})
     await props.removeCookie("role", {path: "/"})
+
+    fetch('api/Auth/Logout', {
+      method: 'GET'
+  })
+      .then(response => response.json())
+      .catch(error => console.log(error))
+
     navigate("/")
     window.location.reload(true);
     

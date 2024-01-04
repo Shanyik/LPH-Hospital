@@ -38,14 +38,14 @@ function App() {
               cookie.role === "Doctor" ? [
                 <>
                   <Route path="/patients" element={<DisplayPatients cookie={cookie}/>} />
-                  <Route path="/examination" element={<ExaminationCreater userId={cookie.id} cookie={cookie}/>}></Route>
+                  <Route path="/examination" element={<ExaminationCreater userId={cookie.id}/>}></Route>
                   <Route path="/main" element={<DoctorMain />} />
                   <Route path="/profile" element={<Profile cookie={cookie}/>} />
                   <Route path="/prescriptioncreator" element={<PrescriptionCreator cookie={cookie}/>} />
                 </>
               ] : cookie.role ==="Patient" ?  [
                 <>
-                  <Route path="/doctors" element={<DisplayDoctors cookie={cookie}/>} /> {/* ? */}
+                  <Route path="/doctors" element={<DisplayDoctors />} /> 
                   <Route path="/patient/prescriptions" element={<Prescriptions cookie={cookie}/>} />
                   <Route path="/patient/documents" element={<Documents cookie={cookie}/>} />
                   <Route path="/patient/home" element={<PatientHome />} />
@@ -53,7 +53,7 @@ function App() {
                 </>
               ] :[
                 <>
-                 <Route path="/adminHome" element={<AdminHome cookie={cookie}/>} />
+                 <Route path="/adminHome" element={<AdminHome/>} />
                   <Route path="/" element={<Home />} />
                   <Route path="/login" element={<Login setCookie={setCookie} cookie={cookie}/>} />
                   <Route path="/registration" element={<Registration cookie={cookie}/>} />

@@ -22,18 +22,14 @@ const PrescriptionCreator = (props) => {
     const getDoctorById = (userId) => {
         return fetch(`api/Doctor/GetById:${userId}`, {
             method: 'GET',
-            headers: {
-            'Authorization': 'Bearer ' + props.cookie["token"]
-            }
+            
         }).then(res => res.json())
     }
 
     const getAllProducts = () => {
         return fetch('api/Product/GetAll', {
             method: 'GET',
-            headers: {
-            'Authorization': 'Bearer ' + props.cookie["token"]
-            }
+            
         }).then(res => res.json())
     }
 
@@ -41,9 +37,7 @@ const PrescriptionCreator = (props) => {
     const getPatientByMedicalNumber = (medicalNumber) => {
         return fetch(`api/Patient/GetByMedicalNumber:${medicalNumber}`, {
             method: 'GET',
-            headers: {
-            'Authorization': 'Bearer ' + props.cookie["token"]
-            }
+            
         }).then(res => res.json())
     }
 
@@ -104,8 +98,7 @@ const PrescriptionCreator = (props) => {
         return fetch('api/Prescription/Add', {
             method: "POST",
             headers: {
-                "Content-Type": "application/json",
-                'Authorization': 'Bearer ' + props.cookie["token"]
+                "Content-Type": "application/json"
             },
             body: JSON.stringify(data),
         }).then((res) => console.log("success"));

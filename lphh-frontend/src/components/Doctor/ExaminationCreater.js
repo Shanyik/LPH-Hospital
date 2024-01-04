@@ -3,23 +3,17 @@ import { useNavigate } from "react-router-dom";
 import "./ExaminationCreater.css"
 import Typography from '@mui/material/Typography';
 
-const ExaminationCreater = ({ userId, cookie }) => {
+const ExaminationCreater = ({ userId }) => {
 
     const getDoctorById = (userId) => {
         return fetch(`api/Doctor/GetById:${userId}`, {
             method: 'GET',
-            headers: {
-            'Authorization': 'Bearer ' + cookie["token"]
-            }
         }).then(res => res.json())
     }
     
     const getPatientByMedicalNumber = (medicalNumber) => {
         return fetch(`api/Patient/GetByMedicalNumber:${medicalNumber}`, {
             method: 'GET',
-            headers: {
-            'Authorization': 'Bearer ' + cookie["token"]
-            }
         }).then(res => res.json())
     }
     
@@ -27,8 +21,7 @@ const ExaminationCreater = ({ userId, cookie }) => {
         return fetch(`api/Exam/Add`, {
             method: "POST",
             headers: {
-                "Content-Type": "application/json",
-                'Authorization': 'Bearer ' + cookie["token"]
+                "Content-Type": "application/json"
             },
             body: JSON.stringify(data),
         }).then((res) => console.log("success"));
