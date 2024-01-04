@@ -52,7 +52,7 @@ public class AuthService : IAuthService
             }; 
             
              _doctorRepository.Add(newDoctor);
-            
+             
 
         }
         else if (role == "Patient")
@@ -70,8 +70,7 @@ public class AuthService : IAuthService
             
 
              _patientRepository.Add(newPatient);
-
-
+             
         }
         else
         {
