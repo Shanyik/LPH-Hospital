@@ -4,14 +4,12 @@ import Modal from '@mui/material/Modal';
 import { useEffect, useState } from 'react';
 
 
-const PrescreptionModal = ({ doctors, prescription, patients, handleClose, open, cookie }) => {
+const PrescreptionModal = ({ doctors, prescription, patients, handleClose, open }) => {
 
     const getProduct = (id) => {
         return fetch(`api/Product/GetById:${id}`, {
             method: 'GET',
-            headers: {
-            'Authorization': 'Bearer ' + cookie["token"]
-            }
+            
         }).then(response => response.json())
     }
 

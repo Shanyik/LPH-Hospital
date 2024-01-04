@@ -10,9 +10,6 @@ const DisplayPatients = (props) => {
     const deletePatient = (username) => {
         return fetch(`/api/Patient/Delete:${username}`, {
             method: 'DELETE',
-            headers: {
-            'Authorization': 'Bearer ' + props.cookie["token"]
-            }
         })
             .then((res) => res.text())
             .then((res) => console.log(res))
@@ -21,9 +18,6 @@ const DisplayPatients = (props) => {
     const getExamDataByPatientID = (id) => {
         return fetch(`/api/Exam/GetByPatientId:${id}`, {
             method: 'GET',
-            headers: {
-            'Authorization': 'Bearer ' + props.cookie["token"]
-            }
         }).then((res => res.json())) //proxy miatt -->json-ben
     }
     
@@ -31,18 +25,12 @@ const DisplayPatients = (props) => {
     
         return fetch(`/api/Prescription/GetByPatientId:${id}`, {
             method: 'GET',
-            headers: {
-            'Authorization': 'Bearer ' + props.cookie["token"]
-            }
         }).then((res => res.json()))
     }
     
     const getAllDoctors = () => {
         return fetch('/api/Doctor/GetAll', {
             method: 'GET',
-            headers: {
-            'Authorization': 'Bearer ' + props.cookie["token"]
-            }
         }).then(res => res.json())
     }
 
@@ -56,9 +44,6 @@ const DisplayPatients = (props) => {
     useEffect(() => {
         fetch('/api/Patient/GetAll', {
             method: 'GET',
-            headers: {
-            'Authorization': 'Bearer ' + props.cookie["token"]
-            }
         })
             .then(response => response.json())
             .then(data => {
@@ -83,9 +68,6 @@ const DisplayPatients = (props) => {
     const findPatient = (username) => {
         return fetch(`/api/Patient/GetByUsername:${username}`, {
             method: 'GET',
-            headers: {
-            'Authorization': 'Bearer ' + props.cookie["token"]
-            }
         })
             .then(res => res.json())
     }
@@ -109,9 +91,6 @@ const DisplayPatients = (props) => {
     const refresPatient = () => {
         fetch('/api/Patient/GetAll', {
             method: 'GET',
-            headers: {
-            'Authorization': 'Bearer ' + props.cookie["token"]
-            }
         }) // env
             .then(response => response.json())
             .then(data => {

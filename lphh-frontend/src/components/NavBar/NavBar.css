@@ -8,15 +8,16 @@
 }
 
 .menuButton:hover {
-    color: #000000;
+    color: #fd5d5d;
     cursor: pointer;
     transition: 0.5s;
 }
 
 .navbar {
-    width: 70%;
-    min-Width: 70%;
-    left: 15%;
+    width: 50%;
+    min-Width: 50%;
+    display: flex;
+    left: 25%;
     top: 20px;
     height: 10%;
     background-color: rgba(255, 255, 255, 0.801);

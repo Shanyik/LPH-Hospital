@@ -12,6 +12,13 @@ const Navbar = (props) => {
   const handleLogOut = async () => {
     await props.removeCookie("id", {path: "/"})
     await props.removeCookie("role", {path: "/"})
+
+    fetch('api/Auth/Logout', {
+      method: 'GET'
+  })
+      .then(response => response.json())
+      .catch(error => console.log(error))
+
     navigate("/")
     window.location.reload(true);
     
@@ -25,21 +32,35 @@ const Navbar = (props) => {
           <Grid item xs={1} >
               <img src={logo} alt="Logo" className="mini-logo" />
             </Grid>
-            <Grid item xs={2} >
+            <Grid item xs={0.1} >
+            </Grid>
+            <Grid  xs={0.3} >
+              <p> | </p>
+            </Grid>
+            <Grid item xs={0.1} >
+            </Grid>
+            <Grid item xs="auto" >
                 <Link className='menuButton' to="/patient/home">Home</Link>
             </Grid>
-            <Grid item xs={2}  >
+            
+            <Grid item xs="auto">
                 <Link className='menuButton' to="/patient/prescriptions">Prescriptions</Link>
             </Grid>
-            <Grid item xs={2} >
+            
+            <Grid item xs="auto" >
                 <Link className='menuButton' to="/patient/documents">Documents</Link>
             </Grid>
-            <Grid item xs={1} >
+            <Grid item xs={0.3} >
             </Grid>
-            <Grid item xs={2} >
+            <Grid item xs={0.3} >
+              <p> | </p>
+            </Grid>
+            <Grid item xs={0.3} >
+            </Grid>
+            <Grid item xs="auto"s >
                 <Link className='menuButton' to="/profile"> Profile</Link>
             </Grid>
-            <Grid item xs={2} >
+            <Grid item xs="auto" >
                 <Link className='menuButton' to="/" onClick={()=>{handleLogOut()}}> Log Out</Link>
             </Grid>
             

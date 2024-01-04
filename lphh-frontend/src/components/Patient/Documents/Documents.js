@@ -11,9 +11,6 @@ const Documents = (props) => {
     useEffect(() => {
         fetch(`/api/Exam/GetByPatientId:${props.cookie["id"]}`, {
             method: 'GET',
-            headers: {
-            'Authorization': 'Bearer ' + props.cookie["token"]
-            }
         })
             .then(response => response.json())
             .then(data => {
@@ -25,9 +22,6 @@ const Documents = (props) => {
             .catch(error => console.log(error))
         fetch('/api/Doctor/GetAll', {
             method: 'GET',
-            headers: {
-            'Authorization': 'Bearer ' + props.cookie["token"]
-            }
         })
             .then(response => response.json())
             .then(data => {

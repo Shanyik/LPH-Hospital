@@ -1,23 +1,19 @@
 import { useEffect, useState } from "react";
 
-const getAllDoctors = (token) => {
+const getAllDoctors = () => {
     return fetch('/api/Doctor/GetAll', {
         method: 'GET',
-        headers: {
-            'Authorization': 'Bearer ' + token
-        }
     }).then(res => res.json())
 }
 
-const AdminHome = (props) => {
+const AdminHome = () => {
 
     const [doctors, setDoctors] = useState(null);
 
     useEffect(() => {
-        getAllDoctors(props.cookie["token"]).then(
+        getAllDoctors().then(
             data => {
                 setDoctors(data);
-                console.log(data[0])
             }
         )
     }, [])
