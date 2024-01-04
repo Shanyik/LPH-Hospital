@@ -12,7 +12,7 @@ const loginFetch = (data) => {
   }).then((res) => res.json());
 };
 
-const getIdFetch = (id, role, token) => {
+const getIdFetch = (id, role) => {
   return fetch(`api/${role}/GetByIdentityId:${id}`, {
     method: 'GET',
   }).then((res) => res.json());

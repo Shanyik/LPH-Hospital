@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import "./DisplayPatients.css";
 import { Box, Grid } from "@mui/material";
-import SearchField from "../Doctor/SearchPatient";
-import ExaminationTable from "../Doctor/ExaminationTable";
-import PresceptionTable from "../Doctor/PrescriptionTable";
+import SearchField from "../SearchPatient";
+import ExaminationTable from "../ExaminationTable";
+import PresceptionTable from "../PrescriptionTable";
 
 const DisplayPatients = (props) => {
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import "./NavBar.css"
+import  "./NavBar.css"
 import { Box, Grid } from "@mui/material";
 import { Link, useNavigate } from 'react-router-dom'
 import logo from '../Images/lphh-minilogo.png';
@@ -28,7 +28,7 @@ const Navbar = (props) => {
             <Grid item xs={2} >
                 <Link className='menuButton' to="/patient/home">Home</Link>
             </Grid>
-            <Grid item xs={2} >
+            <Grid item xs={2}  >
                 <Link className='menuButton' to="/patient/prescriptions">Prescriptions</Link>
             </Grid>
             <Grid item xs={2} >

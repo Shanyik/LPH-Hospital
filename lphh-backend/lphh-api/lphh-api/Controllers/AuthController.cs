@@ -67,15 +67,24 @@ public class AuthController : ControllerBase
             return BadRequest(ModelState);
         }
         
-        HttpContext.Response.Cookies.Append("access_token", result.Token);
+        HttpContext.Response.Cookies.Append("access_token", result.Token); //http-only, secure 
         return Ok(new AuthResponse(result.Email, result.UserName, result.Token));
     }
     
     [HttpPost("Logout")]
     public IActionResult Logout()
     {
-        Response.Cookies.Delete("access_token");
+        try
+        {
+            Response.Cookies.Delete("access_token");
         
-        return NoContent(); 
+            return NoContent(); 
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return BadRequest();
+        }
+        
     }
 }

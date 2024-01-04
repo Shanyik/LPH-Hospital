@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import './App.css';
 import Home from './components/Home/Home';
 import Navbar from './components/NavBar/NavBar';
-import DisplayPatients from './components/DisplayPatients/DisplayPatients';
+import DisplayPatients from './components/Doctor/DiplayPatients/DisplayPatients';
 import NotFound from './components/NotFound/NotFound';
 import DisplayDoctors from "./components/DisplayDoctors/DisplayDoctors";
 import { useEffect} from "react";
