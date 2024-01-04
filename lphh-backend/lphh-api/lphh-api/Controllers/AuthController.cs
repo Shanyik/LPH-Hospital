@@ -54,8 +54,11 @@ public class AuthController : ControllerBase
     [HttpPost("Login")]
     public async Task<ActionResult<AuthResponse>> Authenticate([FromBody] AuthRequest request)
     {
+        
+        Console.WriteLine("fetch good");
         if (!ModelState.IsValid)
         {
+            Console.WriteLine("not valid");
             return BadRequest(ModelState);
         }
 
@@ -63,6 +66,7 @@ public class AuthController : ControllerBase
 
         if (!result.Success)
         {
+            Console.WriteLine("not success");
             AddErrors(result);
             return BadRequest(ModelState);
         }
