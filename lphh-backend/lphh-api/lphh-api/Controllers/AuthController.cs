@@ -76,7 +76,7 @@ public class AuthController : ControllerBase
     }
     
     [HttpPost("Logout")]
-    public IActionResult Logout()
+    public  IActionResult Logout()
     {
         try
         {
@@ -90,5 +90,19 @@ public class AuthController : ControllerBase
             return BadRequest();
         }
         
+    }
+
+    [HttpPost("RefresToken")]
+    public IActionResult RefresToken()
+    {
+        try
+        {
+            return Ok();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
     }
 }

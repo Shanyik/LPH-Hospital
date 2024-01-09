@@ -11,7 +11,7 @@ import DoctorMain from "./components/Doctor/DoctorMain";
 import Prescriptions from "./components/Patient/Prescriptions/Prescriptions";
 import Documents from "./components/Patient/Documents/Documents";
 import Profile from "./components/Profile/Profile";
-import ExaminationCreater from "./components/Doctor/ExaminationCreater";
+import ExaminationCreater from "./components/Doctor/Examinations/ExaminationCreater";
 import PatientHome from "./components/Patient/PatientHome/PatientHome";
 import Login from "./components/Auth/Login";
 import { CookiesProvider, useCookies } from "react-cookie";

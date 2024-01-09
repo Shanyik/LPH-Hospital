@@ -53,29 +53,75 @@ const ExaminationCreater = ({ userId }) => {
 
     const handleMedicalNumberChange = (event) => {
         const input = event.target.value;
-        const isNumeric = /^[0-9-]+$/.test(input);
+        const validInput = isInputValid(input, event);
 
-        if (isNumeric) {
+        if (validInput.length === 11) {
             setMedicalNumber(input);
-            setMedicalNumberError(false)
+            setMedicalNumberError(false);
             getPatientByMedicalNumber(input).then(data => {
                 if (data.status === 404) {
-                    console.log(data)
+                    setMedicalNumberError("invalid");
                 } else {
-                    console.log(data)
-                    setPatient(data)
-                    setMedicalNumberError("accept")
+                    console.log(data);
+                    setPatient(data);
+                    setMedicalNumberError("accept");
                 }
             })
         } else if (input === "") {
-            setMedicalNumberError(false)
-            setPatient(null)
-        } else {
-            setMedicalNumberError(true)
-            setPatient(null)
+            console.log("asd1")
+            setMedicalNumberError(false);
+            setPatient(null);
+        }else {
+            setMedicalNumberError("short&true");
         }
-        setPatient(null)
+        setPatient(null);
     };
+
+    const isInputValid = (input, e) => {
+
+        const pattern = /^[0-9]+$/;
+        const removedValue = removeWhiteSpaces(input);
+
+        if(pattern.test(removedValue)){
+            let newValue = addWhiteSpaces(removedValue);
+            e.target.value = newValue;
+            return newValue;
+        }else{
+            const removedValue =  input.replace(/[^0-9]/g, '');
+            e.target.value =addWhiteSpaces(removedValue);
+            return addWhiteSpaces(removedValue);
+        }
+
+    }
+
+    const removeWhiteSpaces = (input) => {
+        const indexes = [3, 7];
+        let newString = "";
+        for (let index = 0; index < input.length; index++) {
+            if (!indexes.includes(index) || input[index] !== "-") {
+                newString += input[index];
+            }
+
+        }
+
+        return newString;
+    }
+
+    const addWhiteSpaces = (input) => {
+        const indexes = [3, 6];
+        console.log(input)
+        let newString = "";
+        for (let index = 0; index < input.length; index++) {
+            if (indexes.includes(index)) {
+                newString += "-" + input[index];
+            } else {
+                newString += input[index];
+            }
+
+        }
+
+        return newString;
+    }
 
     const onSubmit = (e) => {
         e.preventDefault();
@@ -125,6 +171,10 @@ const ExaminationCreater = ({ userId }) => {
                             <>Only number allowed</>
                         ) : medicalNumbererror === "accept" ? (
                             <div id="okMedicalNumber">Valid Medical Number</div>
+                        ) : medicalNumbererror === "invalid" ? (
+                            <div >Medical Number not exsist</div>
+                        ) : medicalNumbererror === "short&true" ? (
+                            <div >Medical Number to short and only allowed number!</div>
                         ) : (
                             <>Required field!</>
                         )}</div>
@@ -133,6 +183,7 @@ const ExaminationCreater = ({ userId }) => {
                             onChange={(e) => handleMedicalNumberChange(e)}
                             name="medicalNumber"
                             id="medicalNumber"
+                            maxLength={11}
                         />
                     </div>
                     {

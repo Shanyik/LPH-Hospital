@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import "./DisplayPatients.css";
 import { Box, Grid } from "@mui/material";
 import SearchField from "../SearchPatient";
-import ExaminationTable from "../ExaminationTable";
-import PresceptionTable from "../PrescriptionTable";
+import ExaminationTable from "./ExaminationTable";
+import PresceptionTable from "./PrescriptionTable";
 
 const DisplayPatients = (props) => {
 
@@ -14,22 +14,34 @@ const DisplayPatients = (props) => {
             .then((res) => res.text())
             .then((res) => console.log(res))
     }
-    
+
     const getExamDataByPatientID = (id) => {
         return fetch(`/api/Exam/GetByPatientId:${id}`, {
             method: 'GET',
         }).then((res => res.json())) //proxy miatt -->json-ben
     }
-    
+
     const getPresceptionDataByPatientID = (id) => {
-    
+
         return fetch(`/api/Prescription/GetByPatientId:${id}`, {
             method: 'GET',
         }).then((res => res.json()))
     }
-    
+
     const getAllDoctors = () => {
         return fetch('/api/Doctor/GetAll', {
+            method: 'GET',
+        }).then(res => res.json())
+    }
+
+    const findPatient = (medNumber) => {
+        return fetch(`/api/Patient/GetByMedicalNumber:${medNumber}`, {
+            method: 'GET',
+        }).then(res => res.json())
+    }
+
+    const getAllPatient = () => {
+        return fetch('/api/Patient/GetAll', {
             method: 'GET',
         }).then(res => res.json())
     }
@@ -40,22 +52,14 @@ const DisplayPatients = (props) => {
     const [examinations, setExaminations] = useState([]);
     const [presciptions, setPresciptions] = useState([]);
     const [doctors, setDoctors] = useState([]);
-    
+
     useEffect(() => {
-        fetch('/api/Patient/GetAll', {
-            method: 'GET',
-        })
-            .then(response => response.json())
-            .then(data => {
-                setPatients(data)
-            }
-            )
-            .catch(error => console.log(error)).then(
-                getAllDoctors().then(data => {
-                    console.log(data)
-                    setDoctors(data)
-                })
-            )
+        getAllPatient().then(data => {
+            setPatients(data);
+            return getAllDoctors();
+        }).then(data => {
+            setDoctors(data);
+        }).catch(error => console.log(error));
     }, [])
 
     const deleteButton = (username) => {
@@ -65,22 +69,14 @@ const DisplayPatients = (props) => {
                     return patients.filter((patient) => patient.username !== username)
                 })))
     }
-    const findPatient = (username) => {
-        return fetch(`/api/Patient/GetByUsername:${username}`, {
-            method: 'GET',
-        })
-            .then(res => res.json())
-    }
+
     const searchButton = () => {
         const trimmedSearchValue = searchValue.trim();
         if (trimmedSearchValue !== "") {
             findPatient(searchValue).then(data => {
-                console.log(data)
                 if (data.status === 404) {
-                    console.log("asdff")
                     setSearchFetchValue(404)
                 } else {
-                    console.log("234")
                     setPatients([data])
                     setSearchFetchValue(200)
                 }
@@ -89,15 +85,11 @@ const DisplayPatients = (props) => {
     }
 
     const refresPatient = () => {
-        fetch('/api/Patient/GetAll', {
-            method: 'GET',
-        }) // env
-            .then(response => response.json())
-            .then(data => {
-                setPatients(data)
-            }
-            )
-            .catch(error => console.log(error))
+        getAllPatient().then(data => {
+            setPatients(data)
+        }).catch(
+            error => console.log(error)
+        )
         setSearchFetchValue(200)
     }
 
@@ -116,8 +108,13 @@ const DisplayPatients = (props) => {
     return (
 
         <div id="container">
-           
-            <SearchField searchButton={searchButton} setSearchValue={setSearchValue} />
+            <div id="displayPatientSearchContainer">
+                <span>
+                    <SearchField searchButton={searchButton} setSearchValue={setSearchValue} />
+                    <button onClick={() => refresPatient()}>Refress</button>
+                </span>
+            </div>
+
             <Box id="patientMain">
                 <Grid container alignItems="center">
                     <Grid item xs={8} >
@@ -163,8 +160,8 @@ const DisplayPatients = (props) => {
 
                     </Grid>
                     <Grid item xs={4} >
-                        <ExaminationTable examinations={examinations} patients={patients} doctor={doctors}/>
-                        <PresceptionTable presciptions={presciptions} doctors={doctors} patients={patients} cookie={props.cookie}/>
+                        <ExaminationTable examinations={examinations} patients={patients} doctor={doctors} />
+                        <PresceptionTable presciptions={presciptions} doctors={doctors} patients={patients} cookie={props.cookie} />
                     </Grid>
                 </Grid>
 
