@@ -10,5 +10,6 @@ public class Doctor
     public string FirstName { get; init; }
     public string LastName { get; init; }
     public string Ward { get; init; }
+    
     public DateTime CreatedAt  { get; init; }
 }

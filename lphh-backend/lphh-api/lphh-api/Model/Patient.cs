@@ -10,6 +10,7 @@ public class Patient
     public string PhoneNumber { get; init; }
     public string FirstName { get; init; }
     public string LastName { get; init; }
+    
     public DateTime CreatedAt  { get; init; }
 
 }

@@ -5,7 +5,8 @@ public record AuthResult(
     string Email,
     string UserName,
     string IdentityID,
-    string Token)
+    string Token,
+    string RefreshToken)
 {
     //Error code - error message
     public readonly Dictionary<string, string> ErrorMessages = new();

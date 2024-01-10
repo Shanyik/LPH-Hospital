@@ -96,7 +96,7 @@ public class Program
         void AddIdentity()
         {
             builder.Services
-                .AddIdentityCore<IdentityUser>(options =>
+                .AddIdentityCore<User>(options =>
                 {
                     options.SignIn.RequireConfirmedAccount = false;
                     options.User.RequireUniqueEmail = true;
@@ -257,12 +257,12 @@ public class Program
         async Task CreateAdminIfNotExists()
         {
             using var scope = app.Services.CreateScope();
-            var userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
+            var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
             var adminInDb = await userManager.FindByEmailAsync("admin@admin.com");
             var adminRepo = scope.ServiceProvider.GetRequiredService<IAdminRepository>();
             if (adminInDb == null)
             {
-                var admin = new IdentityUser { UserName = "admin", Email = "admin@admin.com" };
+                var admin = new User { UserName = "admin", Email = "admin@admin.com" };
                 var adminCreated = await userManager.CreateAsync(admin, "admin123");
 
                 if (adminCreated.Succeeded)
@@ -298,14 +298,14 @@ public class Program
         async Task CreateDoctorIfNotExists()
         {
             using var scope = app.Services.CreateScope();
-            var userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
+            var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
             var doctorRepo = scope.ServiceProvider.GetRequiredService<IDoctorRepository>();
             var doctorInDb = await userManager.FindByEmailAsync("drww@lphh.com");
             if (doctorInDb == null)
             {
-                var doctor1 = new IdentityUser { UserName = "drWalterW", Email = "drww@lphh.com" };
-                var doctor2 = new IdentityUser { UserName = "drJesseP", Email = "drjp@lphh.com" };
-                var doctor3 = new IdentityUser { UserName = "drGus", Email = "drgf@lphh.com" };
+                var doctor1 = new User { UserName = "drWalterW", Email = "drww@lphh.com" };
+                var doctor2 = new User { UserName = "drJesseP", Email = "drjp@lphh.com" };
+                var doctor3 = new User { UserName = "drGus", Email = "drgf@lphh.com" };
                 
                 var doctorCreated1 = await userManager.CreateAsync(doctor1, "string");
                 var doctorCreated2 = await userManager.CreateAsync(doctor2, "string");
@@ -375,14 +375,14 @@ public class Program
         async Task CreatePatientIfNotExists()
         {
             using var scope = app.Services.CreateScope();
-            var userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
+            var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
             var patientRepo = scope.ServiceProvider.GetRequiredService<IPatientRepository>();
             var patientInDb = await userManager.FindByEmailAsync("intis@gmail.com");
             if (patientInDb == null)
             {
-                var patient1 = new IdentityUser { UserName = "Inti", Email = "intis@gmail.com" };
-                var patient2 = new IdentityUser { UserName = "Egidio", Email = "egidiok@gmail.com" };
-                var patient3 = new IdentityUser { UserName = "Lage", Email = "lagen@gmail.com" };
+                var patient1 = new User { UserName = "Inti", Email = "intis@gmail.com" };
+                var patient2 = new User { UserName = "Egidio", Email = "egidiok@gmail.com" };
+                var patient3 = new User { UserName = "Lage", Email = "lagen@gmail.com" };
                 
                 var patientCreated1 = await userManager.CreateAsync(patient1, "string");
                 var patientCreated2 = await userManager.CreateAsync(patient2, "string");

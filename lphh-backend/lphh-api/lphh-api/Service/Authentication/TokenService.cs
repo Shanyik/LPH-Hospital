@@ -1,7 +1,9 @@
 ﻿using System.Globalization;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
+using lphh_api.Model;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 
@@ -29,6 +31,18 @@ public class TokenService : ITokenService
         var tokenHandler = new JwtSecurityTokenHandler();
         return tokenHandler.WriteToken(token);
     }
+    
+    public string GenerateRefreshToken()
+    {
+        var randomNumber = new byte[64];
+
+        using var generator = RandomNumberGenerator.Create();
+        
+        generator.GetBytes(randomNumber);
+
+        return Convert.ToBase64String(randomNumber);
+    }
+    
 
     private JwtSecurityToken CreateJwtToken(List<Claim> claims, SigningCredentials credentials,
         DateTime expiration) =>
@@ -39,7 +53,8 @@ public class TokenService : ITokenService
             expires: expiration,
             signingCredentials: credentials
         );
-
+    
+    
     private List<Claim> CreateClaims(IdentityUser user, string? role)
     {
         try
@@ -53,7 +68,7 @@ public class TokenService : ITokenService
             {
                 claims.Add(new Claim(ClaimTypes.Role, role));
             }
-
+            
             return claims;
         }
         catch (Exception e)

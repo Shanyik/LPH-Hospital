@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace lphh_api.Context;
 
-public class HospitalApiContext : IdentityDbContext<IdentityUser, IdentityRole, string>
+public class HospitalApiContext : IdentityDbContext<User, IdentityRole, string>
 {
     public DbSet<Doctor> Doctors { get; set; }
     public DbSet<Patient> Patients { get; set; }

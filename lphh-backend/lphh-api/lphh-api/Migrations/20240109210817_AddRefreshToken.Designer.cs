@@ -12,8 +12,8 @@ using lphh_api.Context;
 namespace lphh_api.Migrations
 {
     [DbContext(typeof(HospitalApiContext))]
-    [Migration("20231120093749_admin-database")]
-    partial class admindatabase
+    [Migration("20240109210817_AddRefreshToken")]
+    partial class AddRefreshToken
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -75,71 +75,6 @@ namespace lphh_api.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetRoleClaims", (string)null);
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUser", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("AccessFailedCount")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Email")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<bool>("EmailConfirmed")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("LockoutEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTimeOffset?>("LockoutEnd")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<string>("NormalizedEmail")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("NormalizedUserName")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("PasswordHash")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("PhoneNumberConfirmed")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("SecurityStamp")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("TwoFactorEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("UserName")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("NormalizedEmail")
-                        .HasDatabaseName("EmailIndex");
-
-                    b.HasIndex("NormalizedUserName")
-                        .IsUnique()
-                        .HasDatabaseName("UserNameIndex")
-                        .HasFilter("[NormalizedUserName] IS NOT NULL");
-
-                    b.ToTable("AspNetUsers", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -346,29 +281,29 @@ namespace lphh_api.Migrations
                         new
                         {
                             Id = 1L,
-                            CreatedAt = new DateTime(2023, 11, 20, 10, 37, 48, 871, DateTimeKind.Local).AddTicks(2871),
+                            CreatedAt = new DateTime(2024, 1, 9, 22, 8, 17, 686, DateTimeKind.Local).AddTicks(6407),
                             Description = "EventDescription",
-                            End = new DateTime(2023, 11, 23, 10, 37, 48, 871, DateTimeKind.Local).AddTicks(2868),
+                            End = new DateTime(2024, 1, 12, 22, 8, 17, 686, DateTimeKind.Local).AddTicks(6404),
                             Name = "Donate Blood",
-                            Start = new DateTime(2023, 11, 20, 10, 37, 48, 871, DateTimeKind.Local).AddTicks(2866)
+                            Start = new DateTime(2024, 1, 9, 22, 8, 17, 686, DateTimeKind.Local).AddTicks(6401)
                         },
                         new
                         {
                             Id = 2L,
-                            CreatedAt = new DateTime(2023, 11, 20, 10, 37, 48, 871, DateTimeKind.Local).AddTicks(2877),
+                            CreatedAt = new DateTime(2024, 1, 9, 22, 8, 17, 686, DateTimeKind.Local).AddTicks(6414),
                             Description = "EventDescription",
-                            End = new DateTime(2023, 11, 25, 10, 37, 48, 871, DateTimeKind.Local).AddTicks(2875),
+                            End = new DateTime(2024, 1, 14, 22, 8, 17, 686, DateTimeKind.Local).AddTicks(6412),
                             Name = "General Exams",
-                            Start = new DateTime(2023, 11, 20, 10, 37, 48, 871, DateTimeKind.Local).AddTicks(2874)
+                            Start = new DateTime(2024, 1, 9, 22, 8, 17, 686, DateTimeKind.Local).AddTicks(6410)
                         },
                         new
                         {
                             Id = 3L,
-                            CreatedAt = new DateTime(2023, 11, 20, 10, 37, 48, 871, DateTimeKind.Local).AddTicks(2881),
+                            CreatedAt = new DateTime(2024, 1, 9, 22, 8, 17, 686, DateTimeKind.Local).AddTicks(6421),
                             Description = "EventDescription",
-                            End = new DateTime(2023, 11, 30, 10, 37, 48, 871, DateTimeKind.Local).AddTicks(2880),
+                            End = new DateTime(2024, 1, 19, 22, 8, 17, 686, DateTimeKind.Local).AddTicks(6419),
                             Name = "Donate Blood",
-                            Start = new DateTime(2023, 11, 25, 10, 37, 48, 871, DateTimeKind.Local).AddTicks(2878)
+                            Start = new DateTime(2024, 1, 14, 22, 8, 17, 686, DateTimeKind.Local).AddTicks(6417)
                         });
                 });
 
@@ -405,7 +340,7 @@ namespace lphh_api.Migrations
                         new
                         {
                             Id = 1L,
-                            CreatedAt = new DateTime(2023, 11, 20, 10, 37, 48, 871, DateTimeKind.Local).AddTicks(2845),
+                            CreatedAt = new DateTime(2024, 1, 9, 22, 8, 17, 686, DateTimeKind.Local).AddTicks(6371),
                             DoctorId = 1L,
                             PatientId = 1L,
                             Result = "resultString",
@@ -414,7 +349,7 @@ namespace lphh_api.Migrations
                         new
                         {
                             Id = 2L,
-                            CreatedAt = new DateTime(2023, 11, 20, 10, 37, 48, 871, DateTimeKind.Local).AddTicks(2848),
+                            CreatedAt = new DateTime(2024, 1, 9, 22, 8, 17, 686, DateTimeKind.Local).AddTicks(6375),
                             DoctorId = 2L,
                             PatientId = 3L,
                             Result = "resultString",
@@ -423,7 +358,7 @@ namespace lphh_api.Migrations
                         new
                         {
                             Id = 3L,
-                            CreatedAt = new DateTime(2023, 11, 20, 10, 37, 48, 871, DateTimeKind.Local).AddTicks(2850),
+                            CreatedAt = new DateTime(2024, 1, 9, 22, 8, 17, 686, DateTimeKind.Local).AddTicks(6378),
                             DoctorId = 3L,
                             PatientId = 2L,
                             Result = "resultString",
@@ -510,7 +445,7 @@ namespace lphh_api.Migrations
                         new
                         {
                             Id = 1L,
-                            CreatedAt = new DateTime(2023, 11, 20, 10, 37, 48, 871, DateTimeKind.Local).AddTicks(2780),
+                            CreatedAt = new DateTime(2024, 1, 9, 22, 8, 17, 686, DateTimeKind.Local).AddTicks(6303),
                             Description = "1x2 for 10 days",
                             DoctorId = 1L,
                             PatientId = 1L,
@@ -519,7 +454,7 @@ namespace lphh_api.Migrations
                         new
                         {
                             Id = 2L,
-                            CreatedAt = new DateTime(2023, 11, 20, 10, 37, 48, 871, DateTimeKind.Local).AddTicks(2825),
+                            CreatedAt = new DateTime(2024, 1, 9, 22, 8, 17, 686, DateTimeKind.Local).AddTicks(6341),
                             Description = "1x1 for 120 days",
                             DoctorId = 2L,
                             PatientId = 1L,
@@ -528,7 +463,7 @@ namespace lphh_api.Migrations
                         new
                         {
                             Id = 3L,
-                            CreatedAt = new DateTime(2023, 11, 20, 10, 37, 48, 871, DateTimeKind.Local).AddTicks(2827),
+                            CreatedAt = new DateTime(2024, 1, 9, 22, 8, 17, 686, DateTimeKind.Local).AddTicks(6343),
                             Description = "1x1 for 30 days",
                             DoctorId = 3L,
                             PatientId = 2L,
@@ -586,6 +521,77 @@ namespace lphh_api.Migrations
                         });
                 });
 
+            modelBuilder.Entity("lphh_api.Model.User", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("AccessFailedCount")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("LockoutEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("NormalizedEmail")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("NormalizedUserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("PasswordHash")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("PhoneNumberConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("RefreshToken")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("RefreshTokenExpiry")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("SecurityStamp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("TwoFactorEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("UserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedEmail")
+                        .HasDatabaseName("EmailIndex");
+
+                    b.HasIndex("NormalizedUserName")
+                        .IsUnique()
+                        .HasDatabaseName("UserNameIndex")
+                        .HasFilter("[NormalizedUserName] IS NOT NULL");
+
+                    b.ToTable("AspNetUsers", (string)null);
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -597,7 +603,7 @@ namespace lphh_api.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                    b.HasOne("lphh_api.Model.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -606,7 +612,7 @@ namespace lphh_api.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                    b.HasOne("lphh_api.Model.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -621,7 +627,7 @@ namespace lphh_api.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                    b.HasOne("lphh_api.Model.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -630,7 +636,7 @@ namespace lphh_api.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                    b.HasOne("lphh_api.Model.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)

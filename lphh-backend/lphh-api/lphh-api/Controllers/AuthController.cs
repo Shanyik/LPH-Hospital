@@ -1,5 +1,8 @@
-﻿using lphh_api.Contracts;
+﻿using System.Security.Claims;
+using lphh_api.Contracts;
+using lphh_api.Model;
 using lphh_api.Service.Authentication;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace lphh_api.Controllers;
@@ -9,10 +12,13 @@ namespace lphh_api.Controllers;
 public class AuthController : ControllerBase
 {
     private readonly IAuthService _authenticationService;
+    private readonly UserManager<User> _userManager;
 
-    public AuthController(IAuthService authenticationService)
+
+    public AuthController(IAuthService authenticationService, UserManager<User> userManager)
     {
         _authenticationService = authenticationService;
+        _userManager = userManager;
     }
 
     [HttpPost("Register")]
@@ -70,19 +76,32 @@ public class AuthController : ControllerBase
             AddErrors(result);
             return BadRequest(ModelState);
         }
+
+        var refreshToken = result.RefreshToken;
         
         HttpContext.Response.Cookies.Append("access_token", result.Token); //http-only, secure 
+        HttpContext.Response.Cookies.Append("refresh_token", refreshToken);
         return Ok(new AuthResponse(result.Email, result.UserName, result.Token));
     }
     
     [HttpPost("Logout")]
-    public  IActionResult Logout()
+    public  async Task<IActionResult> Logout()
     {
         try
         {
-            Response.Cookies.Delete("access_token");
-        
-            return NoContent(); 
+            var userIdentifierClaim = HttpContext.User?.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var user = await _userManager.FindByIdAsync(userIdentifierClaim);
+            if (user != null)
+            {
+                user.RefreshToken = null;
+                user.RefreshTokenExpiry = DateTime.UtcNow;
+                await _userManager.UpdateAsync(user);
+                Response.Cookies.Delete("access_token");
+                Response.Cookies.Delete("refresh_token");
+                return Ok(); 
+            }
+            
+            return BadRequest();
         }
         catch (Exception e)
         {
@@ -93,16 +112,43 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost("RefresToken")]
-    public IActionResult RefresToken()
+    public async Task<IActionResult> RefresToken()
     {
         try
         {
-            return Ok();
+            var accessTokenCookie = HttpContext.Request.Cookies["access_token"];
+            var refreshTokenCookie = HttpContext.Request.Cookies["refresh_token"];
+
+            Console.WriteLine(accessTokenCookie);
+            Console.WriteLine(refreshTokenCookie);
+
+            var validationResult = await _authenticationService.RefreshAuth(accessTokenCookie, refreshTokenCookie);
+
+            if (validationResult.Success)
+            {
+                HttpContext.Response.Cookies.Append("access_token", validationResult.AuthToken); //http-only, secure 
+                HttpContext.Response.Cookies.Append("refresh_token", validationResult.RefreshToken);
+                return Ok();
+            }
+            
+            return Unauthorized();
         }
         catch (Exception e)
         {
             Console.WriteLine(e);
             throw;
         }
+    }
+    
+    
+    private void setTokenCookie(string token)
+    {
+        // append cookie with refresh token to the http response
+        var cookieOptions = new CookieOptions
+        {
+            HttpOnly = true,
+            Expires = DateTime.UtcNow.AddDays(7)
+        };
+        Response.Cookies.Append("refreshToken", token, cookieOptions);
     }
 }
