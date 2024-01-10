@@ -1,0 +1,11 @@
+.icon {
+    color: white;
+    font-size: 10vh;
+}
+
+@media screen and (max-width: 601px) {
+    .aboutText {
+        font-size: 7vw;
+        margin: 2rem;
+    }
+}

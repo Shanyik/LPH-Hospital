@@ -1,12 +1,31 @@
 import React from 'react'
 import "./Home.css"
+import WelcomeScreen from './WelcomeScreen/WelcomeScreen';
+import { Divider } from '@mui/material';
+import AboutUs from './AboutUs/AboutUs';
+import Footer from './Footer/Footer';
+
 import { Link } from 'react-router-dom'
 import logo from '../Images/lphh-logo2.png';
 
 const Home = () => {
 
   return (
-    <div className="home-container">
+    <>
+      <WelcomeScreen/>
+      <AboutUs/>
+      <Footer/>
+      
+    </>
+    
+  )
+}
+
+export default Home
+
+/*
+
+<div className="home-container">
     <div className="home-title">
       <img src={logo} alt="Logo" className="home-logo" />
       Welcome to Los Pollos Hermanos Hospital!
@@ -21,7 +40,4 @@ const Home = () => {
     </div>
   </div>
 
-  )
-}
-
-export default Home
+*/

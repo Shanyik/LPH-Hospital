@@ -1,0 +1,19 @@
+.divider {
+    width: 99.5vw;
+    height: 10vw;
+    background-color: #2e7d32;
+    padding: 1px;
+    margin: auto
+}
+
+.name {
+    font-size: 30px;
+    color: aliceblue;
+}
+
+@media screen and (max-width: 601px) {
+    .name {
+        font-size: 5vw;
+        color: aliceblue;
+    }
+}

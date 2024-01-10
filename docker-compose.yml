@@ -10,7 +10,7 @@ services:
       - "5274:5274"
     depends_on:
       - db
-    # command: ["dotnet", "ef" , "database update"] // probably not working correctly, backend migrates based on program.cs method
+    command: ["dotnet", "ef" , "database update"] 
     networks:
       - lphh-network
 

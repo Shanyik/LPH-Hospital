@@ -84,12 +84,13 @@ public class AuthController : ControllerBase
         return Ok(new AuthResponse(result.Email, result.UserName, result.Token));
     }
     
-    [HttpPost("Logout")]
+    [HttpGet("Logout")]
     public  async Task<IActionResult> Logout()
     {
         try
         {
             var userIdentifierClaim = HttpContext.User?.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            Console.WriteLine(userIdentifierClaim);
             var user = await _userManager.FindByIdAsync(userIdentifierClaim);
             if (user != null)
             {

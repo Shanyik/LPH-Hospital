@@ -1,0 +1,32 @@
+.background-image {
+    background-image: url(../../Images/hospital.jpg);
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    min-height: 100vh;
+    filter: grayscale(1);
+}
+
+.info {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  filter: none;
+}
+
+.logo{
+  min-width: 100%;
+  filter: none;
+}
+
+.welcomeButton{
+    margin-left: 10px;
+    filter: none;
+}
+
+@media screen and (max-width: 601px) {
+  .logo{
+    min-width: 70%;
+  }
+}
