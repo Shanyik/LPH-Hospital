@@ -5,7 +5,13 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #B3B3B3
+  background-color: rgba(0, 0, 0, 0.7);
+  background-image: url(components/Images/hospital.jpg);
+  background-size: cover;
+  background-position: center;
+  background-blend-mode: overlay;
+
+  /* hospital backgroud whit oapcity to 0.1 - 0.3, with white background to support */
   /* 
 
     Sage Green: #BCD0B6

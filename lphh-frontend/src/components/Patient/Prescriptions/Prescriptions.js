@@ -69,7 +69,7 @@ const Prescriptions = (props) => {
     presciptions.length > 0 && doctors.length > 0 && products.length > 0 ? [
         <>
         <table>
-            <thead>
+            <thead className='tableHeader'>
                 <tr>
                     <th>Doctor</th>
                     <th>Product</th>
