@@ -8,7 +8,7 @@ const WelcomeScreen = () => {
     <section>
       <div className="background-image">
         <div className='info'> 
-          <div>
+          <div className="whiteBox">
             <img className='logo' src={require('../../Images/lphh-logo2.png')}></img>
             <div>
               <br/>
