@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import "./DisplayPatients.css";
 import { Box, Grid } from "@mui/material";
 import SearchField from "../SearchPatient";
 import ExaminationTable from "./ExaminationTable";
 import PresceptionTable from "./PrescriptionTable";
+import { FetchErrorContext } from "../../401Redirect/fetchErrorContext";
 
 const DisplayPatients = (props) => {
 
@@ -22,7 +23,7 @@ const DisplayPatients = (props) => {
     }
 
     const getPresceptionDataByPatientID = (id) => {
-
+        console.log(id)
         return fetch(`/api/Prescription/GetByPatientId:${id}`, {
             method: 'GET',
         }).then((res => res.json()))
@@ -53,11 +54,14 @@ const DisplayPatients = (props) => {
     const [presciptions, setPresciptions] = useState([]);
     const [doctors, setDoctors] = useState([]);
 
+    const { originUrl, setOriginUrl, originOptions, setOriginOptions, dataSetter, setDataSetter } = useContext(FetchErrorContext)
+
     useEffect(() => {
         getAllPatient().then(data => {
             setPatients(data);
             return getAllDoctors();
         }).then(data => {
+            console.log(data)
             setDoctors(data);
         }).catch(error => console.log(error));
     }, [])
@@ -98,6 +102,7 @@ const DisplayPatients = (props) => {
             setExaminations(data);
         }).then(
             getPresceptionDataByPatientID(id).then(data => {
+                console.log(data)
                 setPresciptions(data)
             })
         )

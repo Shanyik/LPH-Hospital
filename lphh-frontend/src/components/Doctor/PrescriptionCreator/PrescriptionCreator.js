@@ -1,9 +1,11 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import "./PrescriptionCreator.css"
 import Typography from '@mui/material/Typography';
 import { useNavigate } from 'react-router-dom';
 import { Grid } from "@mui/material";
 import Button from '@mui/material/Button';
+import { FetchErrorContext } from "../../401Redirect/fetchErrorContext";
+import { fetchWithInterceptor } from "../../401Redirect/AuthRedirect";
 
 const PrescriptionCreator = (props) => {
 
@@ -17,28 +19,39 @@ const PrescriptionCreator = (props) => {
     const [description, setDescription] = useState("")
     const [selectedProduct, setSelectedProduct] = useState(null);
 
+    const { originUrl, setOriginUrl, originOptions, setOriginOptions, dataSetter, setDataSetter } = useContext(FetchErrorContext)
+
     const navigate = useNavigate()
 
     const getDoctorById = (userId) => {
-        return fetch(`api/Doctor/GetById:${userId}`, {
+        return fetchWithInterceptor(`api/Doctor/GetById:${userId}`, {
             method: 'GET',
-            
-        }).then(res => res.json())
+
+        }, setOriginUrl(`api/Doctor/GetById:${userId}`), setOriginOptions({
+            method: 'GET',
+
+        }))
     }
 
     const getAllProducts = () => {
-        return fetch('api/Product/GetAll', {
+        return fetchWithInterceptor('api/Product/GetAll', {
             method: 'GET',
-            
-        }).then(res => res.json())
+
+        }, setOriginUrl('api/Product/GetAll'), setOriginOptions({
+            method: 'GET',
+
+        }))
     }
 
-    
+
     const getPatientByMedicalNumber = (medicalNumber) => {
-        return fetch(`api/Patient/GetByMedicalNumber:${medicalNumber}`, {
+        return fetchWithInterceptor(`api/Patient/GetByMedicalNumber:${medicalNumber}`, {
             method: 'GET',
-            
-        }).then(res => res.json())
+
+        }, setOriginUrl(`api/Patient/GetByMedicalNumber:${medicalNumber}`), setOriginOptions({
+            method: 'GET',
+
+        }))
     }
 
     useEffect(() => {
@@ -46,13 +59,14 @@ const PrescriptionCreator = (props) => {
             .then(data => {
                 setDoctor(data)
                 console.log(data.lastName)
+                getAllProducts()
+                    .then(data => {
+                        setProducts(data)
+                        console.log(data)
+                    })
             })
 
-        getAllProducts()
-            .then(data => {
-                setProducts(data)
-                console.log(data)
-            })
+
     }, [props.cookie["id"]])
 
     const handleMedicalNumberChange = (event) => {
@@ -71,37 +85,43 @@ const PrescriptionCreator = (props) => {
         }
         else {
             setPatient(null)
-        } 
+        }
     };
 
     const handleSearch = (event) => {
         const searchTerm = event.target.value.toLowerCase();
         setSearchTerm(searchTerm);
-    
+
         const filtered = products.filter((product) =>
-          product.name.toLowerCase().includes(searchTerm)
+            product.name.toLowerCase().includes(searchTerm)
         );
-    
+
         setFilteredProducts(filtered);
-      };
+    };
 
     const handleSelectProduct = (event) => {
         const selectedProductName = event.target.value;
         const selectedProduct = products.find(
-          (product) => product.name === selectedProductName
+            (product) => product.name === selectedProductName
         );
-    
+
         setSelectedProduct(selectedProduct);
     };
 
     const addPrescription = (data) => {
-        return fetch('api/Prescription/Add', {
+        return fetchWithInterceptor('api/Prescription/Add', {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify(data),
-        }).then((res) => console.log("success"));
+        }, setOriginUrl('api/Prescription/Add'), setOriginOptions({
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(data),
+        }))
     }
 
     const onSubmit = (e) => {
@@ -118,7 +138,7 @@ const PrescriptionCreator = (props) => {
             console.log(data)
             addPrescription(data)
             navigate("/patients");
-        } 
+        }
     };
 
     return (
@@ -126,98 +146,98 @@ const PrescriptionCreator = (props) => {
             <div id="examCreaterContainer">
                 <form className="ExamForm" onSubmit={onSubmit}>
 
-                <div className="form-group">
-                    <label className="form-label">Medical Number:</label>
-                    <input
-                    type="text"
-                    name="medicalNumber"
-                    value={medicalNumber}
-                    onChange={(e) => handleMedicalNumberChange(e)}
-                    className="form-input"
-                    />
-                </div>
+                    <div className="form-group">
+                        <label className="form-label">Medical Number:</label>
+                        <input
+                            type="text"
+                            name="medicalNumber"
+                            value={medicalNumber}
+                            onChange={(e) => handleMedicalNumberChange(e)}
+                            className="form-input"
+                        />
+                    </div>
 
-                {
-                    patient !== null ? (
-                        <>
-                            <div> {/* margin */}
-                                <Grid container alignItems="center">
-                                    <Grid item xs={6} >
-                                        <Typography htmlFor="name">Firstname:</Typography>
+                    {
+                        patient && patient !== null ? (
+                            <>
+                                <div> {/* margin */}
+                                    <Grid container alignItems="center">
+                                        <Grid item xs={6} >
+                                            <Typography htmlFor="name">Firstname:</Typography>
+                                        </Grid>
+                                        <Grid item xs={6} >
+                                            <Typography htmlFor="name">Lastname:</Typography>
+                                        </Grid>
                                     </Grid>
-                                    <Grid item xs={6} >
-                                        <Typography htmlFor="name">Lastname:</Typography>
+                                    <Grid container alignItems="center">
+                                        <Grid item xs={6} >
+                                            <h2>{patient.firstName}</h2>
+                                        </Grid>
+                                        <Grid item xs={6} >
+                                            <h2>{patient.lastName}</h2>
+                                        </Grid>
                                     </Grid>
-                                </Grid>
-                                <Grid container alignItems="center">
-                                    <Grid item xs={6} >
-                                        <h2>{patient.firstName}</h2>
-                                    </Grid>
-                                    <Grid item xs={6} >
-                                        <h2>{patient.lastName}</h2>
-                                    </Grid>
-                                </Grid>
-                            </div>
+                                </div>
 
-                            <div>
-                                <label htmlFor="productSearch">Search for a product:</label>
-                                <input
-                                    type="text"
-                                    id="productSearch"
-                                    value={searchTerm}
-                                    onChange={handleSearch}
-                                />
                                 <div>
-                                    <label htmlFor="productDropdown">Select a product:</label>
-                                    <select
-                                        id="productDropdown"
-                                        value={selectedProduct ? selectedProduct.name : ''}
-                                        onChange={handleSelectProduct}
-                                    >
-                                        <option value="" disabled>
-                                        Select a product
-                                        </option>
-                                        {
-                                            filteredProducts.length === 0 ? (
-                                                products.map((product, index) => (
-                                                    <option key={index} value={product.name}>
-                                                        {product.name}
-                                                    </option>
-                                                ))
-                                            ) : (
-                                                filteredProducts.map((product, index) => (
-                                                    <option key={index} value={product.name}>
-                                                        {product.name}
-                                                    </option>
-                                                ))
-                                            )}
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div id="descriptionContainer">
-                                <div className="control">
-                                    <h4>Description</h4>
-                                    <textarea
-                                        className="descriptionTextArea"
-                                        onChange={(e) => setDescription(e.target.value)}
-                                        name="medicalNumber"
-                                        id="medicalNumber"
+                                    <label htmlFor="productSearch">Search for a product:</label>
+                                    <input
+                                        type="text"
+                                        id="productSearch"
+                                        value={searchTerm}
+                                        onChange={handleSearch}
                                     />
+                                    <div>
+                                        <label htmlFor="productDropdown">Select a product:</label>
+                                        <select
+                                            id="productDropdown"
+                                            value={selectedProduct ? selectedProduct.name : ''}
+                                            onChange={handleSelectProduct}
+                                        >
+                                            <option value="" disabled>
+                                                Select a product
+                                            </option>
+                                            {
+                                                filteredProducts.length === 0 ? (
+                                                    products.map((product, index) => (
+                                                        <option key={index} value={product.name}>
+                                                            {product.name}
+                                                        </option>
+                                                    ))
+                                                ) : (
+                                                    filteredProducts.map((product, index) => (
+                                                        <option key={index} value={product.name}>
+                                                            {product.name}
+                                                        </option>
+                                                    ))
+                                                )}
+                                        </select>
+                                    </div>
                                 </div>
-                            </div>
-                            
-                            <Button variant="contained" color="success" type="submit">
-                                Submit
-                            </Button>
-                        </>
-                     ) : (
-                        <></>
-                     )
-                }  
+
+                                <div id="descriptionContainer">
+                                    <div className="control">
+                                        <h4>Description</h4>
+                                        <textarea
+                                            className="descriptionTextArea"
+                                            onChange={(e) => setDescription(e.target.value)}
+                                            name="medicalNumber"
+                                            id="medicalNumber"
+                                        />
+                                    </div>
+                                </div>
+
+                                <Button variant="contained" color="success" type="submit">
+                                    Submit
+                                </Button>
+                            </>
+                        ) : (
+                            <></>
+                        )
+                    }
                 </form>
             </div>
-         ) : (
+        ) : (
             null
         )
     )

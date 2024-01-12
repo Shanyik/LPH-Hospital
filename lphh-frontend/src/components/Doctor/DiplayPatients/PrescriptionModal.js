@@ -1,12 +1,15 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
+import { FetchErrorContext } from '../../401Redirect/fetchErrorContext';
+import { fetchWithInterceptor } from '../../401Redirect/AuthRedirect';
 
 
 const PrescreptionModal = ({ doctors, prescription, patients, handleClose, open }) => {
 
     const getProduct = (id) => {
+        console.log(id)
         return fetch(`api/Product/GetById:${id}`, {
             method: 'GET',
             
@@ -15,6 +18,7 @@ const PrescreptionModal = ({ doctors, prescription, patients, handleClose, open 
 
     const [product, setProduct] = useState(null);
     const [productLoaded, setProductLoaded] = useState(false);
+    const { originUrl, setOriginUrl, originOptions, setOriginOptions, dataSetter, setDataSetter } = useContext(FetchErrorContext)
 
     useEffect(() => {
         if (prescription !== undefined) {

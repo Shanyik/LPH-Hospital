@@ -97,12 +97,11 @@ public class AuthController : ControllerBase
                 user.RefreshToken = null;
                 user.RefreshTokenExpiry = DateTime.UtcNow;
                 await _userManager.UpdateAsync(user);
-                Response.Cookies.Delete("access_token");
-                Response.Cookies.Delete("refresh_token");
-                return Ok(); 
+                
             }
-            
-            return BadRequest();
+            Response.Cookies.Delete("access_token");
+            Response.Cookies.Delete("refresh_token");
+            return Ok(); 
         }
         catch (Exception e)
         {
@@ -112,26 +111,30 @@ public class AuthController : ControllerBase
         
     }
 
-    [HttpPost("RefresToken")]
+    [HttpGet("RefreshToken")]
     public async Task<IActionResult> RefresToken()
     {
         try
         {
+            Console.WriteLine("--------------------------------------------------");
             var accessTokenCookie = HttpContext.Request.Cookies["access_token"];
             var refreshTokenCookie = HttpContext.Request.Cookies["refresh_token"];
 
-            Console.WriteLine(accessTokenCookie);
+            //Console.WriteLine(accessTokenCookie);
             Console.WriteLine(refreshTokenCookie);
-
+            
             var validationResult = await _authenticationService.RefreshAuth(accessTokenCookie, refreshTokenCookie);
-
+            Console.WriteLine("validatares");
             if (validationResult.Success)
             {
+                Console.WriteLine("success");
+                Console.WriteLine("-----------------------------------------------");
                 HttpContext.Response.Cookies.Append("access_token", validationResult.AuthToken); //http-only, secure 
                 HttpContext.Response.Cookies.Append("refresh_token", validationResult.RefreshToken);
                 return Ok();
             }
-            
+            Console.WriteLine(validationResult.Success);
+            Console.WriteLine("-----------------------------------------------");
             return Unauthorized();
         }
         catch (Exception e)

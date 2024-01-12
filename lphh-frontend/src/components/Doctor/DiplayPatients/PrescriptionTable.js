@@ -39,8 +39,8 @@ const PresceptionTable = ({ presciptions, doctors, patients, cookie }) => {
                                     presciptions.length >= 1 ? [presciptions.map((presciption) => (
                                         <>
                                             <tr onClick={() => (handleOpen(presciption))}>
-                                                <td>{doctors.find((doctor) => doctor.Id === presciption.doctorID).firstName}{" "}
-                                                    {doctors.find((doctor) => doctor.Id === presciption.doctorID).lastName}
+                                                <td>{doctors.find((doctor) => doctor.id === presciption.doctorId).firstName}{" "}
+                                                    {doctors.find((doctor) => doctor.id === presciption.doctorId).lastName}
                                                 </td>
                                                 <td>{new Date(presciption.createdAt).toLocaleDateString()}{" "}
                                                     {new Date(presciption.createdAt).toLocaleTimeString()}</td>
