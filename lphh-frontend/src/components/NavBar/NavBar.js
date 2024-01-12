@@ -57,7 +57,7 @@ const Navbar = (props) => {
             </Grid>
             <Grid item xs={0.3} >
             </Grid>
-            <Grid item xs="auto"s >
+            <Grid item xs="auto" >
                 <Link className='menuButton' to="/profile"> Profile</Link>
             </Grid>
             <Grid item xs="auto" >
@@ -70,24 +70,38 @@ const Navbar = (props) => {
     ) : props.cookie["role"] === "Doctor" ?(
       <section>
        <Box className="navbar">       
-          <Grid container alignItems="center">
-            <Grid item xs={1} >
+       <Grid container alignItems="center">
+          <Grid item xs={1} >
               <img src={logo} alt="Logo" className="mini-logo" />
             </Grid>
-            <Grid item xs={2.2} >
+            <Grid item xs={0.1} >
+            </Grid>
+            <Grid  xs={0.3} >
+              <p> | </p>
+            </Grid>
+            <Grid item xs={0.1} >
+            </Grid>
+            <Grid item xs={"auto"} >
                 <Link className='menuButton' to="/patients">Patients </Link>
             </Grid>
-            <Grid item xs={2.2} >
+            <Grid item xs={"auto"} >
                 <Link className='menuButton' to="/examination"> Examination</Link>
             </Grid>
-            <Grid item xs={2.2} >
+            <Grid item xs={"auto"} >
                 <Link className='menuButton' to="/prescriptioncreator">Prescription </Link>
             </Grid>
-            <Grid item xs={2.2} >
-              <Link className='menuButton' to="/profile"> Profile</Link>
+            <Grid item xs={0.3} >
             </Grid>
-            <Grid item xs={2.2} >
-              <Link className='menuButton' to="/" onClick={()=>{handleLogOut()}}> Log Out</Link>
+            <Grid item xs={0.3} >
+              <p> | </p>
+            </Grid>
+            <Grid item xs={0.3} >
+            </Grid>
+            <Grid item xs="auto" >
+                <Link className='menuButton' to="/profile"> Profile</Link>
+            </Grid>
+            <Grid item xs="auto" >
+                <Link className='menuButton' to="/" onClick={()=>{handleLogOut()}}> Log Out</Link>
             </Grid>
           </Grid>
         </Box>
