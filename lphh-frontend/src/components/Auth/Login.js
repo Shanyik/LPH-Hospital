@@ -84,6 +84,12 @@ const Login = (props) => {
     navigate("/")
   }
 
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      loginHandler();
+    }
+  }
+
   return (
     <div className="container">
       <div className="form-heading">Login</div>
@@ -107,6 +113,7 @@ const Login = (props) => {
           onChange={(e) => {
             passwordHandler(e);
           }}
+          onKeyDown={(e)=>handleKeyPress(e)}
           className="form-input"
         />
       </div>

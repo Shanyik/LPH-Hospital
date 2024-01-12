@@ -1,30 +1,42 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./ExaminationCreater.css"
 import Typography from '@mui/material/Typography';
+import { FetchErrorContext } from "../../401Redirect/fetchErrorContext";
+import { fetchWithInterceptor } from "../../401Redirect/AuthRedirect";
 
 const ExaminationCreater = ({ userId }) => {
 
     const getDoctorById = (userId) => {
-        return fetch(`api/Doctor/GetById:${userId}`, {
+        return fetchWithInterceptor(`api/Doctor/GetById:${userId}`, {
             method: 'GET',
-        }).then(res => res.json())
+        }, setOriginUrl(`api/Doctor/GetById:${userId}`), setOriginOptions({
+            method: 'GET',
+        }))
     }
     
     const getPatientByMedicalNumber = (medicalNumber) => {
-        return fetch(`api/Patient/GetByMedicalNumber:${medicalNumber}`, {
+        return fetchWithInterceptor(`api/Patient/GetByMedicalNumber:${medicalNumber}`, {
             method: 'GET',
-        }).then(res => res.json())
+        }, setOriginUrl(`api/Patient/GetByMedicalNumber:${medicalNumber}`), setOriginOptions({
+            method: 'GET',
+        }))
     }
     
     const addExam = (data) => {
-        return fetch(`api/Exam/Add`, {
+        return fetchWithInterceptor(`api/Exam/Add`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify(data),
-        }).then((res) => console.log("success"));
+        }, setOriginUrl(`api/Exam/Add`), setOriginOptions( {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(data),
+        }))
     }
 
     const navigate = useNavigate();
@@ -40,7 +52,7 @@ const ExaminationCreater = ({ userId }) => {
     const [description, setDescription] = useState("")
 
     const [formError, setFormError] = useState(false)
-
+    const { originUrl, setOriginUrl, originOptions, setOriginOptions, dataSetter, setDataSetter } = useContext(FetchErrorContext)
 
     useEffect(() => {
         getDoctorById(userId).then(data => {

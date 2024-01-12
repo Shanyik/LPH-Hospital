@@ -23,7 +23,7 @@ public class DoctorController : ControllerBase
         try
         {
             var doctors = await _doctorRepository.GetAll();
-
+            var user = User;
             if (!doctors.Any())
             {
                 return NotFound();

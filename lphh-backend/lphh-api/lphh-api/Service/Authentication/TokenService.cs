@@ -11,7 +11,7 @@ namespace lphh_api.Service.Authentication;
 
 public class TokenService : ITokenService
 {
-    private const int ExpirationMinutes = 30;
+    private const int ExpirationMinutes = 10;
     
     private IConfiguration _configuration;
 
@@ -22,7 +22,7 @@ public class TokenService : ITokenService
 
     public string CreateToken(IdentityUser user, string role)
     {
-        var expiration = DateTime.UtcNow.AddMinutes(ExpirationMinutes);
+        var expiration = DateTime.UtcNow.AddSeconds(ExpirationMinutes);
         var token = CreateJwtToken(
             CreateClaims(user, role),
             CreateSigningCredentials(),

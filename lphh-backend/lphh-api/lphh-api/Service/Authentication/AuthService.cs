@@ -136,15 +136,16 @@ public class AuthService : IAuthService
     public async Task<AuthRefreshRespond> RefreshAuth(string? authToken, string? refreshToken)
     {
         var principal = GetPrincipalFromExpiredToken(authToken);
-
-        if (principal?.Identity?.Name is null)
+        
+        if (principal?.FindFirst(ClaimTypes.NameIdentifier)?.Value is null)
             return InvalidAuthTokenOrAttempt();
 
-        var user = await _userManager.FindByIdAsync(principal?.Identity?.Name);
-
+        var user = await _userManager.FindByIdAsync(principal?.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+        
+        
         if (user is null || user.RefreshToken != refreshToken || user.RefreshTokenExpiry < DateTime.UtcNow)
             return InvalidAuthTokenOrAttempt();
-
+        
         var userRole = "";
         
         var checkDoctor = await _doctorRepository.GetByIdentityId(user.Id);
@@ -153,17 +154,18 @@ public class AuthService : IAuthService
 
         if (checkDoctor != null)
         {
-            userRole = "doctor";
+            userRole = "Doctor";
         }
         else if (checkPatient != null)
         {
-            userRole = "patient";
+            userRole = "Patient";
         }
         else if (checkAdmin != null)
         {
-            userRole = "admin";
+            userRole = "Admin";
         }
 
+        
         if (userRole == "")
             return InvalidAuthTokenOrAttempt();
         
@@ -171,27 +173,40 @@ public class AuthService : IAuthService
         var newRefreshToken = _tokenService.GenerateRefreshToken();
 
         user.RefreshToken = newRefreshToken;
-        user.RefreshTokenExpiry = DateTime.UtcNow;
+        user.RefreshTokenExpiry = DateTime.UtcNow.AddDays(7);
         await _userManager.UpdateAsync(user);
 
         return new AuthRefreshRespond(true, newAuthToken, newRefreshToken);
 
     }
     
-    private ClaimsPrincipal? GetPrincipalFromExpiredToken(string? token)
+    private ClaimsPrincipal? GetPrincipalFromExpiredToken(string? token) // ez nem kell
     {
-        var Key = Encoding.UTF8.GetBytes(_configuration["JWT:Key"]);
-
-        var validation = new TokenValidationParameters
+        try
         {
-            ValidateIssuer = false,
-            ValidateAudience = false,
-            ValidateLifetime = false,
-            ValidateIssuerSigningKey = true,
-            IssuerSigningKey = new SymmetricSecurityKey(Key)
-        };
+            var key = Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]);
+            Console.WriteLine(key);
 
-        return new JwtSecurityTokenHandler().ValidateToken(token, validation, out _);
+            var validation = new TokenValidationParameters
+            {
+                ValidateIssuer = false,
+                ValidateAudience = false,
+                ValidateLifetime = false,
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = new SymmetricSecurityKey(key)
+            };
+
+            
+            var res = new JwtSecurityTokenHandler().ValidateToken(token, validation, out _ );
+            Console.WriteLine(res);
+            return res;
+        }
+        catch (Exception ex)
+        {
+            // Itt kezeld a kivételt vagy írd ki a hibaüzenetet a konzolra
+            Console.WriteLine(ex.ToString());
+            return null;
+        }
     }
     
     private static AuthResult InvalidEmailOrUsername(string input)
