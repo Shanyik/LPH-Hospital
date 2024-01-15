@@ -96,8 +96,7 @@ const Navbar = (props) => {
             <Grid item xs={2.2} >
               <Link className='menuButton' to="/prescriptioncreator">Prescription </Link>
             </Grid>
-            <Grid item xs={2.2} >
-              <Link className='menuButton' to="/profile"> Profile</Link>
+            <Grid item xs={0.3} >
             </Grid>
             <Grid item xs={2.2} >
               <Link className='menuButton' to="/" onClick={() => { handleLogOut() }}> Log Out</Link>
