@@ -1,14 +1,19 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { FetchErrorContext } from "../401Redirect/fetchErrorContext";
+import { fetchWithInterceptor } from "../401Redirect/AuthRedirect";
 
-const getAllDoctors = () => {
-    return fetch('/api/Doctor/GetAll', {
-        method: 'GET',
-    }).then(res => res.json())
-}
+
 
 const AdminHome = () => {
 
     const [doctors, setDoctors] = useState(null);
+    
+
+    const getAllDoctors = () => {
+        return fetch('/api/Doctor/GetAll', {
+            method: 'GET',
+        }).then(res => res.json())
+    }
 
     useEffect(() => {
         getAllDoctors().then(

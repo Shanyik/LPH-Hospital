@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import "./login.css";
 
 
 const loginFetch = (data) => {
@@ -23,6 +24,8 @@ const Login = (props) => {
   const [password, setPassword] = useState(null);
   const [result, setResult] = useState(null);
 
+  const [loading, setLoading] = useState(null);
+
   const navigate = useNavigate();
 
   const emailHandler = (input) => {
@@ -38,9 +41,9 @@ const Login = (props) => {
   const navigateToUrl = (role) => {
     if (role === "Doctor") {
       navigate("/main");
-    } else if(role === "Patient"){
+    } else if (role === "Patient") {
       navigate("/patient/home");
-    }else{
+    } else {
       navigate("/adminHome");
     }
   };
@@ -51,33 +54,44 @@ const Login = (props) => {
       password: password,
     };
     console.log(data);
-    loginFetch(data).then((res) => {
-      if (res.token !== undefined) {
-        const token = res.token;
-        const decodedToken = JSON.parse(atob(token.split(".")[1]));
-        const role =
-          decodedToken[
+    if (data.email === null || data.password === null) {
+      setResult("noData")
+    } else {
+      loginFetch(data).then((res) => {
+
+        if (res.token !== undefined) {
+          setLoading(true);
+          const token = res.token;
+          const decodedToken = JSON.parse(atob(token.split(".")[1]));
+          const role =
+            decodedToken[
             "http://schemas.microsoft.com/ws/2008/06/identity/claims/role"
-          ];
-        const id =
-          decodedToken[
+            ];
+          const id =
+            decodedToken[
             "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"
-          ];
+            ];
+          getIdFetch(id, role, token).then((data) => {
+            setTimeout(() => {
+              localStorage.setItem('kulcs', 'érték');
+              localStorage.setItem('id', data.id);
+              localStorage.setItem('role', role);
+              props.setRefresh(role);
+              props.setId(data.id);
+              navigateToUrl(role);
+            }, 3000);
 
-        getIdFetch(id, role, token).then((data) => {
-          props.setCookie("id", data.id, { maxAge: 3600, path: "/" });
-          props.setCookie("role", role, { maxAge: 3600, path: "/" });
-          props.setCookie("token", token, { maxAge: 3600, path: "/" });
-          navigateToUrl(role);
-          window.location.reload(true);
-        });
+          });
 
-        console.log(decodedToken);
-        console.log(res);
-      } else {
-        setResult(false);
-      }
-    });
+          console.log(decodedToken);
+          console.log(res);
+        } else {
+          setLoading(null);
+          setResult(false);
+        }
+      });
+    }
+
   };
 
   const handleGoBack = () => {
@@ -92,33 +106,47 @@ const Login = (props) => {
 
   return (
     <div className="container">
-      <div className="form-heading">Login</div>
-      <div id="loginResult" className="form-error">
-        {result === false ? "Wrong Email or password" : ""}
-      </div>
-      <div className="form-group">
-        <label className="form-label">Email:</label>
-        <input
-          type="text"
-          onChange={(e) => {
-            emailHandler(e);
-          }}
-          className="form-input"
-        />
-      </div>
-      <div className="form-group">
-        <label className="form-label">Password:</label>
-        <input
-          type="password"
-          onChange={(e) => {
-            passwordHandler(e);
-          }}
-          onKeyDown={(e)=>handleKeyPress(e)}
-          className="form-input"
-        />
-      </div>
-      <button onClick={() => (handleGoBack())} className="form-goBack">Go Back</button>
-      <button onClick={() => loginHandler()} className="form-submit">Login</button>
+      {
+        loading === null ? (
+          <>
+            <div className="form-heading">Login</div>
+            <div id="loginResult" className="form-error">
+              {result === false ? "Wrong Email or password" :
+                result === "noData" ? "Email/Username and password required!" : ""}
+            </div>
+            <div className="form-group">
+              <label className="form-label">Email:</label>
+              <input
+                type="text"
+                onChange={(e) => {
+                  emailHandler(e);
+                }}
+                className="form-input"
+              />
+            </div>
+            <div className="form-group">
+              <label className="form-label">Password:</label>
+              <input
+                type="password"
+                onChange={(e) => {
+                  passwordHandler(e);
+                }}
+                onKeyDown={(e) => handleKeyPress(e)}
+                className="form-input"
+              />
+            </div>
+            <button onClick={() => (handleGoBack())} className="form-goBack">Go Back</button>
+            <button onClick={() => loginHandler()} className="form-submit">Login</button>
+          </>
+        ) : (
+          <>
+            <span className="loader">
+
+            </span>
+          </>
+        )
+      }
+
     </div>
   );
 };

@@ -1,7 +1,6 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
-import { useEffect } from 'react';
 
 const ExamModal = ({ open, handleClose, exam, patients, doctors }) => {
 
@@ -18,8 +17,6 @@ const ExamModal = ({ open, handleClose, exam, patients, doctors }) => {
         px: 4,
         pb: 3,
     };
-
-    useEffect(() => { console.log(exam.doctorId)}, [])
 
     return (
         <Modal

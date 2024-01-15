@@ -1,4 +1,7 @@
-﻿using lphh_api.Model;
+﻿using System;
+using System.Linq;
+using System.Threading.Tasks;
+using lphh_api.Model;
 using lphh_api.Repository.ExamRepo;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

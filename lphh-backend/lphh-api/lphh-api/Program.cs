@@ -1,4 +1,7 @@
+using System;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 using lphh_api.Context;
 using lphh_api.Model;
 using lphh_api.Repository.AdminRepo;
@@ -10,8 +13,13 @@ using lphh_api.Repository.PrescriptionRepo;
 using lphh_api.Repository.ProductRepo;
 using lphh_api.Service.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 
@@ -29,6 +37,7 @@ public class Program
         AddDbContext();
         AddAuthentication();
         AddIdentity();
+       
 
         var app = builder.Build();
 
@@ -68,8 +77,10 @@ public class Program
 
         app.UseHttpsRedirection();
 
+        app.UseRouting();
         app.UseAuthentication();
         app.UseAuthorization();
+        
 
         app.UseCors(corsPolicyBuilder =>
         {
@@ -105,9 +116,14 @@ public class Program
                     options.Password.RequireNonAlphanumeric = false;
                     options.Password.RequireUppercase = false;
                     options.Password.RequireLowercase = false;
+
+                    options.Lockout.MaxFailedAccessAttempts = 3;
+                    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(1);
+                    
                 })
                 .AddRoles<IdentityRole>() //Enable Identity roles 
-                .AddEntityFrameworkStores<HospitalApiContext>();
+                .AddEntityFrameworkStores<HospitalApiContext>()
+                .AddSignInManager<SignInManager<User>>();
         }
 
         #endregion
@@ -183,7 +199,12 @@ public class Program
         void AddAuthentication()
         {
             builder.Services
-                .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddAuthentication(options =>
+                {
+                    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;  
+                    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                })
                 .AddJwtBearer(options =>
                 {
                     options.TokenValidationParameters = new TokenValidationParameters()
@@ -208,6 +229,14 @@ public class Program
                             return Task.CompletedTask;
                         } 
                     };
+                        
+                })
+                .AddCookie("Identity.Application", options =>
+                {
+           
+                    options.Cookie.Name = "YourAuthCookieName"; // A sütike neve
+                    options.ExpireTimeSpan = TimeSpan.FromMinutes(30); // A sütike élettartama
+            
                 });
         }
         

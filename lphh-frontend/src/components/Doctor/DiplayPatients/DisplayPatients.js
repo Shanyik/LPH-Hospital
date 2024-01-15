@@ -4,29 +4,21 @@ import { Box, Grid } from "@mui/material";
 import SearchField from "../SearchPatient";
 import ExaminationTable from "./ExaminationTable";
 import PresceptionTable from "./PrescriptionTable";
-import { FetchErrorContext } from "../../401Redirect/fetchErrorContext";
+import { fetchWithInterceptor } from "../../401Redirect/AuthRedirect";
 
 const DisplayPatients = (props) => {
 
-    const deletePatient = (username) => {
-        return fetch(`/api/Patient/Delete:${username}`, {
-            method: 'DELETE',
-        })
-            .then((res) => res.text())
-            .then((res) => console.log(res))
-    }
-
+    
     const getExamDataByPatientID = (id) => {
         return fetch(`/api/Exam/GetByPatientId:${id}`, {
             method: 'GET',
-        }).then((res => res.json())) //proxy miatt -->json-ben
+        }).then(res => res.json())
     }
 
     const getPresceptionDataByPatientID = (id) => {
-        console.log(id)
         return fetch(`/api/Prescription/GetByPatientId:${id}`, {
             method: 'GET',
-        }).then((res => res.json()))
+        }).then(res => res.json())
     }
 
     const getAllDoctors = () => {
@@ -54,9 +46,9 @@ const DisplayPatients = (props) => {
     const [presciptions, setPresciptions] = useState([]);
     const [doctors, setDoctors] = useState([]);
 
-    const { originUrl, setOriginUrl, originOptions, setOriginOptions, dataSetter, setDataSetter } = useContext(FetchErrorContext)
 
     useEffect(() => {
+
         getAllPatient().then(data => {
             setPatients(data);
             return getAllDoctors();
@@ -66,13 +58,7 @@ const DisplayPatients = (props) => {
         }).catch(error => console.log(error));
     }, [])
 
-    const deleteButton = (username) => {
-        deletePatient(username)
-            .then(
-                setPatients((patients => {
-                    return patients.filter((patient) => patient.username !== username)
-                })))
-    }
+
 
     const searchButton = () => {
         const trimmedSearchValue = searchValue.trim();
@@ -89,6 +75,7 @@ const DisplayPatients = (props) => {
     }
 
     const refresPatient = () => {
+        console.log("refresPatient")
         getAllPatient().then(data => {
             setPatients(data)
         }).catch(
@@ -98,14 +85,15 @@ const DisplayPatients = (props) => {
     }
 
     const rowController = (id) => {
+        console.log("rowController")
         getExamDataByPatientID(id).then(data => {
             setExaminations(data);
-        }).then(
-            getPresceptionDataByPatientID(id).then(data => {
-                console.log(data)
-                setPresciptions(data)
-            })
-        )
+            
+        })
+        getPresceptionDataByPatientID(id).then(data => {
+            console.log(data)
+            setPresciptions(data)
+        })
 
     }
 
@@ -148,7 +136,6 @@ const DisplayPatients = (props) => {
                                                             <td>{patient.lastName}</td>
                                                             <td>{patient.medicalNumber}</td>
                                                             <td>{patient.phoneNumber}</td>
-                                                            <td><button onClick={() => deleteButton(patient.username)}>Delete</button></td>
                                                         </tr>
                                                     ))
                                                 ]

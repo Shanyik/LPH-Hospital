@@ -1,4 +1,5 @@
-﻿using System.IdentityModel.Tokens.Jwt;
+﻿using System;
+using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using lphh_api.Model;
@@ -7,6 +8,7 @@ using lphh_api.Repository.DoctorRepo;
 using lphh_api.Repository.PatientRepo;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
+using IConfiguration = Microsoft.Extensions.Configuration.IConfiguration;
 
 namespace lphh_api.Service.Authentication;
 
@@ -18,15 +20,18 @@ public class AuthService : IAuthService
     private readonly IDoctorRepository _doctorRepository;
     private readonly IAdminRepository _adminRepositroy;
     private IConfiguration _configuration;
+    private readonly SignInManager<User> _sginManager;
 
-    public AuthService(UserManager<User> userManager, ITokenService tokenService, IPatientRepository patientRepository, IDoctorRepository doctorRepository, IConfiguration configuration, IAdminRepository adminRepositroy)
+    public AuthService(UserManager<User> userManager, ITokenService tokenService, IPatientRepository patientRepository, IDoctorRepository doctorRepository, IConfiguration configuration, IAdminRepository adminRepositroy, SignInManager<User> sginManager)
     {
         _userManager = userManager;
         _tokenService = tokenService;
         _doctorRepository = doctorRepository;
         _configuration = configuration;
         _adminRepositroy = adminRepositroy;
+        _sginManager = sginManager;
         _patientRepository = patientRepository;
+        
     }
 
     public async Task<AuthResult> RegisterAsync(string email, string username, string password, string role)
@@ -43,6 +48,31 @@ public class AuthService : IAuthService
         await _userManager.AddToRoleAsync(user, role); // Adding the user to a role
         return new AuthResult(true, email, username, user.Id, "", "");
     }
+
+    public async Task<UserInfoModel> FindUserRole(string id)
+    {
+        var patient = await _patientRepository.GetByIdentityId(id);
+        var doctor = await _doctorRepository.GetByIdentityId(id);
+        var admin = await _adminRepositroy.GetByIdentityId(id);
+
+        
+        
+        if (patient != null)
+        {
+            return new UserInfoModel("Patient", patient.Id.ToString());
+        }
+        else if (doctor != null)
+        {
+            return new UserInfoModel("Doctor", doctor.Id.ToString());
+        }
+        else if (admin != null)
+        {
+            return new UserInfoModel("Admin", admin.Id.ToString());
+        }
+
+        return new UserInfoModel("", "");
+    }
+    
     
     public async Task<AuthResult> RegisterUserAsync(string email, string username, string phoneNumber, string firstName,string lastName,string ward,string medicalNumber, string role, string identityId)
     {
@@ -103,25 +133,27 @@ public class AuthService : IAuthService
     
     public async Task<AuthResult> LoginAsync(string input, string password)
     {
+        
         var managedUserByEmail = await _userManager.FindByEmailAsync(input);
 
         var managedUserByUserName = await _userManager.FindByNameAsync(input);
-
+        
         if (managedUserByEmail == null && managedUserByUserName == null)
         {
+            
             return InvalidEmailOrUsername(input);
         }
 
         var validInput = managedUserByEmail != null ? managedUserByEmail : managedUserByUserName;
-        
-        var isPasswordValid = await _userManager.CheckPasswordAsync(validInput, password);
-        if (!isPasswordValid)
+        //var isPasswordValid = await _userManager.CheckPasswordAsync(validInput, password);
+        var test = await _sginManager.PasswordSignInAsync(validInput, password, isPersistent: false, lockoutOnFailure: true);
+
+        Console.WriteLine(test.Succeeded);
+        if (!test.Succeeded)
         {
             return InvalidPassword(input, validInput.UserName);
         }
-
-
-        // get the role and pass it to the TokenService
+       
         var roles = await _userManager.GetRolesAsync(validInput);
         var accessToken = _tokenService.CreateToken(validInput, roles[0]);
         var refreshToken = _tokenService.GenerateRefreshToken();
@@ -180,7 +212,7 @@ public class AuthService : IAuthService
 
     }
     
-    private ClaimsPrincipal? GetPrincipalFromExpiredToken(string? token) // ez nem kell
+    private ClaimsPrincipal? GetPrincipalFromExpiredToken(string? token) 
     {
         try
         {
@@ -203,7 +235,6 @@ public class AuthService : IAuthService
         }
         catch (Exception ex)
         {
-            // Itt kezeld a kivételt vagy írd ki a hibaüzenetet a konzolra
             Console.WriteLine(ex.ToString());
             return null;
         }

@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import ModalPrescription from './ModalPrescription';
 import Button from '@mui/material/Button';
+import { FetchErrorContext } from '../../401Redirect/fetchErrorContext';
 
 
 const Prescriptions = (props) => {
@@ -11,8 +12,9 @@ const Prescriptions = (props) => {
     const [showModal, setShowModal] = useState(false)
     const [currentId, setCurrentId] = useState(false)
     
+    const { id } = useContext(FetchErrorContext)
     useEffect(() => {
-        fetch(`/api/Prescription/GetByPatientId:${props.cookie["id"]}`, {
+        fetch(`/api/Prescription/GetByPatientId:${id}`, {
             method: 'GET',
         })
             .then(response => response.json())
@@ -42,7 +44,7 @@ const Prescriptions = (props) => {
             }
             )
             .catch(error => console.log(error))
-    }, [props.cookie])
+    }, [id])
     
     const handleOpen = (presciption) => {
 

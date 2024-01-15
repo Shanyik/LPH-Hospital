@@ -17,10 +17,6 @@ const ExaminationTable = ({ examinations, patients, doctor }) => {
        
     };
 
-    useEffect(() => {
-        console.log(examinations)
-        console.log(doctor)
-    });
 
     return (
 

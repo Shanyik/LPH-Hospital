@@ -1,17 +1,21 @@
-﻿using System.Globalization;
+﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
+using Castle.Core.Configuration;
 using lphh_api.Model;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
+using IConfiguration = Microsoft.Extensions.Configuration.IConfiguration;
 
 namespace lphh_api.Service.Authentication;
 
 public class TokenService : ITokenService
 {
-    private const int ExpirationMinutes = 10;
+    private const int ExpirationMinutes = 20;
     
     private IConfiguration _configuration;
 
@@ -22,7 +26,7 @@ public class TokenService : ITokenService
 
     public string CreateToken(IdentityUser user, string role)
     {
-        var expiration = DateTime.UtcNow.AddSeconds(ExpirationMinutes);
+        var expiration = DateTime.UtcNow.AddMinutes(ExpirationMinutes);
         var token = CreateJwtToken(
             CreateClaims(user, role),
             CreateSigningCredentials(),

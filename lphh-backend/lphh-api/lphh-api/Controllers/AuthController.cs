@@ -1,7 +1,11 @@
-﻿using System.Security.Claims;
+﻿using System;
+using System.Security.Claims;
+using System.Text.Json;
+using System.Threading.Tasks;
 using lphh_api.Contracts;
 using lphh_api.Model;
 using lphh_api.Service.Authentication;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -67,8 +71,10 @@ public class AuthController : ControllerBase
             Console.WriteLine("not valid");
             return BadRequest(ModelState);
         }
+       
 
         var result = await _authenticationService.LoginAsync(request.Email, request.Password);
+      
 
         if (!result.Success)
         {
@@ -78,8 +84,8 @@ public class AuthController : ControllerBase
         }
 
         var refreshToken = result.RefreshToken;
-        
-        HttpContext.Response.Cookies.Append("access_token", result.Token); //http-only, secure 
+
+        setTokenCookie(result.Token, "access_token");
         HttpContext.Response.Cookies.Append("refresh_token", refreshToken);
         return Ok(new AuthResponse(result.Email, result.UserName, result.Token));
     }
@@ -112,13 +118,14 @@ public class AuthController : ControllerBase
     }
 
     [HttpGet("RefreshToken")]
-    public async Task<IActionResult> RefresToken()
+    public async Task<IActionResult> RefreshToken()
     {
         try
         {
             Console.WriteLine("--------------------------------------------------");
             var accessTokenCookie = HttpContext.Request.Cookies["access_token"];
             var refreshTokenCookie = HttpContext.Request.Cookies["refresh_token"];
+            Console.WriteLine("-----------------------------------------------");
 
             //Console.WriteLine(accessTokenCookie);
             Console.WriteLine(refreshTokenCookie);
@@ -129,11 +136,11 @@ public class AuthController : ControllerBase
             {
                 Console.WriteLine("success");
                 Console.WriteLine("-----------------------------------------------");
-                HttpContext.Response.Cookies.Append("access_token", validationResult.AuthToken); //http-only, secure 
+                HttpContext.Response.Cookies.Append("access_token", validationResult.AuthToken); 
                 HttpContext.Response.Cookies.Append("refresh_token", validationResult.RefreshToken);
                 return Ok();
             }
-            Console.WriteLine(validationResult.Success);
+            //Console.WriteLine(validationResult.Success);
             Console.WriteLine("-----------------------------------------------");
             return Unauthorized();
         }
@@ -143,16 +150,40 @@ public class AuthController : ControllerBase
             throw;
         }
     }
-    
-    
-    private void setTokenCookie(string token)
+
+    [HttpGet("HowAmI")]
+    public async Task<ActionResult> HowAmI()
     {
-        // append cookie with refresh token to the http response
+        try
+        {
+            //var token = HttpContext.Request.Cookies["access_token"];
+            var userId = HttpContext.User?.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            Console.WriteLine(userId);
+            if (userId == null)
+            {
+                return Unauthorized();
+            }
+            
+            var res = await _authenticationService.FindUserRole(userId);
+        
+            return Ok(res);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+        
+    }
+    
+    private void setTokenCookie(string token, string tokenName)
+    {
+       
         var cookieOptions = new CookieOptions
         {
             HttpOnly = true,
             Expires = DateTime.UtcNow.AddDays(7)
         };
-        Response.Cookies.Append("refreshToken", token, cookieOptions);
+        Response.Cookies.Append(tokenName, token, cookieOptions);
     }
 }

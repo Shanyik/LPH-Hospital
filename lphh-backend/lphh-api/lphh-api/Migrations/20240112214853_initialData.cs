@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace lphh_api.Migrations
 {
     /// <inheritdoc />
-    public partial class AddRefreshToken : Migration
+    public partial class initialData : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -290,9 +290,9 @@ namespace lphh_api.Migrations
                 columns: new[] { "Id", "CreatedAt", "Description", "End", "Name", "Start" },
                 values: new object[,]
                 {
-                    { 1L, new DateTime(2024, 1, 9, 22, 8, 17, 686, DateTimeKind.Local).AddTicks(6407), "EventDescription", new DateTime(2024, 1, 12, 22, 8, 17, 686, DateTimeKind.Local).AddTicks(6404), "Donate Blood", new DateTime(2024, 1, 9, 22, 8, 17, 686, DateTimeKind.Local).AddTicks(6401) },
-                    { 2L, new DateTime(2024, 1, 9, 22, 8, 17, 686, DateTimeKind.Local).AddTicks(6414), "EventDescription", new DateTime(2024, 1, 14, 22, 8, 17, 686, DateTimeKind.Local).AddTicks(6412), "General Exams", new DateTime(2024, 1, 9, 22, 8, 17, 686, DateTimeKind.Local).AddTicks(6410) },
-                    { 3L, new DateTime(2024, 1, 9, 22, 8, 17, 686, DateTimeKind.Local).AddTicks(6421), "EventDescription", new DateTime(2024, 1, 19, 22, 8, 17, 686, DateTimeKind.Local).AddTicks(6419), "Donate Blood", new DateTime(2024, 1, 14, 22, 8, 17, 686, DateTimeKind.Local).AddTicks(6417) }
+                    { 1L, new DateTime(2024, 1, 12, 22, 48, 53, 248, DateTimeKind.Local).AddTicks(72), "EventDescription", new DateTime(2024, 1, 15, 22, 48, 53, 248, DateTimeKind.Local).AddTicks(69), "Donate Blood", new DateTime(2024, 1, 12, 22, 48, 53, 248, DateTimeKind.Local).AddTicks(67) },
+                    { 2L, new DateTime(2024, 1, 12, 22, 48, 53, 248, DateTimeKind.Local).AddTicks(78), "EventDescription", new DateTime(2024, 1, 17, 22, 48, 53, 248, DateTimeKind.Local).AddTicks(76), "General Exams", new DateTime(2024, 1, 12, 22, 48, 53, 248, DateTimeKind.Local).AddTicks(75) },
+                    { 3L, new DateTime(2024, 1, 12, 22, 48, 53, 248, DateTimeKind.Local).AddTicks(83), "EventDescription", new DateTime(2024, 1, 22, 22, 48, 53, 248, DateTimeKind.Local).AddTicks(82), "Donate Blood", new DateTime(2024, 1, 17, 22, 48, 53, 248, DateTimeKind.Local).AddTicks(80) }
                 });
 
             migrationBuilder.InsertData(
@@ -300,9 +300,9 @@ namespace lphh_api.Migrations
                 columns: new[] { "Id", "CreatedAt", "DoctorId", "PatientId", "Result", "Type" },
                 values: new object[,]
                 {
-                    { 1L, new DateTime(2024, 1, 9, 22, 8, 17, 686, DateTimeKind.Local).AddTicks(6371), 1L, 1L, "resultString", "General Exam" },
-                    { 2L, new DateTime(2024, 1, 9, 22, 8, 17, 686, DateTimeKind.Local).AddTicks(6375), 2L, 3L, "resultString", "General Exam" },
-                    { 3L, new DateTime(2024, 1, 9, 22, 8, 17, 686, DateTimeKind.Local).AddTicks(6378), 3L, 2L, "resultString", "General Exam" }
+                    { 1L, new DateTime(2024, 1, 12, 22, 48, 53, 248, DateTimeKind.Local).AddTicks(42), 1L, 1L, "resultString", "General Exam" },
+                    { 2L, new DateTime(2024, 1, 12, 22, 48, 53, 248, DateTimeKind.Local).AddTicks(45), 2L, 3L, "resultString", "General Exam" },
+                    { 3L, new DateTime(2024, 1, 12, 22, 48, 53, 248, DateTimeKind.Local).AddTicks(47), 3L, 2L, "resultString", "General Exam" }
                 });
 
             migrationBuilder.InsertData(
@@ -310,9 +310,9 @@ namespace lphh_api.Migrations
                 columns: new[] { "Id", "CreatedAt", "Description", "DoctorId", "PatientId", "ProductId" },
                 values: new object[,]
                 {
-                    { 1L, new DateTime(2024, 1, 9, 22, 8, 17, 686, DateTimeKind.Local).AddTicks(6303), "1x2 for 10 days", 1L, 1L, 1L },
-                    { 2L, new DateTime(2024, 1, 9, 22, 8, 17, 686, DateTimeKind.Local).AddTicks(6341), "1x1 for 120 days", 2L, 1L, 3L },
-                    { 3L, new DateTime(2024, 1, 9, 22, 8, 17, 686, DateTimeKind.Local).AddTicks(6343), "1x1 for 30 days", 3L, 2L, 2L }
+                    { 1L, new DateTime(2024, 1, 12, 22, 48, 53, 247, DateTimeKind.Local).AddTicks(9976), "1x2 for 10 days", 1L, 1L, 1L },
+                    { 2L, new DateTime(2024, 1, 12, 22, 48, 53, 248, DateTimeKind.Local).AddTicks(17), "1x1 for 120 days", 2L, 1L, 3L },
+                    { 3L, new DateTime(2024, 1, 12, 22, 48, 53, 248, DateTimeKind.Local).AddTicks(19), "1x1 for 30 days", 3L, 2L, 2L }
                 });
 
             migrationBuilder.InsertData(

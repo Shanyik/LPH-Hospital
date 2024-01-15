@@ -25,47 +25,59 @@ const Profile = (props) => {
         .then((res) => console.log(res))
     }
   }
+  const howAmI = () => {
+    return fetch('/api/Auth/HowAmI').then(res => res.json())
 
-  const [userData, setUserData] = useState(null)
-  const { originUrl, setOriginUrl, originOptions, setOriginOptions, dataSetter, setDataSetter } = useContext(FetchErrorContext)
+  }
+  const [userData, setUserData] = useState(null);
+
+
+  const { refresh, id, setId } = useContext(FetchErrorContext)
+
 
   useEffect(() => {
-    if (props.cookie["role"] === "Patient") {
-      fetch(`api/Patient/GetById:${props.cookie["id"]}`, {
-        method: 'GET'
-      })
-        .then(response => response.json())
-        .then(data => {
-          console.log(data)
-          setUserData(data);
-        }
-        )
-        .catch(error => console.log(error))
+    if (id === null || id === undefined) {
+      console.log(howAmI())
+      howAmI();
+    } if (refresh === "Patient") {
+      howAmI().then(data => {
+
+        const currentId = data.id
+        fetch(`api/Patient/GetById:${currentId}`, {
+          method: 'GET'
+        }).then(res => res.json())
+          .then(data => {
+            console.log(data)
+            setUserData(data);
+          })
+          .catch(error => console.log(error))
+      }
+      )
     }
     else {
-      fetchWithInterceptor(`api/Doctor/GetById:${props.cookie["id"]}`, {
-        method: 'GET'
-      }, setOriginUrl(`api/Doctor/GetById:${props.cookie["id"]}`), setOriginOptions({
-        method: 'GET'
-      }))
-        /*.then(response => { if (response.status === 200) {
-            console.log("ok")
-           return response.json() }else{
-            console.log("ok1")
-           } })*/
-        .then(data => {
-          console.log(data)
-          setUserData(data);
-        }
-        )
-        .catch(error => console.log(error))
+      howAmI().then(data => {
+
+        const currentId = data.id
+        fetch(`api/Doctor/GetById:${currentId}`, {
+          method: 'GET'
+        }).then(res => res.json())
+          .then(data => {
+            console.log(data)
+            setUserData(data);
+          })
+          .catch(error => console.log(error))
+      }
+      )
     }
-  }, [props.cookie])
+
+
+  }, [id])
 
   return (
-    userData && userData !== null  ? (
+    userData && userData !== null ? (
       <>
-        <Avatar className="profileAvatar" sx={{ bgcolor: "orange", width: 100, height: 100, alignItems: "center", left: "47%", top: "15%", zIndex: "100", position: "absolute" }}>{Array.from(userData.username)[0]}</Avatar>
+        <Avatar className="profileAvatar" sx={{ bgcolor: "orange", width: 100, height: 100, alignItems: "center", left: "47%", top: "15%", zIndex: "100", position: "absolute" }}>
+          {Array.from(userData.username)[0]}</Avatar>
         <Box className="profileBox" alignItems={"center"} >
           <Grid sx={{ width: "100%", height: "80%", position: "absolute", marginTop: "10%" }} container alignItems="center">
             <Grid item xs={6} >

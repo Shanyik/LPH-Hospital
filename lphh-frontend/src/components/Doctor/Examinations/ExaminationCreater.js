@@ -3,40 +3,28 @@ import { useNavigate } from "react-router-dom";
 import "./ExaminationCreater.css"
 import Typography from '@mui/material/Typography';
 import { FetchErrorContext } from "../../401Redirect/fetchErrorContext";
-import { fetchWithInterceptor } from "../../401Redirect/AuthRedirect";
+
 
 const ExaminationCreater = ({ userId }) => {
 
     const getDoctorById = (userId) => {
-        return fetchWithInterceptor(`api/Doctor/GetById:${userId}`, {
-            method: 'GET',
-        }, setOriginUrl(`api/Doctor/GetById:${userId}`), setOriginOptions({
-            method: 'GET',
-        }))
+        return fetch(`api/Doctor/GetById:${userId}`).then(res => res.json())
     }
     
     const getPatientByMedicalNumber = (medicalNumber) => {
-        return fetchWithInterceptor(`api/Patient/GetByMedicalNumber:${medicalNumber}`, {
+        return fetch(`api/Patient/GetByMedicalNumber:${medicalNumber}`, {
             method: 'GET',
-        }, setOriginUrl(`api/Patient/GetByMedicalNumber:${medicalNumber}`), setOriginOptions({
-            method: 'GET',
-        }))
+        }).then(res => res.json())
     }
     
     const addExam = (data) => {
-        return fetchWithInterceptor(`api/Exam/Add`, {
+        return fetch(`api/Exam/Add`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify(data),
-        }, setOriginUrl(`api/Exam/Add`), setOriginOptions( {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(data),
-        }))
+        }).then(res => {if(res.status !== 200){res.json()}})
     }
 
     const navigate = useNavigate();
@@ -52,16 +40,17 @@ const ExaminationCreater = ({ userId }) => {
     const [description, setDescription] = useState("")
 
     const [formError, setFormError] = useState(false)
-    const { originUrl, setOriginUrl, originOptions, setOriginOptions, dataSetter, setDataSetter } = useContext(FetchErrorContext)
+
+    const { id } = useContext(FetchErrorContext)
 
     useEffect(() => {
-        getDoctorById(userId).then(data => {
+        getDoctorById(id).then(data => {
             setDoctor(data)
             console.log(data.lastName)
             setDoctorFirstName(data.firstName)
             setDoctorLastName(data.lastName)
         })
-    }, [userId])
+    }, [id])
 
     const handleMedicalNumberChange = (event) => {
         const input = event.target.value;
@@ -141,7 +130,7 @@ const ExaminationCreater = ({ userId }) => {
         if (patient !== null && type !== null) {
             const data = {
                 type: type,
-                doctorid: userId,
+                doctorid: id,
                 patientId: patient.id,
                 result: description,
                 createdAt: new Date()

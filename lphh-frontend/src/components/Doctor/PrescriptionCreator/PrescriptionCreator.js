@@ -19,43 +19,34 @@ const PrescriptionCreator = (props) => {
     const [description, setDescription] = useState("")
     const [selectedProduct, setSelectedProduct] = useState(null);
 
-    const { originUrl, setOriginUrl, originOptions, setOriginOptions, dataSetter, setDataSetter } = useContext(FetchErrorContext)
+    const { id } = useContext(FetchErrorContext)
 
     const navigate = useNavigate()
 
     const getDoctorById = (userId) => {
-        return fetchWithInterceptor(`api/Doctor/GetById:${userId}`, {
+        return fetch(`api/Doctor/GetById:${userId}`, {
             method: 'GET',
 
-        }, setOriginUrl(`api/Doctor/GetById:${userId}`), setOriginOptions({
-            method: 'GET',
-
-        }))
+        }).then(res => res.json())
     }
 
     const getAllProducts = () => {
-        return fetchWithInterceptor('api/Product/GetAll', {
+        return fetch('api/Product/GetAll', {
             method: 'GET',
 
-        }, setOriginUrl('api/Product/GetAll'), setOriginOptions({
-            method: 'GET',
-
-        }))
+        }).then(res => res.json())
     }
 
 
     const getPatientByMedicalNumber = (medicalNumber) => {
-        return fetchWithInterceptor(`api/Patient/GetByMedicalNumber:${medicalNumber}`, {
+        return fetch(`api/Patient/GetByMedicalNumber:${medicalNumber}`, {
             method: 'GET',
 
-        }, setOriginUrl(`api/Patient/GetByMedicalNumber:${medicalNumber}`), setOriginOptions({
-            method: 'GET',
-
-        }))
+        }).then(res => res.json())
     }
 
     useEffect(() => {
-        getDoctorById(props.cookie["id"])
+        getDoctorById(id)
             .then(data => {
                 setDoctor(data)
                 console.log(data.lastName)
@@ -67,7 +58,7 @@ const PrescriptionCreator = (props) => {
             })
 
 
-    }, [props.cookie["id"]])
+    }, [])
 
     const handleMedicalNumberChange = (event) => {
         setMedicalNumber(event.target.value);
@@ -109,19 +100,13 @@ const PrescriptionCreator = (props) => {
     };
 
     const addPrescription = (data) => {
-        return fetchWithInterceptor('api/Prescription/Add', {
+        return fetch('api/Prescription/Add', {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify(data),
-        }, setOriginUrl('api/Prescription/Add'), setOriginOptions({
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(data),
-        }))
+        }).then(res=> {if(res.status !== 200){return res.json()}})
     }
 
     const onSubmit = (e) => {
